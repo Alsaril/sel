@@ -1,0 +1,67 @@
+<html>
+<head>
+    <style>
+        body {
+            width: 8cm;
+            font-family: monospace;
+        }
+
+        div.row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        td.name {
+            width: 4cm;
+        }
+
+        td.price {
+            width: 2cm;
+        }
+
+        td.sum {
+            width: 2cm;
+        }
+
+        td.price, td.sum {
+            vertical-align: top;
+            text-align: right;
+        }
+
+        tr, td, table, tbody {
+            margin: 0px;
+            padding: 0px;
+            border: none;
+        }
+
+        .bold {
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .mp {
+            float: right;
+            margin-top: 0.25cm;
+            margin-right: 20%%;
+        }
+    </style>
+</head>
+<body>
+<div class='center'>
+    <div>
+        %s<br>
+        %s<br>
+        %s
+    </div>
+</div>
+
+<div class='row'><span>Касса №%d</span><span>ИНН %s</span></div>
+<div class='row'><span>Дата %s</span><span>Док №%d</span></div>
+<div class='row'><span>Время %s</span><span>Без печати недействителен</span></div>
+<div>Продажа</div>
+<hr>
+<table>

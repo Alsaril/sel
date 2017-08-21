@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.supply.SupplyViewController">
+   <children>
+      <TableView layoutX="23.0" layoutY="69.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0">
+        <columns>
+          <TableColumn prefWidth="103.0" text="Дата" />
+          <TableColumn prefWidth="201.0" text="Поставщик" />
+            <TableColumn prefWidth="252.0" text="Акт" />
+        </columns>
+      </TableView>
+      <Button layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#showSupplyAddView" text="Добавить" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0" />
+      <Button layoutX="518.0" layoutY="20.0" mnemonicParsing="false" onAction="#showSuppliers" text="Список поставщиков" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+   </children>
+</AnchorPane>

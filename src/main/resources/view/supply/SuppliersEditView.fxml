@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.supply.SupplierAddController">
+   <children>
+      <Label layoutX="26.0" layoutY="27.0" text="Название" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      <TextField layoutX="107.0" layoutY="22.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0" />
+      <Label layoutX="429.0" layoutY="102.0" text="Тип" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
+      <Label layoutX="22.0" layoutY="59.0" text="ИНН" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0" />
+      <Label layoutX="21.0" layoutY="228.0" text="Реквезиты" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="220.0" />
+      <Label layoutX="21.0" layoutY="137.0" text="Юр.адрес" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="140.0" />
+      <Label layoutX="21.0" layoutY="162.0" text="Физ. адрес" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="180.0" />
+      <Label layoutX="358.0" layoutY="316.0" text="Имя" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="290.0" />
+      <Label layoutX="340.0" layoutY="338.0" text="Телефон" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="325.0" />
+      <Label layoutX="39.0" layoutY="297.0" text="Имя" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="290.0" />
+      <Label layoutX="38.0" layoutY="324.0" text="Телефон" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="325.0" />
+      <TextField layoutX="68.0" layoutY="80.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0" />
+      <TextArea layoutX="103.0" layoutY="217.0" prefHeight="26.0" prefWidth="199.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="215.0" />
+      <TextField layoutX="100.0" layoutY="132.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="135.0" />
+      <TextField layoutX="98.0" layoutY="157.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="175.0" />
+      <TextField layoutX="80.0" layoutY="290.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="285.0" />
+      <TextField layoutX="415.0" layoutY="330.0" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="320.0" />
+      <TextField layoutX="361.0" layoutY="354.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="320.0" />
+      <TextField layoutX="387.0" layoutY="242.0" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="285.0" />
+      <ComboBox layoutX="59.0" layoutY="95.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="95.0" />
+      <Label layoutX="20.0" layoutY="265.0" text="Контакт 1" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="265.0" />
+      <Label layoutX="300.0" layoutY="264.0" text="Контакт 2" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="265.0" />
+   </children>
+</AnchorPane>

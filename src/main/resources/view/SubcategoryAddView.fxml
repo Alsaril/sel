@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="150.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.products.SubcategoryEditController">
+    <children>
+        <Label layoutX="20.0" layoutY="38.0" text="Имя" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+        <TextField fx:id="subcategoryName" layoutX="80.0" layoutY="33.0" prefHeight="26.0" prefWidth="300.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0" />
+        <Button layoutX="342.0" layoutY="116.0" mnemonicParsing="false" onAction="#addSubcategory" text="Добавить" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <Label layoutX="16.0" layoutY="59.0" text="Категория" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0" />
+      <ComboBox fx:id="categoryCombobox" layoutX="100.0" layoutY="55.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0" />
+    </children>
+</AnchorPane>
