@@ -85,6 +85,7 @@ public class ProductViewController {
             @Override
             public void handle(ActionEvent event) {
                 Product item = productTable.getSelectionModel().getSelectedItem();
+                editProduct(item);
             }
         });
 
@@ -115,7 +116,7 @@ public class ProductViewController {
             public void handle(ActionEvent event) {
                 SubcategoryItem item = categoryTreeView.getSelectionModel().getSelectedItem().getValue();
                 if (item.getTrue_subcategory()){
-
+                    editSubcategory(Data.getSubcategoryById(item.getId(), subcategoryList));
                 }else{
                     editCategory(Data.getCategoryById(item.getId(), categoryList));
                 }
@@ -172,7 +173,7 @@ public class ProductViewController {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../../view/CategoryAddView.fxml"));
+            loader.setLocation(getClass().getResource("/view/CategoryAddView.fxml"));
             Parent categoryAddFXML = loader.load();
             stage.setTitle("Редактирование категории");
             stage.setMinHeight(150);
@@ -199,7 +200,7 @@ public class ProductViewController {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../../view/products/DelCategory.fxml"));
+            loader.setLocation(getClass().getResource("/view/products/DelCategory.fxml"));
             Parent categoryAddFXML = loader.load();
             stage.setTitle("Удаление категории");
             stage.setMinHeight(150);
@@ -226,7 +227,7 @@ public class ProductViewController {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../../view/products/ProductEditView.fxml"));
+            loader.setLocation(getClass().getResource("/view/products/ProductEditView.fxml"));
             Parent categoryAddFXML = loader.load();
             stage.setTitle("Новый товар");
             stage.setMinHeight(150);
@@ -248,8 +249,30 @@ public class ProductViewController {
         }
     }
 
-    private void editProduct(){
+    private void editProduct(Product product){
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/products/ProductEditView.fxml"));
+            Parent categoryAddFXML = loader.load();
+            stage.setTitle("Редактирование товара");
+            stage.setMinHeight(150);
+            stage.setMinWidth(400);
+            stage.setScene(new Scene(categoryAddFXML));
+            stage.initModality(Modality.WINDOW_MODAL);
 
+            ProductsEditController controller = loader.getController();
+            controller.setCategoriesAndSubcategories(categoryList, subcategoryList);
+            controller.setProduct(product);
+
+            stage.showAndWait();
+
+            if (controller.isOk()) {
+                loadProductsData();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void delProduct(){
@@ -259,26 +282,55 @@ public class ProductViewController {
     public void showAddSubcategoryDialog(ActionEvent actionEvent) {
         try {
             Stage stage = new Stage();
-            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("../../view/SubcategoryAddView.fxml"));
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/SubcategoryEditView.fxml"));
+            Parent categoryAddFXML = loader.load();
             stage.setTitle("Новая подкатегория");
-            stage.setMinHeight(600);
-            stage.setMinWidth(800);
+            stage.setMinHeight(150);
+            stage.setMinWidth(400);
             stage.setResizable(false);
             stage.setScene(new Scene(categoryAddFXML));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
-            stage.show();
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                public void handle(WindowEvent we) {
-                    loadProductsData();
-                }
-            });
+
+            SubcategoryEditController controller = loader.getController();
+            controller.setCategoryList(FXCollections.observableArrayList(categoryList));
+            stage.showAndWait();
+
+            if (controller.isOkClicked()) {
+                loadProductsData();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private void editSubcategory(){
+    private void editSubcategory(Subcategory subcategory){
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/SubcategoryEditView.fxml"));
+            Parent categoryAddFXML = loader.load();
+            stage.setTitle("Редактирование подкатегории");
+            stage.setMinHeight(150);
+            stage.setMinWidth(400);
+            stage.setResizable(false);
+            stage.setScene(new Scene(categoryAddFXML));
+            stage.initModality(Modality.WINDOW_MODAL);
 
+            SubcategoryEditController controller = loader.getController();
+            controller.setSubcategoryToEdit(subcategory);
+            controller.setCategoryList(FXCollections.observableArrayList(categoryList));
+            stage.showAndWait();
+
+
+            if (controller.isOkClicked()) {
+                loadProductsData();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void delSubcategory(){
@@ -334,7 +386,7 @@ public class ProductViewController {
                 }
             }
         } else {
-            int categoryId = subcategoryItem.getCategory();
+            int categoryId = subcategoryItem.getId();
             for (int i = 0; i < productsList.size(); i++) {
                 if (productsList.get(i).getCategory()!=null) {
                     if (productsList.get(i).getCategory() == categoryId) {

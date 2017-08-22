@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.supply.SupplierAddController">
+<AnchorPane prefHeight="396.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.supply.SupplierEditController">
    <children>
-      <Label layoutX="26.0" layoutY="27.0" text="Название" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
-      <TextField layoutX="107.0" layoutY="22.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0" />
-      <Label layoutX="429.0" layoutY="102.0" text="Тип" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
-      <Label layoutX="22.0" layoutY="59.0" text="ИНН" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0" />
-      <Label layoutX="21.0" layoutY="228.0" text="Реквезиты" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="220.0" />
-      <Label layoutX="21.0" layoutY="137.0" text="Юр.адрес" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="140.0" />
-      <Label layoutX="21.0" layoutY="162.0" text="Физ. адрес" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="180.0" />
-      <Label layoutX="358.0" layoutY="316.0" text="Имя" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="290.0" />
-      <Label layoutX="340.0" layoutY="338.0" text="Телефон" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="325.0" />
-      <Label layoutX="39.0" layoutY="297.0" text="Имя" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="290.0" />
-      <Label layoutX="38.0" layoutY="324.0" text="Телефон" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="325.0" />
-      <TextField layoutX="68.0" layoutY="80.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0" />
-      <TextArea layoutX="103.0" layoutY="217.0" prefHeight="26.0" prefWidth="199.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="215.0" />
-      <TextField layoutX="100.0" layoutY="132.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="135.0" />
-      <TextField layoutX="98.0" layoutY="157.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="175.0" />
-      <TextField layoutX="80.0" layoutY="290.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="285.0" />
-      <TextField layoutX="415.0" layoutY="330.0" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="320.0" />
-      <TextField layoutX="361.0" layoutY="354.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="320.0" />
-      <TextField layoutX="387.0" layoutY="242.0" AnchorPane.leftAnchor="380.0" AnchorPane.topAnchor="285.0" />
-      <ComboBox layoutX="59.0" layoutY="95.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="95.0" />
-      <Label layoutX="20.0" layoutY="265.0" text="Контакт 1" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="265.0" />
-      <Label layoutX="300.0" layoutY="264.0" text="Контакт 2" AnchorPane.leftAnchor="300.0" AnchorPane.topAnchor="265.0" />
+      <Button layoutX="324.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleOk" text="OK" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+      <GridPane layoutX="65.0" layoutY="46.0" prefHeight="172.0" prefWidth="380.0" AnchorPane.bottomAnchor="118.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="248.0" minWidth="10.0" prefWidth="121.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.0" minWidth="10.0" prefWidth="411.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="73.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="125.0" minHeight="10.0" prefHeight="83.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="90.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Наименование" />
+            <Label text="ИНН" GridPane.rowIndex="1" />
+            <Label text="Юр.адрес" GridPane.rowIndex="2" />
+            <Label text="Физ.адрес" GridPane.rowIndex="3" />
+            <TextField fx:id="nameField" prefHeight="26.0" prefWidth="300.0" GridPane.columnIndex="1" />
+            <TextField fx:id="innField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextArea fx:id="urAddressField" prefHeight="70.0" prefWidth="286.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextArea fx:id="physAddressField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Реквизиты" GridPane.rowIndex="4" />
+            <TextArea fx:id="requisitesField" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <padding>
+                  <Insets bottom="2.0" top="2.0" />
+               </padding>
+            </TextArea>
+         </children>
+      </GridPane>
    </children>
 </AnchorPane>

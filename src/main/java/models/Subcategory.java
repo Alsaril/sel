@@ -20,9 +20,7 @@ public class Subcategory {
     @DatabaseField
     private String name;
 
-    public Subcategory(String name) {
-        this.name = name;
-
+    public Subcategory() {
     }
 
     public int getCategory() {

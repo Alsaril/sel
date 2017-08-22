@@ -10,8 +10,8 @@
     <children>
         <Label layoutX="20.0" layoutY="38.0" text="Имя" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
         <TextField fx:id="subcategoryName" layoutX="80.0" layoutY="33.0" prefHeight="26.0" prefWidth="300.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0" />
-        <Button layoutX="342.0" layoutY="116.0" mnemonicParsing="false" onAction="#addSubcategory" text="Добавить" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+        <Button layoutX="342.0" layoutY="116.0" mnemonicParsing="false" onAction="#add" text="Добавить" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
       <Label layoutX="16.0" layoutY="59.0" text="Категория" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0" />
-      <ComboBox fx:id="categoryCombobox" layoutX="100.0" layoutY="55.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0" />
+      <ComboBox fx:id="categoryComboBox" layoutX="100.0" layoutY="55.0" prefWidth="150.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0" />
     </children>
 </AnchorPane>

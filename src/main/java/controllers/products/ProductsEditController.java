@@ -1,5 +1,6 @@
 package controllers.products;
 
+import controllers.supply.NewSupplyController;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,10 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import models.Category;
-import models.Product;
-import models.Subcategories;
-import models.Subcategory;
+import models.*;
 import network.Api;
 import network.RetrofitClient;
 import retrofit2.Call;
@@ -38,7 +36,7 @@ public class ProductsEditController {
     private List<Subcategory> subcategoryList;
     private boolean ok = false;
     private boolean edit = false;
-    private Product product;
+    private Product product = new Product();
 
     Api api = RetrofitClient.getApiService();
 
@@ -62,6 +60,11 @@ public class ProductsEditController {
     @FXML
     private Label categoryLable;
     @FXML
+    private Label subcategoryLable;
+    @FXML
+    private TextField productMinCount;
+
+    @FXML
     private void initialize() {
 
     }
@@ -69,59 +72,49 @@ public class ProductsEditController {
 
     public void handleAdd(ActionEvent actionEvent) {
         if ((!Objects.equals(productName.getText(), "")) && (!Objects.equals(productPrice.getText(), ""))) {
-            Double floatPriceProduct = Double.parseDouble(productPrice.getText());
+            Double doublePriceProduct = Double.parseDouble(productPrice.getText());
+            Double doubleCountProduct = Double.parseDouble(productMinCount.getText());
 
             product.setName(productName.getText());
-            product.setPrice(floatPriceProduct);
+            product.setPrice(doublePriceProduct);
             product.setShortName(productLName.getText());
             product.setUnit(productMeasurement.getText());
             product.setVendor(productVendor.getText());
+            product.setBarcode(productBarcode.getText());
             product.setProducer(productProducer.getText());
             product.setInteger(productIntegerOnly.isSelected());
+            product.setMinCount(doubleCountProduct);
 
-            if (edit){
-
-            }else{
-                NetworkHelper.addProduct(product);
+            if (edit) {
+                editProduct(product);
+            } else {
+                addProduct(product);
             }
-
-
         } else {
             Dialogs.showDialog("Введите название и цену!");
         }
     }
 
     public void handleBarcode(ActionEvent actionEvent) {
-        Call<String> call = api.newBarcode();
-        call.enqueue(new Callback<String>() {
+        Call<Barcode> call = api.newBarcode();
+        call.enqueue(new Callback<Barcode>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<Barcode> call, Response<Barcode> response) {
                 if (response.code() == 200) {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            productBarcode.setText(response.body());
+                            productBarcode.setText(response.body().getBarcode());
                         }
                     });
                 } else {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            Dialogs.showErrorDialog("Ошибка запроса на сервер!");
-                        }
-                    });
+                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        Dialogs.showErrorDialog("Ошибка запроса! Проверьте соеденение с интернетом!");
-                        //Dialogs.showExeptionDialog(t.getMessage());
-                    }
-                });
+            public void onFailure(Call<Barcode> call, Throwable t) {
+                Dialogs.showExeptionDialog(t.getMessage());
             }
         });
     }
@@ -131,11 +124,11 @@ public class ProductsEditController {
     }
 
 
-    public void handleCategory(ActionEvent actionEvent){
+    public void handleCategory(ActionEvent actionEvent) {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../../view/products/SelectCategory.fxml"));
+            loader.setLocation(getClass().getResource("/view/products/SelectCategory.fxml"));
             Parent categoryAddFXML = loader.load();
             stage.setTitle("Выберите категорию");
             stage.setMinHeight(150);
@@ -154,6 +147,7 @@ public class ProductsEditController {
                 product.setCategory(controller.getCategoryId());
                 product.setSubCategory(controller.getSubcategoryId());
                 categoryLable.setText(controller.getCategoryId().toString());
+                subcategoryLable.setText(controller.getSubcategoryId().toString());
 
             }
         } catch (IOException e) {
@@ -162,12 +156,12 @@ public class ProductsEditController {
     }
 
 
-    public void setCategoriesAndSubcategories(List<Category> categories, List<Subcategory> subcategories){
+    public void setCategoriesAndSubcategories(List<Category> categories, List<Subcategory> subcategories) {
         categoryList = categories;
         subcategoryList = subcategories;
     }
 
-    public void setProduct(Product product){
+    public void setProduct(Product product) {
         this.product = product;
 
         productName.setText(product.getName());
@@ -177,17 +171,120 @@ public class ProductsEditController {
         productVendor.setText(product.getVendor());
         productProducer.setText(product.getProducer());
         productIntegerOnly.setSelected(product.isInteger());
-    }
-
-    public void setEdit(){
+        productBarcode.setText(product.getBarcode());
+        productMinCount.setText(product.getMinCountFormat());
         edit = true;
     }
 
-
-    public boolean isOk(){
+    public boolean isOk() {
         return ok;
     }
 
+    public void handleDel(){
+        delProduct(product);
+
+    }
+
+    public void close(){
+        Stage stage = (Stage) productName.getScene().getWindow();
+        stage.close();
+    }
+    public void closeDelDialog(){
+        //Stage stage = (Stage) delButton.getScene().getWindow();
+        //stage.close();
+    }
+
+    private void delProduct(Product product) {
+        String id = String.valueOf(product.getId());
+        Call<Void> call = api.delProduct(id);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 204) {
+                    Dialogs.showDialog("Товар удален успешно!");
+                    ok = true;
+                    closeDelDialog();
+                } else {
+                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Dialogs.showExeptionDialog(t.getMessage());
+            }
+        });
+    }
+
+    private void addProduct(Product product) {
+        Call<Product> call = api.addProduct(product);
+        call.enqueue(new Callback<Product>() {
+            @Override
+            public void onResponse(Call<Product> call, Response<Product> response) {
+                if (response.code() == 201) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            Dialogs.showDialog("Товар добавлен успешно!");
+                            ok = true;
+                            addFirstSupply(response.body());
+                            close();
+                        }
+                    });
+                } else {
+                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Product> call, Throwable t) {
+                Dialogs.showExeptionDialog(t.getMessage());
+            }
+        });
+    }
+
+    private void editProduct(Product product) {
+        String id = String.valueOf(product.getId());
+        Call<Void> call = api.editProduct(id, product);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.code() == 200) {
+                    Dialogs.showDialog("Товар изменен успешно!");
+                    ok = true;
+                    close();
+                } else {
+                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Dialogs.showExeptionDialog(t.getMessage());
+            }
+        });
+    }
+
+    private void addFirstSupply(Product product){
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/supply/firstSupply.fxml"));
+            Parent categoryAddFXML = loader.load();
+            stage.setTitle("Добавление поставки");
+            stage.setMinHeight(150);
+            stage.setMinWidth(400);
+            stage.setResizable(false);
+            stage.setScene(new Scene(categoryAddFXML));
+            stage.initModality(Modality.WINDOW_MODAL);
+
+            NewSupplyController controller = loader.getController();
+            controller.setProductToFirstSupply(product);
+            stage.showAndWait();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

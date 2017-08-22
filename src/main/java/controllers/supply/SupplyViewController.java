@@ -18,7 +18,7 @@ public class SupplyViewController {
     public void showSuppliers(ActionEvent actionEvent){
         try{
             Stage stage = new Stage();
-            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("../../view/supply/SuppliersView.fxml"));
+            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("/view/supply/SuppliersView.fxml"));
             stage.setTitle("Поставщики");
             stage.setMinHeight(800);
             stage.setMinWidth(900);
@@ -35,7 +35,7 @@ public class SupplyViewController {
     public void showSupplyAddView(ActionEvent actionEvent){
         try{
             Stage stage = new Stage();
-            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("../../view/supply/SupplyAddView.fxml"));
+            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("/view/supply/SupplyAddView.fxml"));
             stage.setTitle("Новая поставка");
             stage.setMinHeight(800);
             stage.setMinWidth(900);

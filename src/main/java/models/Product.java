@@ -56,7 +56,7 @@ public class Product {
     @SerializedName("min_count")
     @Expose
     @DatabaseField
-    private String minCount;
+    private Double minCount;
     @SerializedName("sub_category")
     @Expose
     @DatabaseField(columnName = "sub_category")
@@ -69,6 +69,10 @@ public class Product {
     public Product(String name, Double price) {
         name = this.name;
         price = this.price;
+    }
+
+    public Product() {
+
     }
 
     public int getId() {
@@ -159,11 +163,15 @@ public class Product {
         this.reserved = reserved;
     }
 
-    public String getMinCount() {
+    public Double getMinCount() {
         return minCount;
     }
 
-    public void setMinCount(String minCount) {
+    public String getMinCountFormat() {
+        return String.format("%.2f", minCount);
+    }
+
+    public void setMinCount(Double minCount) {
         this.minCount = minCount;
     }
 

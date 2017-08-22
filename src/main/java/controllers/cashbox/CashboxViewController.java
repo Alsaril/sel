@@ -133,7 +133,7 @@ public class CashboxViewController {
         try{
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../../view/cashbox/NewCashboxView.fxml"));
+            loader.setLocation(getClass().getResource("/view/cashbox/NewCashboxView.fxml"));
             Parent categoryAddFXML = loader.load();
             stage.setTitle("Кассовая операция");
             stage.setMinHeight(600);

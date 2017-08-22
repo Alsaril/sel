@@ -123,7 +123,7 @@ public class NewCashboxController {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../../view/cashbox/SelectProductView.fxml"));
+            loader.setLocation(getClass().getResource("/view/cashbox/SelectProductView.fxml"));
             Parent FXML = loader.load();
             stage.setTitle("Выбор товара");
             stage.setResizable(false);

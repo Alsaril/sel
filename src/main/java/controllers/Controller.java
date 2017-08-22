@@ -18,7 +18,7 @@ public class Controller {
     public void showProducts(ActionEvent actionEvent){
         try{
             Stage stage = new Stage();
-            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("../view/ProductsView.fxml"));
+            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("/view/ProductsView.fxml"));
             stage.setTitle("Товары");
             stage.setMinHeight(800);
             stage.setMinWidth(900);
@@ -36,7 +36,7 @@ public class Controller {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../view/cashbox/PasswordCheck.fxml"));
+            loader.setLocation(getClass().getResource("/view/cashbox/PasswordCheck.fxml"));
             Parent categoryAddFXML = loader.load();
             stage.setTitle("Введите пароль");
             stage.setResizable(false);
@@ -59,7 +59,7 @@ public class Controller {
     private void showOperations(ActionEvent actionEvent){
         try{
             Stage stage = new Stage();
-            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("../view/cashbox/CashboxView.fxml"));
+            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("/view/cashbox/CashboxView.fxml"));
             stage.setTitle("Касса");
             stage.setMinHeight(800);
             stage.setMinWidth(900);
@@ -75,7 +75,7 @@ public class Controller {
     public void showSupply(ActionEvent actionEvent){
         try{
             Stage stage = new Stage();
-            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("../view/supply/SupplyView.fxml"));
+            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("/view/supply/SupplyView.fxml"));
             stage.setTitle("Поставки");
             stage.setMinHeight(800);
             stage.setMinWidth(900);
@@ -92,7 +92,7 @@ public class Controller {
     public void showSettings(ActionEvent actionEvent){
         try{
             Stage stage = new Stage();
-            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("../view/SettingsView.fxml"));
+            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("/view/SettingsView.fxml"));
             stage.setTitle("Настройки");
             stage.setMinHeight(800);
             stage.setMinWidth(900);
@@ -109,7 +109,7 @@ public class Controller {
     public void showClients(ActionEvent actionEvent){
         try{
             Stage stage = new Stage();
-            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("../view/ClientsView.fxml"));
+            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("/view/ClientsView.fxml"));
             stage.setTitle("Клиенты");
             stage.setMinHeight(800);
             stage.setMinWidth(900);
