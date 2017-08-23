@@ -1,29 +1,25 @@
 
 package models;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class ProductsData {
 
-    @SerializedName("categories")
+    @SerializedName("nodes")
     @Expose
-    private List<Category> categories = null;
+    private List<Node> nodes = null;
     @SerializedName("products")
     @Expose
     private List<Product> products = null;
-    @SerializedName("subcategories")
-    @Expose
-    private List<Subcategory> subcategories = null;
 
-    public List<Category> getCategories() {
-        return categories;
+    public List<Node> getNodes() {
+        return nodes;
     }
 
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
+    public void setNodes(List<Node> nodes) {
+        this.nodes = nodes;
     }
 
     public List<Product> getProducts() {
@@ -32,14 +28,6 @@ public class ProductsData {
 
     public void setProducts(List<Product> products) {
         this.products = products;
-    }
-
-    public List<Subcategory> getSubcategories() {
-        return subcategories;
-    }
-
-    public void setSubcategories(List<Subcategory> subcategories) {
-        this.subcategories = subcategories;
     }
 
 }

@@ -84,7 +84,6 @@ public class CategoryEditController {
                         public void run() {
                             okClicked = true;
                             close();
-
                         }
                     });
 

@@ -148,7 +148,7 @@ public class ProductViewController {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../../view/CategoryAddView.fxml"));
+            loader.setLocation(getClass().getResource("/view/CategoryAddView.fxml"));
             Parent categoryAddFXML = loader.load();
             stage.setTitle("Новая категория");
             stage.setMinHeight(150);
