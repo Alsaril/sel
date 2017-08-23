@@ -55,8 +55,8 @@ public class RetrofitClient {
     }
 
 
-    //public static Api getApiService() {
-    //   return getRetrofitInstance().create(Api.class);
-    //}
+    public static Api getApiService() {
+        return getRetrofitInstance().create(Api.class);
+    }
 
 }

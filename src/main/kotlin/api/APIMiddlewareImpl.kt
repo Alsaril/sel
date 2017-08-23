@@ -8,7 +8,9 @@ import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import models.*
+import network.RetrofitClient
 import retrofit2.Response
+import utils.awaitResponse
 import java.lang.ref.WeakReference
 
 object APIMiddlewareImpl : API {
@@ -17,7 +19,7 @@ object APIMiddlewareImpl : API {
     private val CREATED = 201
     private val DELETED = 201
 
-    private val networkAPI = NetworkHelper.API
+    private val networkAPI = RetrofitClient.getApiService()
     private val localAPI: ILocalBase = LocalBase
 
     private var state = State.OFFLINE

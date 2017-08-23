@@ -1,20 +1,14 @@
 package controllers.products;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import models.Category;
 import network.Api;
 import network.RetrofitClient;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import utils.Dialogs;
-import network.NetworkHelper;
 
 import java.util.Objects;
 
@@ -36,43 +30,44 @@ public class CategoryEditController {
     private Button delButton;
 
 
-    public void close(){
+    public void close() {
         Stage stage = (Stage) categoryName.getScene().getWindow();
         stage.close();
     }
-    public void closeDelDialog(){
+
+    public void closeDelDialog() {
         Stage stage = (Stage) delButton.getScene().getWindow();
         stage.close();
     }
 
-    public void add(ActionEvent actionEvent){
-        if (edit){
-            if (!Objects.equals(categoryName.getText(), "")){
+    public void add(ActionEvent actionEvent) {
+        if (edit) {
+            if (!Objects.equals(categoryName.getText(), "")) {
                 editableCategory.setName(categoryName.getText());
-                editCategory(editableCategory);
+                //editCategory(editableCategory);
             } else {
                 Dialogs.showDialog("Введите имя категории!");
             }
-        }else{
-            if (!Objects.equals(categoryName.getText(), "")){
-                addCategory(categoryName.getText());
+        } else {
+            if (!Objects.equals(categoryName.getText(), "")) {
+                //addCategory(categoryName.getText());
             } else {
                 Dialogs.showDialog("Введите имя категории!");
             }
         }
     }
 
-    public void handleDel(){
-        delCategory(editableCategory);
+    public void handleDel() {
+        //delCategory(editableCategory);
 
     }
-    public void handleCancel(){
+
+    public void handleCancel() {
         closeDelDialog();
     }
 
 
-
-    public void addCategory(String name) {
+    /*public void addCategory(String name) {
         Call<Void> call = api.addCategory(new Category(name));
         call.enqueue(new Callback<Void>() {
             @Override
@@ -97,15 +92,15 @@ public class CategoryEditController {
                 Dialogs.showErrorDialog("Ошибка запроса на сервер!");
             }
         });
-    }
+    }*/
 
-    public void editCategory(Category category){
+    /*public void editCategory(Category category) {
         String id = String.valueOf(category.getId());
         Call<Void> call = api.editCategory(id, category);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -114,7 +109,7 @@ public class CategoryEditController {
 
                         }
                     });
-                }else{
+                } else {
                     Dialogs.showErrorDialog("Не удалось изменить категорию!");
                 }
             }
@@ -124,14 +119,15 @@ public class CategoryEditController {
                 Dialogs.showExeptionDialog(t.getMessage());
             }
         });
-    }
-    private void delCategory(Category category){
+    }*/
+
+    /*private void delCategory(Category category) {
         String id = String.valueOf(category.getId());
         Call<Void> call = api.delCategory(id);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.code() == 204){
+                if (response.code() == 204) {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -140,7 +136,7 @@ public class CategoryEditController {
 
                         }
                     });
-                }else{
+                } else {
                     Dialogs.showErrorDialog("Не удалось удалить категорию!");
                 }
             }
@@ -150,14 +146,15 @@ public class CategoryEditController {
                 Dialogs.showExeptionDialog(t.getMessage());
             }
         });
-    }
+    }*/
 
-    public void setCategoryToEdit(Category category){
+    public void setCategoryToEdit(Category category) {
         editableCategory = category;
         categoryName.setText(category.getName());
         edit = true;
     }
-    public void setCategory(Category category){
+
+    public void setCategory(Category category) {
         editableCategory = category;
     }
 

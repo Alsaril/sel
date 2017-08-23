@@ -13,7 +13,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import models.*;
+import models.PositionSupplyMin;
+import models.Product;
+import models.Supplier;
+import models.SupplyMin;
 import network.Api;
 import network.RetrofitClient;
 import retrofit2.Call;
@@ -30,25 +33,22 @@ import java.util.List;
  */
 public class NewSupplyController {
     Product firstSupplyProduct;
-
+    Api api = RetrofitClient.getApiService();
     @FXML
     private ComboBox<Supplier> supplierCombobox;
     @FXML
     private TextField priceField;
     @FXML
     private TextField countField;
-
+    private ObservableList<Supplier> suppliersOL = FXCollections.observableArrayList();
 
     @FXML
     private void initialize() {
         //loadSuppliersData();
     }
 
-    Api api = RetrofitClient.getApiService();
-    private ObservableList<Supplier> suppliersOL = FXCollections.observableArrayList();
-
     private void loadSuppliersData() {
-        Call<List<Supplier>> call = api.suppliersData();
+        Call<List<Supplier>> call = api.suppliers();
         call.enqueue(new Callback<List<Supplier>>() {
             @Override
             public void onResponse(Call<List<Supplier>> call, Response<List<Supplier>> response) {

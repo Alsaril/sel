@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import models.Category;
 import models.Supplier;
 import network.Api;
 import network.RetrofitClient;
@@ -134,7 +133,7 @@ public class SupplierEditController {
     }
     private void delSupplier(Supplier supplier){
         String id = String.valueOf(supplier.getId());
-        Call<Void> call = api.delCategory(id);
+        Call<Void> call = api.delSupplier(id);
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

@@ -10,19 +10,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import models.*;
+import models.Barcode;
+import models.Category;
+import models.Product;
+import models.Subcategory;
 import network.Api;
 import network.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import utils.Dialogs;
-import network.NetworkHelper;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,16 +35,13 @@ import java.util.Objects;
  */
 public class ProductsEditController {
 
+    Api api = RetrofitClient.getApiService();
     private ObservableList<Subcategory> subcategoriesOL = FXCollections.observableArrayList();
     private List<Category> categoryList;
     private List<Subcategory> subcategoryList;
     private boolean ok = false;
     private boolean edit = false;
     private Product product = new Product();
-
-    Api api = RetrofitClient.getApiService();
-
-
     @FXML
     private TextField productName;
     @FXML
@@ -96,7 +97,7 @@ public class ProductsEditController {
     }
 
     public void handleBarcode(ActionEvent actionEvent) {
-        Call<Barcode> call = api.newBarcode();
+        Call<Barcode> call = api.barcode();
         call.enqueue(new Callback<Barcode>() {
             @Override
             public void onResponse(Call<Barcode> call, Response<Barcode> response) {
@@ -180,16 +181,17 @@ public class ProductsEditController {
         return ok;
     }
 
-    public void handleDel(){
+    public void handleDel() {
         delProduct(product);
 
     }
 
-    public void close(){
+    public void close() {
         Stage stage = (Stage) productName.getScene().getWindow();
         stage.close();
     }
-    public void closeDelDialog(){
+
+    public void closeDelDialog() {
         //Stage stage = (Stage) delButton.getScene().getWindow();
         //stage.close();
     }
@@ -208,6 +210,7 @@ public class ProductsEditController {
                     Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
                 }
             }
+
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Dialogs.showExeptionDialog(t.getMessage());
@@ -256,6 +259,7 @@ public class ProductsEditController {
                     Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
                 }
             }
+
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Dialogs.showExeptionDialog(t.getMessage());
@@ -263,7 +267,7 @@ public class ProductsEditController {
         });
     }
 
-    private void addFirstSupply(Product product){
+    private void addFirstSupply(Product product) {
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();

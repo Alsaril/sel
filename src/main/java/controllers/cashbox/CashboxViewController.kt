@@ -78,7 +78,9 @@ class CashboxViewController {
 
         api.addStateListener(object : StateListener {
             override fun stateChanged(state: State) {
-                networkStatus.text = state.toString()
+                launch(JavaFx) {
+                    networkStatus.text = state.toString()
+                }
             }
         })
     }
