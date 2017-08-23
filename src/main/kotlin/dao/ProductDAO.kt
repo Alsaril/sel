@@ -7,15 +7,16 @@ import models.Product
 
 
 class ProductDAO(private val connectionSource: ConnectionSource) {
-    private val dao = DaoManager.createDao(connectionSource, Product::class.java)
+    private val modelClass = Product::class.java
+    private val dao = DaoManager.createDao(connectionSource, modelClass)
 
     init {
-        TableUtils.createTableIfNotExists(connectionSource, Product::class.java)
+        TableUtils.createTableIfNotExists(connectionSource, modelClass)
     }
 
     fun saveList(products: List<Product>) {
         TableUtils.clearTable(connectionSource, Product::class.java)
-        products.forEach { dao.create(it) }
+        products.forEach { dao.createOrUpdate(it) }
     }
 
     fun loadList() = dao.queryForAll()

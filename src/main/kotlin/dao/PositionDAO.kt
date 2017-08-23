@@ -7,15 +7,16 @@ import models.Operation
 import models.Position
 
 class PositionDAO(private val connectionSource: ConnectionSource) {
-    private var dao = DaoManager.createDao(connectionSource, Position::class.java)
+    private val modelClass = Position::class.java
+    private var dao = DaoManager.createDao(connectionSource, modelClass)
 
     init {
-        TableUtils.createTableIfNotExists(connectionSource, Position::class.java)
+        TableUtils.createTableIfNotExists(connectionSource, modelClass)
     }
 
     fun save(position: Position) = dao.create(position)
 
     fun getFromOperation(operation: Operation) = dao.queryForEq("operation", operation.id)
 
-    fun clear() = TableUtils.clearTable(connectionSource, Position::class.java)
+    fun clear() = TableUtils.clearTable(connectionSource, modelClass)
 }

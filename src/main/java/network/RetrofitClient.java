@@ -1,7 +1,6 @@
 package network;
 
 
-
 import com.google.gson.*;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -15,7 +14,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.Locale;
 
 public class RetrofitClient {
 
@@ -29,7 +27,7 @@ public class RetrofitClient {
                 // Customize the request
                 Request request = original.newBuilder()
                         .header("Accept", "application/json")
-                        .header("Authorization", "Token "+FileHelper.readToken().toString())
+                        .header("Authorization", "Token " + FileHelper.readToken().toString())
                         .method(original.method(), original.body())
                         .build();
 
@@ -40,7 +38,7 @@ public class RetrofitClient {
             }
         }).build();
         GsonBuilder gsonBuilder = new GsonBuilder().excludeFieldsWithoutExposeAnnotation();
-        gsonBuilder.registerTypeAdapter(Double.class,  new JsonSerializer<Double>() {
+        gsonBuilder.registerTypeAdapter(Double.class, new JsonSerializer<Double>() {
             @Override
             public JsonElement serialize(final Double src, final Type typeOfSrc, final JsonSerializationContext context) {
                 BigDecimal bigDecimal = new BigDecimal(src, MathContext.DECIMAL64);
@@ -57,9 +55,8 @@ public class RetrofitClient {
     }
 
 
-
-    public static Api getApiService() {
-        return getRetrofitInstance().create(Api.class);
-    }
+    //public static Api getApiService() {
+    //   return getRetrofitInstance().create(Api.class);
+    //}
 
 }

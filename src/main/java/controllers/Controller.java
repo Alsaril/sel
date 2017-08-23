@@ -96,7 +96,7 @@ public class Controller {
             stage.setTitle("Настройки");
             stage.setMinHeight(800);
             stage.setMinWidth(900);
-            stage.setResizable(false);
+            //stage.setResizable(false);
             stage.setScene(new Scene(categoryAddFXML));
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(((Node)actionEvent.getSource()).getScene().getWindow());

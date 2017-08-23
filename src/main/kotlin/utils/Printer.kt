@@ -57,9 +57,8 @@ object Printer {
 
         val header = headerTemplate.format(asteriskHeader, "*${utils.Printer.NAME}*", asteriskHeader, cashbox, inn, date, number, time)
 
-        val rows: String = positions
+        val rows: String = positions.stream()
                 .map { (vendor, name, price, count, sum) -> rowTemplate.format(vendor, name, price, count, sum) }
-                .stream()
                 .collect(java.util.stream.Collectors.joining(""))
 
         val footer = footerTemplate.format(sum, cash, odd, operator)
