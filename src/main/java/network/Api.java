@@ -18,7 +18,7 @@ public interface Api {
     Call<Void> addOperation(@Body Operation operation);
 
     @GET("suppliers")
-    Call <List<Supplier>> suppliersData();
+    Call<List<Supplier>> suppliers();
 
     @POST("suppliers/")
     Call<Void> addSupplier(@Body Supplier supplier);
@@ -30,7 +30,7 @@ public interface Api {
     Call<Void> delSupplier(@Path("id") String id);
 
     @GET("barcode")
-    Call<Barcode> newBarcode();
+    Call<Barcode> barcode();
 
     @POST("products/")
     Call<Product> addProduct(@Body Product product);
@@ -42,7 +42,7 @@ public interface Api {
     Call<Void> delProduct(@Path("id") String id);
 
     @GET("supplies")
-    Call <List<Supply>> suppliesData();
+    Call<List<Supply>> supplies();
 
     @POST("supplies/")
     Call<Void> addSupply(@Body SupplyMin supplyMin);
@@ -52,5 +52,14 @@ public interface Api {
 
     @DELETE("supplies/{id}/")
     Call<Void> delSupply(@Path("id") String id);
+
+    @POST("nodes/")
+    Call<Void> addNode(@Body Node node);
+
+    @PUT("nodes/{id}/")
+    Call<Void> editNode(@Path("id") String id, @Body Node node);
+
+    @DELETE("nodes/{id}/")
+    Call<Void> delNode(@Path("id") String id);
 
 }

@@ -2,28 +2,26 @@ package controllers.products;
 
 import controllers.supply.NewSupplyController;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import models.*;
+import models.Barcode;
+import models.Product;
 import network.Api;
 import network.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import utils.Dialogs;
-import network.NetworkHelper;
 
-import java.io.*;
-import java.util.List;
+import java.io.IOException;
 import java.util.Objects;
 
 /**
@@ -31,13 +29,10 @@ import java.util.Objects;
  */
 public class ProductsEditController {
 
+    Api api = RetrofitClient.getApiService();
     private boolean ok = false;
     private boolean edit = false;
     private Product product = new Product();
-
-    Api api = RetrofitClient.getApiService();
-
-
     @FXML
     private TextField productName;
     @FXML
@@ -93,7 +88,7 @@ public class ProductsEditController {
     }
 
     public void handleBarcode(ActionEvent actionEvent) {
-        Call<Barcode> call = api.newBarcode();
+        Call<Barcode> call = api.barcode();
         call.enqueue(new Callback<Barcode>() {
             @Override
             public void onResponse(Call<Barcode> call, Response<Barcode> response) {
