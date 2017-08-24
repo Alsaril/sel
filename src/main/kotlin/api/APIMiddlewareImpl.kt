@@ -1,8 +1,5 @@
 package api
 
-/**
- * Created by igor on 23.08.17.
- */
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async

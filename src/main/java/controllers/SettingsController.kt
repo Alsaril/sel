@@ -1,50 +1,45 @@
 package controllers
 
-import javafx.application.Platform
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.Node
 import javafx.scene.control.TextField
 import javafx.stage.Modality
+import kotlinx.coroutines.experimental.javafx.JavaFx
+import kotlinx.coroutines.experimental.launch
 import models.auth.AuthRequest
 import models.auth.Token
-import network.AuthApi
 import network.AuthRetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import utils.CloseListener
 import utils.Dialogs
 import utils.FileHelper
+import utils.awaitResponse
 
 
-/**
- * Created by andrey on 25.07.17.
- */
-class SettingsController: LoadController<Boolean>(){
+class SettingsController : LoadController<Boolean>() {
+    private var authApi = AuthRetrofitClient.apiService
+
     @FXML private lateinit var login: TextField
     @FXML private lateinit var password: TextField
 
-    fun save(actionEvent: ActionEvent) {
-        val call = retrofitApi.auth(AuthRequest(login.text, password.text))
-        call.enqueue(object : Callback<Token> {
-            override fun onResponse(call: Call<Token>, response: Response<Token>) {
-                if (response.code() == 200) {
-                    FileHelper.saveToken(response.body()?.token)
-                    Dialogs.showDialog("Токен получен!")
-                    Platform.runLater { close(true) }
-                } else {
-                    Dialogs.showErrorDialog("Не удалось получить токен!")
-                }
-            }
-
-            override fun onFailure(call: Call<Token>, t: Throwable) {
-                Dialogs.showExeptionDialog(t.message.toString())
-            }
-        })
+    fun save(actionEvent: ActionEvent) = launch(JavaFx) {
+        val call = authApi.auth(AuthRequest(login.text, password.text))
+        val response: Response<Token>
+        try {
+            response = call.awaitResponse()
+        } catch (t: Throwable) {
+            Dialogs.showErrorDialog("Не удалось получить токен!")
+            return@launch
+        }
+        if (response.code() == 200) {
+            FileHelper.saveToken(response.body()?.token)
+            Dialogs.showDialog("Токен получен!")
+            close(true)
+        } else {
+            Dialogs.showErrorDialog("Не удалось получить токен!")
+        }
     }
-
-    internal var retrofitApi = AuthRetrofitClient.getApiService()
 
     companion object {
         fun show(owner: Node, callback: CloseListener<Boolean>) {
