@@ -141,13 +141,9 @@ class ProductViewController : LoadController<Boolean>() {
                 items[it.value.parent!! - 1].children.add(it)
             }
         }
-        if (roots.size == 1) {
-            nodeTreeView.root = roots[0]
-        } else {
-            val root = TreeItem<Node>(Node("Single root"))
-            root.children.addAll(roots)
-            nodeTreeView.root = root
-        }
+        val root = TreeItem<Node>(Node("Все"))
+        root.children.addAll(roots)
+        nodeTreeView.root = root
     }
 
 

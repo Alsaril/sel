@@ -19,7 +19,7 @@ class Node(@SerializedName("id")
            @DatabaseField
            var parent: Int?) {
     constructor() : this(0, "", null)
-    constructor(name: String) : this(0, name, null)
+    constructor(name: String) : this(-1, name, null)
 
     override fun toString() = name
 
