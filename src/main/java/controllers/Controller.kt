@@ -1,7 +1,9 @@
 package controllers
 
+import controllers.cashbox.OperationController
 import controllers.cashbox.PasswordController
 import controllers.products.ProductViewController
+import controllers.supply.SupplyViewController
 import javafx.event.ActionEvent
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
@@ -9,7 +11,6 @@ import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.stage.Modality
 import javafx.stage.Stage
-import models.Product
 
 import java.io.IOException
 
@@ -18,8 +19,7 @@ import java.io.IOException
  */
 class Controller {
     fun showProducts(actionEvent: ActionEvent) {
-          ProductViewController.show(actionEvent.source as Node) {
-          }
+          ProductViewController.show(actionEvent.source as Node) {}
 
     }
 
@@ -32,61 +32,18 @@ class Controller {
     }
 
     private fun showOperations(actionEvent: ActionEvent) {
-        try {
-            val stage = Stage()
-            val categoryAddFXML = FXMLLoader.load<Parent>(javaClass.getResource("/view/cashbox/CashboxView.fxml"))
-            stage.title = "Касса"
-            stage.minHeight = 800.0
-            stage.minWidth = 900.0
-            stage.scene = Scene(categoryAddFXML)
-            stage.initModality(Modality.WINDOW_MODAL)
-            stage.initOwner((actionEvent.source as Node).scene.window)
-            stage.show()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+        OperationController.show(actionEvent.source as Node){}
 
     }
 
     fun showSupply(actionEvent: ActionEvent) {
-        try {
-            val stage = Stage()
-            val categoryAddFXML = FXMLLoader.load<Parent>(javaClass.getResource("/view/supply/SupplyView.fxml"))
-            stage.title = "Поставки"
-            stage.minHeight = 800.0
-            stage.minWidth = 900.0
-            stage.isResizable = false
-            stage.scene = Scene(categoryAddFXML)
-            stage.initModality(Modality.WINDOW_MODAL)
-            stage.initOwner((actionEvent.source as Node).scene.window)
-            stage.show()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+        SupplyViewController.show(actionEvent.source as Node){}
 
     }
 
     fun showSettings(actionEvent: ActionEvent) {
-         SettingsController.show(actionEvent.source as Node){
-
-         }
+         SettingsController.show(actionEvent.source as Node){}
     }
 
-    fun showClients(actionEvent: ActionEvent) {
-        try {
-            val stage = Stage()
-            val categoryAddFXML = FXMLLoader.load<Parent>(javaClass.getResource("/view/ClientsView.fxml"))
-            stage.title = "Клиенты"
-            stage.minHeight = 800.0
-            stage.minWidth = 900.0
-            stage.isResizable = false
-            stage.scene = Scene(categoryAddFXML)
-            stage.initModality(Modality.WINDOW_MODAL)
-            stage.initOwner((actionEvent.source as Node).scene.window)
-            stage.show()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-    }
+    fun showClients(actionEvent: ActionEvent) {}
 }

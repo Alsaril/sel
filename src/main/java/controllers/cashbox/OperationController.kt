@@ -11,12 +11,14 @@ import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.cell.PropertyValueFactory
+import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Operation
 import models.Position
 import models.Product
 import start.Main
+import utils.CloseListener
 
 class OperationController: LoadController<Boolean>(){
     private val mainApp: Main? = null
@@ -111,4 +113,14 @@ class OperationController: LoadController<Boolean>(){
     }
 
     private fun getProductById(id: Int) = productList?.firstOrNull { it.id == id }
+
+    companion object {
+        fun show(owner: Node, callback: CloseListener<Boolean>) {
+            LoadController.show(owner, callback,
+                    path = "/view/cashbox/OperationsView.fxml",
+                    title = "Касса",
+                    isResizable = false,
+                    modality = Modality.WINDOW_MODAL)
+        }
+    }
 }
