@@ -33,26 +33,13 @@ public class Controller {
     }
 
     public void showPasswordCheckDialog(ActionEvent actionEvent){
-        try {
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/cashbox/PasswordCheck.fxml"));
-            Parent categoryAddFXML = loader.load();
-            stage.setTitle("Введите пароль");
-            stage.setResizable(false);
-            stage.setScene(new Scene(categoryAddFXML));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
 
-            PasswordCheckController controller = loader.getController();
-            stage.showAndWait();
-
-            if (controller.isOk()) {
+        PasswordCheckController.Companion.show(((Node) actionEvent.getSource()), param -> {
+            if (param) {
                 showOperations(actionEvent);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
+
 
     }
 

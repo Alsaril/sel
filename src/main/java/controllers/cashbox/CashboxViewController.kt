@@ -26,9 +26,6 @@ import models.Product
 import start.Main
 import java.io.IOException
 
-/**
- * Created by andrey on 24.07.17.
- */
 class CashboxViewController {
     private val mainApp: Main? = null
 
@@ -45,9 +42,9 @@ class CashboxViewController {
     @FXML private lateinit var userColumn: TableColumn<Operation, String>
     @FXML private lateinit var totalLable: Label
 
-    @FXML private lateinit var userLable: Label
-    @FXML private lateinit var typeLable: Label
-    @FXML private lateinit var dateLable: Label
+    @FXML private lateinit var userLabel: Label
+    @FXML private lateinit var typeLabel: Label
+    @FXML private lateinit var dateLabel: Label
 
     @FXML private lateinit var positionTable: TableView<Position>
     @FXML private lateinit var nameColumn: TableColumn<Position, String>
@@ -118,21 +115,19 @@ class CashboxViewController {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
     }
 
     private fun showOperation(operation: Operation) {
-        userLable.text = operation.user
-        typeLable.text = operation.typeString
-        dateLable.text = operation.dateFormat
+        userLabel.text = operation.user
+        typeLabel.text = operation.typeString()
+        dateLabel.text = operation.dateFormat()
         val positions = operation.positions
         var sum = 0.0
         positions.forEach { position ->
             getProductById(position.product)?.let {
                 position.productName = it.name
-                setSum(position)
-                it.unit = it.unit
-                sum += position.sum
+                position.unit = it.unit
+                sum += position.sum()
             }
         }
         val positionObservableList = FXCollections.observableArrayList(operation.positions)
@@ -148,16 +143,4 @@ class CashboxViewController {
     }
 
     private fun getProductById(id: Int) = productList?.firstOrNull { it.id == id }
-
-    private fun setSum(position: Position) {
-        with(position) {
-            val count = count
-            val price = price
-            val discount = discount
-
-            if (count != null && price != null && discount != null) {
-                sum = (price - discount) * count
-            }
-        }
-    }
 }

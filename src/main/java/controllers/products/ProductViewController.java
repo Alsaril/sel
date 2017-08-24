@@ -14,22 +14,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import models.Category;
 import models.Product;
 import models.ProductsData;
-import models.Subcategory;
 import models.treeView.SubcategoryItem;
 import network.Api;
 import network.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import utils.Data;
 import utils.Dialogs;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
 
 
 public class ProductViewController {
@@ -40,8 +36,7 @@ public class ProductViewController {
     private ObservableList<Product> productsOL = FXCollections.observableArrayList();
     private ObservableList<Product> productsFiltredOL = FXCollections.observableArrayList();
     private List<Product> productsList;
-    private List<Category> categoryList;
-    private List<Subcategory> subcategoryList;
+    private List<Node> nodeList;
     private Product selectProduct;
 
     @FXML
@@ -61,11 +56,6 @@ public class ProductViewController {
     @FXML
     private TreeView<SubcategoryItem> categoryTreeView;
 
-
-    public ProductViewController() {
-
-    }
-
     @FXML
     private void initialize() {
         // Инициализация таблицы адресатов с двумя столбцами.
@@ -82,7 +72,7 @@ public class ProductViewController {
             @Override
             public void handle(ActionEvent event) {
                 Product item = productTable.getSelectionModel().getSelectedItem();
-                editProduct(item);
+                //editProduct(item);
             }
         });
 
@@ -115,7 +105,7 @@ public class ProductViewController {
                 if (item.getTrue_subcategory()){
                     //editSubcategory(Data.getSubcategoryById(item.getId(), subcategoryList));
                 }else{
-                    editCategory(Data.getCategoryById(item.getId(), categoryList));
+                    //editCategory(Data.getCategoryById(item.getId(), categoryList));
                 }
 
             }
@@ -129,7 +119,7 @@ public class ProductViewController {
                 if (item.getTrue_subcategory()){
 
                 }else{
-                    delCategory(Data.getCategoryById(item.getId(), categoryList));
+                    //delCategory(Data.getCategoryById(item.getId(), categoryList));
                 }
 
             }
@@ -166,7 +156,7 @@ public class ProductViewController {
         }
     }
 
-    public void editCategory(Category category){
+    /*public void editCategory(Category category){
         try {
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
@@ -274,7 +264,7 @@ public class ProductViewController {
 
     private void delProduct(){
 
-    }
+    }*/
 
     /* public void showAddSubcategoryDialog(ActionEvent actionEvent) {
          try {
@@ -370,7 +360,7 @@ public class ProductViewController {
 
     private void showProductsInCategory(SubcategoryItem subcategoryItem) {
 
-        productsFiltredOL.clear();
+        /*productsFiltredOL.clear();
         if (subcategoryItem.getTrue_subcategory()) {
             int subcategoryId = subcategoryItem.getId();
             for (int i = 0; i < productsList.size(); i++) {
@@ -398,7 +388,7 @@ public class ProductViewController {
             productTable.setItems(productsOL);
         } else {
             productTable.setItems(productsFiltredOL);
-        }
+        }*/
     }
 
 

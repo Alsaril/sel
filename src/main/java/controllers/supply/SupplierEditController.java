@@ -24,7 +24,7 @@ public class SupplierEditController {
     static Api api = RetrofitClient.getApiService();
     public boolean okClicked = false;
     public boolean edit = false;
-    Supplier supplier = new Supplier();
+//    Supplier supplier = new Supplier();
 
     @FXML
     private TextField nameField;
@@ -52,22 +52,22 @@ public class SupplierEditController {
 
     public void handleOk(ActionEvent actionEvent){
         if (!Objects.equals(nameField.getText(), "")){
-            supplier.setName(nameField.getText());
-            supplier.setInn(innField.getText());
-            supplier.setUrAddress(urAddressField.getText());
-            supplier.setPhysAddress(physAddressField.getText());
-            supplier.setRequisites(requisitesField.getText());
-
-            if (edit){
-                editSupplier(supplier);
-            }else{
-                addSupplier(supplier);
-            }
+//            supplier.setName(nameField.getText());
+//            supplier.setInn(innField.getText());
+//            supplier.setUrAddress(urAddressField.getText());
+//            supplier.setPhysAddress(physAddressField.getText());
+//            supplier.setRequisites(requisitesField.getText());
+//
+//            if (edit){
+//                editSupplier(supplier);
+//            }else{
+//                addSupplier(supplier);
+//            }
         }
     }
 
     public void handleDel(){
-        delSupplier(supplier);
+        //delSupplier(supplier);
 
     }
     public void handleCancel(){
@@ -160,13 +160,13 @@ public class SupplierEditController {
     }
 
     public void setSupplier(Supplier supplierToEdit){
-        supplier = supplierToEdit;
-        nameField.setText(supplier.getName());
-        innField.setText(supplier.getInn());
-        urAddressField.setText(supplier.getUrAddress());
-        physAddressField.setText(supplier.getPhysAddress());
-        requisitesField.setText(supplier.getRequisites());
-        edit = true;
+//        supplier = supplierToEdit;
+//        nameField.setText(supplier.getName());
+//        innField.setText(supplier.getInn());
+//        urAddressField.setText(supplier.getUrAddress());
+//        physAddressField.setText(supplier.getPhysAddress());
+//        requisitesField.setText(supplier.getRequisites());
+//        edit = true;
     }
 
     public boolean isOkClicked() {

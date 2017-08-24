@@ -50,10 +50,5 @@ object LocalBase : ILocalBase {
         positionDao.clear()
     }
 
-    override fun productsData(): ProductsData {
-        val data = ProductsData()
-        data.nodes = nodes()
-        data.products = products()
-        return data
-    }
+    override fun productsData() = ProductsData(nodes(), products())
 }

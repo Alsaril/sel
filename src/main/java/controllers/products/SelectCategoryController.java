@@ -4,12 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
-import models.Category;
-import models.Subcategory;
+import models.Node;
 import models.treeView.SubcategoryItem;
-import utils.Data;
 import utils.Dialogs;
-
 
 import java.util.List;
 
@@ -19,26 +16,25 @@ import java.util.List;
 public class SelectCategoryController {
     private Integer categoryId;
     private Integer subcategoryId;
-    private List<Category> categoryList;
-    private List<Subcategory> subcategoryList;
+    private List<Node> nodeList;
     private boolean ok;
 
     @FXML
     private TreeView<SubcategoryItem> categoryTreeView;
 
 
-    public void setCategoryAndSubcategory(List<Category> categories, List<Subcategory> subcategories){
-        categoryList = categories;
-        subcategoryList = subcategories;
-        categoryTreeView.setRoot(Data.categoryTreeViewRootItem(categoryList, subcategoryList));
-    }
+//    public void setCategoryAndSubcategory(List<Category> categories, List<Subcategory> subcategories){
+//        categoryList = categories;
+//        subcategoryList = subcategories;
+//        categoryTreeView.setRoot(Data.categoryTreeViewRootItem(categoryList, subcategoryList));
+//    }
 
     public void handleSelect(ActionEvent actionEvent){
         if (categoryTreeView.getSelectionModel().getSelectedItem().getValue()!=null) {
             SubcategoryItem subcategoryItem = categoryTreeView.getSelectionModel().getSelectedItem().getValue();
             if (subcategoryItem.getTrue_subcategory()) {
                 subcategoryId = subcategoryItem.getId();
-                categoryId = Data.getSubcategoryById(subcategoryId, subcategoryList).getCategory();
+                //categoryId = Data.getSubcategoryById(subcategoryId, subcategoryList).getCategory();
             } else {
                 categoryId = subcategoryItem.getId();
                 subcategoryId = null;

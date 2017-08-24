@@ -1,0 +1,76 @@
+package models
+
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+import com.j256.ormlite.field.DatabaseField
+
+class Product(@SerializedName("id")
+              @Expose
+              @DatabaseField(id = true)
+              var id: Int = 0,
+
+              @SerializedName("name")
+              @Expose
+              @DatabaseField(columnName = "name")
+              var name: String,
+
+              @SerializedName("short_name")
+              @Expose
+              @DatabaseField
+              var shortName: String,
+
+              @SerializedName("unit")
+              @Expose
+              @DatabaseField
+              var unit: String,
+
+              @SerializedName("integer")
+              @Expose
+              @DatabaseField
+              var isInteger: Boolean,
+
+              @SerializedName("barcode")
+              @Expose
+              @DatabaseField(columnName = "barcode")
+              var barcode: String,
+
+              @SerializedName("vendor")
+              @Expose
+              @DatabaseField
+              var vendor: String,
+
+              @SerializedName("producer")
+              @Expose
+              @DatabaseField
+              var producer: String,
+
+              @SerializedName("price")
+              @Expose
+              @DatabaseField
+              var price: Double,
+
+              @SerializedName("count")
+              @Expose
+              @DatabaseField
+              var count: String,
+
+              @SerializedName("reserved")
+              @Expose
+              @DatabaseField
+              var reserved: String,
+
+              @SerializedName("min_count")
+              @Expose
+              @DatabaseField
+              var minCount: Double,
+
+              @SerializedName("parent")
+              @Expose
+              @DatabaseField(columnName = "sub_category")
+              var parent: Int) {
+
+    constructor() : this(0, "", "", "", false, "", "", "", 0.0, "", "", 0.0, 0)
+
+    fun minCountFormat() = String.format("%.2f", minCount)
+    fun priceFormat() = String.format("%.2f", price)
+}

@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import models.Category;
+import models.Node;
 import network.Api;
 import network.RetrofitClient;
 import utils.Dialogs;
@@ -21,7 +21,7 @@ public class CategoryEditController {
     static Api api = RetrofitClient.getApiService();
     public boolean okClicked = false;
     public boolean edit = false;
-    Category editableCategory;
+    Node editableCategory;
 
     @FXML
     private TextField categoryName;
@@ -43,7 +43,7 @@ public class CategoryEditController {
     public void add(ActionEvent actionEvent) {
         if (edit) {
             if (!Objects.equals(categoryName.getText(), "")) {
-                editableCategory.setName(categoryName.getText());
+                // editableCategory.setName(categoryName.getText());
                 //editCategory(editableCategory);
             } else {
                 Dialogs.showDialog("Введите имя категории!");
@@ -148,7 +148,7 @@ public class CategoryEditController {
         });
     }*/
 
-    public void setCategoryToEdit(Category category) {
+    /*public void setCategoryToEdit(Category category) {
         editableCategory = category;
         categoryName.setText(category.getName());
         edit = true;
@@ -156,7 +156,7 @@ public class CategoryEditController {
 
     public void setCategory(Category category) {
         editableCategory = category;
-    }
+    }*/
 
     public boolean isOkClicked() {
         return okClicked;

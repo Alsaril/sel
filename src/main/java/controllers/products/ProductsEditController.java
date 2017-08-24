@@ -2,8 +2,6 @@ package controllers.products;
 
 import controllers.supply.NewSupplyController;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,9 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import models.Barcode;
-import models.Category;
 import models.Product;
-import models.Subcategory;
 import network.Api;
 import network.RetrofitClient;
 import retrofit2.Call;
@@ -27,7 +23,6 @@ import retrofit2.Response;
 import utils.Dialogs;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -36,12 +31,12 @@ import java.util.Objects;
 public class ProductsEditController {
 
     Api api = RetrofitClient.getApiService();
-    private ObservableList<Subcategory> subcategoriesOL = FXCollections.observableArrayList();
-    private List<Category> categoryList;
-    private List<Subcategory> subcategoryList;
+    //    private ObservableList<Subcategory> subcategoriesOL = FXCollections.observableArrayList();
+    //   private List<Category> categoryList;
+    //   private List<Subcategory> subcategoryList;
     private boolean ok = false;
     private boolean edit = false;
-    private Product product = new Product();
+    // private Product product = new Product();
     @FXML
     private TextField productName;
     @FXML
@@ -76,7 +71,7 @@ public class ProductsEditController {
             Double doublePriceProduct = Double.parseDouble(productPrice.getText());
             Double doubleCountProduct = Double.parseDouble(productMinCount.getText());
 
-            product.setName(productName.getText());
+           /* product.setName(productName.getText());
             product.setPrice(doublePriceProduct);
             product.setShortName(productLName.getText());
             product.setUnit(productMeasurement.getText());
@@ -84,12 +79,12 @@ public class ProductsEditController {
             product.setBarcode(productBarcode.getText());
             product.setProducer(productProducer.getText());
             product.setInteger(productIntegerOnly.isSelected());
-            product.setMinCount(doubleCountProduct);
+            product.setMinCount(doubleCountProduct);*/
 
             if (edit) {
-                editProduct(product);
+                // editProduct(product);
             } else {
-                addProduct(product);
+                // addProduct(product);
             }
         } else {
             Dialogs.showDialog("Введите название и цену!");
@@ -140,13 +135,13 @@ public class ProductsEditController {
             stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
 
             SelectCategoryController controller = loader.getController();
-            controller.setCategoryAndSubcategory(categoryList, subcategoryList);
+            // controller.setCategoryAndSubcategory(categoryList, subcategoryList);
 
             stage.showAndWait();
 
             if (controller.isOk()) {
-                product.setCategory(controller.getCategoryId());
-                product.setSubCategory(controller.getSubcategoryId());
+                //  product.setCategory(controller.getCategoryId());
+                //  product.setSubCategory(controller.getSubcategoryId());
                 categoryLable.setText(controller.getCategoryId().toString());
                 subcategoryLable.setText(controller.getSubcategoryId().toString());
 
@@ -157,23 +152,23 @@ public class ProductsEditController {
     }
 
 
-    public void setCategoriesAndSubcategories(List<Category> categories, List<Subcategory> subcategories) {
+    /*public void setCategoriesAndSubcategories(List<Category> categories, List<Subcategory> subcategories) {
         categoryList = categories;
         subcategoryList = subcategories;
-    }
+    }*/
 
     public void setProduct(Product product) {
-        this.product = product;
+        //this.product = product;
 
         productName.setText(product.getName());
-        productPrice.setText(product.getPriceFormat());
+        productPrice.setText(product.priceFormat());
         productLName.setText(product.getShortName());
         productMeasurement.setText(product.getUnit());
         productVendor.setText(product.getVendor());
         productProducer.setText(product.getProducer());
         productIntegerOnly.setSelected(product.isInteger());
         productBarcode.setText(product.getBarcode());
-        productMinCount.setText(product.getMinCountFormat());
+        productMinCount.setText(product.minCountFormat());
         edit = true;
     }
 
@@ -182,7 +177,7 @@ public class ProductsEditController {
     }
 
     public void handleDel() {
-        delProduct(product);
+        //delProduct(product);
 
     }
 
