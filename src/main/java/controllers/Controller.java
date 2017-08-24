@@ -18,7 +18,7 @@ public class Controller {
     public void showProducts(ActionEvent actionEvent){
         try{
             Stage stage = new Stage();
-            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("/view/ProductsView.fxml"));
+            Parent categoryAddFXML = FXMLLoader.load(getClass().getResource("/view/products/ProductsView.fxml"));
             stage.setTitle("Товары");
             stage.setMinHeight(800);
             stage.setMinWidth(900);

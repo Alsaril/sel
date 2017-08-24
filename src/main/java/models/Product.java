@@ -57,14 +57,6 @@ public class Product {
     @Expose
     @DatabaseField
     private Double minCount;
-    @SerializedName("sub_category")
-    @Expose
-    @DatabaseField(columnName = "sub_category")
-    private Integer subCategory;
-    @SerializedName("category")
-    @Expose
-    @DatabaseField(columnName = "category")
-    private Integer category;
 
     public Product(String name, Double price) {
         name = this.name;
@@ -175,21 +167,6 @@ public class Product {
         this.minCount = minCount;
     }
 
-    public Integer getSubCategory() {
-        return subCategory;
-    }
-
-    public void setSubCategory(Integer subCategory) {
-        this.subCategory = subCategory;
-    }
-
-    public Integer getCategory() {
-        return category;
-    }
-
-    public void setCategory(Integer category) {
-        this.category = category;
-    }
     //format-----------------------------------------------------------------------------
     public String getPriceFormat(){
         return String.format("%.2f", price);

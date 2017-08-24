@@ -5,11 +5,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
-import javafx.stage.WindowEvent;
-import models.Category;
 import models.Product;
 import models.ProductsData;
-import models.Subcategory;
 import models.treeView.SubcategoryItem;
 import network.Api;
 import network.RetrofitClient;
@@ -43,8 +40,6 @@ public class ProductViewController {
     private ObservableList<Product> productsOL = FXCollections.observableArrayList();
     private ObservableList<Product> productsFiltredOL = FXCollections.observableArrayList();
     private List<Product> productsList;
-    private List<Category> categoryList;
-    private List<Subcategory> subcategoryList;
     private Product selectProduct;
 
     @FXML
@@ -116,9 +111,9 @@ public class ProductViewController {
             public void handle(ActionEvent event) {
                 SubcategoryItem item = categoryTreeView.getSelectionModel().getSelectedItem().getValue();
                 if (item.getTrue_subcategory()){
-                    editSubcategory(Data.getSubcategoryById(item.getId(), subcategoryList));
+                    //editSubcategory(Data.getSubcategoryById(item.getId(), subcategoryList));
                 }else{
-                    editCategory(Data.getCategoryById(item.getId(), categoryList));
+                    //editCategory(Data.getCategoryById(item.getId(), categoryList));
                 }
 
             }
@@ -132,95 +127,16 @@ public class ProductViewController {
                 if (item.getTrue_subcategory()){
 
                 }else{
-                    delCategory(Data.getCategoryById(item.getId(), categoryList));
+                    //delCategory(Data.getCategoryById(item.getId(), categoryList));
                 }
 
             }
         });
         contextMenu.getItems().setAll(edit, del);
-        categoryTreeView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> showProductsInCategory(newValue.getValue()));
+        /*categoryTreeView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> showProductsInCategory(newValue.getValue()));*/
         categoryTreeView.setContextMenu(contextMenu);
 
-    }
-
-    public void showAddCategoryDialog(ActionEvent actionEvent) {
-        try {
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/CategoryAddView.fxml"));
-            Parent categoryAddFXML = loader.load();
-            stage.setTitle("Новая категория");
-            stage.setMinHeight(150);
-            stage.setMinWidth(400);
-            stage.setResizable(false);
-            stage.setScene(new Scene(categoryAddFXML));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
-
-            CategoryEditController controller = loader.getController();
-            stage.showAndWait();
-
-            if (controller.isOkClicked()) {
-                loadProductsData();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void editCategory(Category category){
-        try {
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/CategoryAddView.fxml"));
-            Parent categoryAddFXML = loader.load();
-            stage.setTitle("Редактирование категории");
-            stage.setMinHeight(150);
-            stage.setMinWidth(400);
-            stage.setResizable(false);
-            stage.setScene(new Scene(categoryAddFXML));
-            stage.initModality(Modality.WINDOW_MODAL);
-
-            //stage.initOwner();
-
-            CategoryEditController controller = loader.getController();
-            controller.setCategoryToEdit(category);
-            stage.showAndWait();
-
-            if (controller.isOkClicked()) {
-                loadProductsData();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void delCategory(Category category){
-        try {
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/products/DelCategory.fxml"));
-            Parent categoryAddFXML = loader.load();
-            stage.setTitle("Удаление категории");
-            stage.setMinHeight(150);
-            stage.setMinWidth(400);
-            stage.setResizable(false);
-            stage.setScene(new Scene(categoryAddFXML));
-            stage.initModality(Modality.WINDOW_MODAL);
-
-            //stage.initOwner();
-
-            CategoryEditController controller = loader.getController();
-            controller.setCategory(category);
-            stage.showAndWait();
-
-            if (controller.isOkClicked()) {
-                loadProductsData();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void showAddProductDialog(ActionEvent actionEvent) {
@@ -237,7 +153,7 @@ public class ProductViewController {
             stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
 
             ProductsEditController controller = loader.getController();
-            controller.setCategoriesAndSubcategories(categoryList, subcategoryList);
+            //controller.setCategoriesAndSubcategories(categoryList, subcategoryList);
 
             stage.showAndWait();
 
@@ -262,7 +178,7 @@ public class ProductViewController {
             stage.initModality(Modality.WINDOW_MODAL);
 
             ProductsEditController controller = loader.getController();
-            controller.setCategoriesAndSubcategories(categoryList, subcategoryList);
+            //controller.setCategoriesAndSubcategories(categoryList, subcategoryList);
             controller.setProduct(product);
 
             stage.showAndWait();
@@ -279,63 +195,6 @@ public class ProductViewController {
 
     }
 
-    public void showAddSubcategoryDialog(ActionEvent actionEvent) {
-        try {
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/SubcategoryEditView.fxml"));
-            Parent categoryAddFXML = loader.load();
-            stage.setTitle("Новая подкатегория");
-            stage.setMinHeight(150);
-            stage.setMinWidth(400);
-            stage.setResizable(false);
-            stage.setScene(new Scene(categoryAddFXML));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
-
-            SubcategoryEditController controller = loader.getController();
-            controller.setCategoryList(FXCollections.observableArrayList(categoryList));
-            stage.showAndWait();
-
-            if (controller.isOkClicked()) {
-                loadProductsData();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    private void editSubcategory(Subcategory subcategory){
-        try {
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/SubcategoryEditView.fxml"));
-            Parent categoryAddFXML = loader.load();
-            stage.setTitle("Редактирование подкатегории");
-            stage.setMinHeight(150);
-            stage.setMinWidth(400);
-            stage.setResizable(false);
-            stage.setScene(new Scene(categoryAddFXML));
-            stage.initModality(Modality.WINDOW_MODAL);
-
-            SubcategoryEditController controller = loader.getController();
-            controller.setSubcategoryToEdit(subcategory);
-            controller.setCategoryList(FXCollections.observableArrayList(categoryList));
-            stage.showAndWait();
-
-
-            if (controller.isOkClicked()) {
-                loadProductsData();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void delSubcategory(){
-
-    }
 
     private void loadProductsData() {
         Call<ProductsData> call = api.productsData();
@@ -344,14 +203,12 @@ public class ProductViewController {
             public void onResponse(Call<ProductsData> call, Response<ProductsData> response) {
                 if (response.code() == 200) {
                     productsList = response.body().getProducts();
-                    categoryList = response.body().getCategories();
-                    subcategoryList = response.body().getSubcategories();
                     productsOL = FXCollections.observableArrayList(response.body().getProducts());
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
                             productTable.setItems(productsOL);
-                            categoryTreeView.setRoot(Data.categoryTreeViewRootItem(response.body().getCategories(), response.body().getSubcategories()));
+                            //categoryTreeView.setRoot(Data.categoryTreeViewRootItem(response.body().getCategories(), response.body().getSubcategories()));
                         }
                     });
 
@@ -365,43 +222,6 @@ public class ProductViewController {
                 Dialogs.showExeptionDialog(t.getMessage());
             }
         });
-    }
-
-    //Тут костыль;)
-
-
-
-    private void showProductsInCategory(SubcategoryItem subcategoryItem) {
-
-        productsFiltredOL.clear();
-        if (subcategoryItem.getTrue_subcategory()) {
-            int subcategoryId = subcategoryItem.getId();
-            for (int i = 0; i < productsList.size(); i++) {
-                if (productsList.get(i).getSubCategory()!=null) {
-                    if (productsList.get(i).getSubCategory() == subcategoryId) {
-                        if (productsList.get(i) != null) {
-                            productsFiltredOL.add(productsList.get(i));
-                        }
-                    }
-                }
-            }
-        } else {
-            int categoryId = subcategoryItem.getId();
-            for (int i = 0; i < productsList.size(); i++) {
-                if (productsList.get(i).getCategory()!=null) {
-                    if (productsList.get(i).getCategory() == categoryId) {
-                        if (productsList.get(i) != null) {
-                            productsFiltredOL.add(productsList.get(i));
-                        }
-                    }
-                }
-            }
-        }
-        if (Objects.equals(subcategoryItem.getName(), "Все")) {
-            productTable.setItems(productsOL);
-        } else {
-            productTable.setItems(productsFiltredOL);
-        }
     }
 
 

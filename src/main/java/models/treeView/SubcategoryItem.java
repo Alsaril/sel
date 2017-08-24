@@ -1,9 +1,5 @@
 package models.treeView;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-import models.Subcategory;
-
 /**
  * Created by andrey on 13.08.17.
  */

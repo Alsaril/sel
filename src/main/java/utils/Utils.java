@@ -1,15 +1,7 @@
 package utils;
 
-import javafx.scene.control.TreeItem;
-import models.Category;
-import models.Subcategory;
-import models.treeView.SubcategoryItem;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by andrey on 14.08.17.

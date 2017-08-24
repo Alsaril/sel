@@ -31,9 +31,6 @@ import java.util.Objects;
  */
 public class ProductsEditController {
 
-    private ObservableList<Subcategory> subcategoriesOL = FXCollections.observableArrayList();
-    private List<Category> categoryList;
-    private List<Subcategory> subcategoryList;
     private boolean ok = false;
     private boolean edit = false;
     private Product product = new Product();
@@ -121,44 +118,6 @@ public class ProductsEditController {
 
     public void handlePrint(ActionEvent actionEvent) {
 
-    }
-
-
-    public void handleCategory(ActionEvent actionEvent) {
-        try {
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/products/SelectCategory.fxml"));
-            Parent categoryAddFXML = loader.load();
-            stage.setTitle("Выберите категорию");
-            stage.setMinHeight(150);
-            stage.setMinWidth(400);
-            stage.setResizable(false);
-            stage.setScene(new Scene(categoryAddFXML));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(((Node) actionEvent.getSource()).getScene().getWindow());
-
-            SelectCategoryController controller = loader.getController();
-            controller.setCategoryAndSubcategory(categoryList, subcategoryList);
-
-            stage.showAndWait();
-
-            if (controller.isOk()) {
-                product.setCategory(controller.getCategoryId());
-                product.setSubCategory(controller.getSubcategoryId());
-                categoryLable.setText(controller.getCategoryId().toString());
-                subcategoryLable.setText(controller.getSubcategoryId().toString());
-
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    public void setCategoriesAndSubcategories(List<Category> categories, List<Subcategory> subcategories) {
-        categoryList = categories;
-        subcategoryList = subcategories;
     }
 
     public void setProduct(Product product) {
