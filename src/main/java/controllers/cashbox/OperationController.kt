@@ -21,8 +21,6 @@ import start.Main
 class OperationController : LoadController<Boolean>() {
     private val mainApp: Main? = null
 
-    private var api: API = APIMiddlewareImpl
-
     private var operationOL = FXCollections.observableArrayList<Operation>()
     private var productList: List<Product>? = null
 

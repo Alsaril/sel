@@ -34,7 +34,8 @@ import java.util.*
 
 class NewOperationController : LoadController<Boolean>() {
 
-    private var api = RetrofitClient.getApiService()
+
+    public var retrofitApi = RetrofitClient.getApiService()
 
     private var positionsOL: ObservableList<Position>? = FXCollections.observableArrayList()
     private var positionList: List<Position>? = null
@@ -131,7 +132,7 @@ class NewOperationController : LoadController<Boolean>() {
     }
 
     private fun addOperation(operation: Operation) {
-        val call = api.addOperation(operation)
+        val call = retrofitApi.addOperation(operation)
         call.enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 201) {

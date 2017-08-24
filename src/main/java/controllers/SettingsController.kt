@@ -26,7 +26,7 @@ class SettingsController: LoadController<Boolean>(){
     @FXML private lateinit var password: TextField
 
     fun save(actionEvent: ActionEvent) {
-        val call = api.auth(AuthRequest(login.text, password.text))
+        val call = retrofitApi.auth(AuthRequest(login.text, password.text))
         call.enqueue(object : Callback<Token> {
             override fun onResponse(call: Call<Token>, response: Response<Token>) {
                 if (response.code() == 200) {
@@ -44,7 +44,7 @@ class SettingsController: LoadController<Boolean>(){
         })
     }
 
-    internal var api = AuthRetrofitClient.getApiService()
+    internal var retrofitApi = AuthRetrofitClient.getApiService()
 
     companion object {
         fun show(owner: Node, callback: CloseListener<Boolean>) {

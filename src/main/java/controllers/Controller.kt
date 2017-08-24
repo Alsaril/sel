@@ -1,6 +1,7 @@
 package controllers
 
 import controllers.cashbox.PasswordController
+import controllers.products.ProductViewController
 import javafx.event.ActionEvent
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
@@ -8,6 +9,7 @@ import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.stage.Modality
 import javafx.stage.Stage
+import models.Product
 
 import java.io.IOException
 
@@ -16,20 +18,8 @@ import java.io.IOException
  */
 class Controller {
     fun showProducts(actionEvent: ActionEvent) {
-        try {
-            val stage = Stage()
-            val categoryAddFXML = FXMLLoader.load<Parent>(javaClass.getResource("/view/products/ProductsView.fxml"))
-            stage.title = "Товары"
-            stage.minHeight = 800.0
-            stage.minWidth = 900.0
-            stage.isResizable = false
-            stage.scene = Scene(categoryAddFXML)
-            stage.initModality(Modality.WINDOW_MODAL)
-            stage.initOwner((actionEvent.source as Node).scene.window)
-            stage.show()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+          ProductViewController.show(actionEvent.source as Node) {
+          }
 
     }
 
