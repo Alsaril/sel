@@ -18,9 +18,7 @@ class Result<T>(val result: T?, val state: State, private val success: Boolean, 
 
 enum class State {ONLINE, OFFLINE }
 
-interface StateListener {
-    fun stateChanged(state: State)
-}
+typealias StateListener = (state: State) -> Unit
 
 interface API {
     fun productsData(): Deferred<Result<ProductsData>>

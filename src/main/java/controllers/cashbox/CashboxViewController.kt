@@ -2,8 +2,6 @@ package controllers.cashbox
 
 import api.API
 import api.APIMiddlewareImpl
-import api.State
-import api.StateListener
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
@@ -32,7 +30,6 @@ class CashboxViewController {
     internal var api: API = APIMiddlewareImpl
 
     private var operationOL = FXCollections.observableArrayList<Operation>()
-    private var operationList: List<Operation>? = null
     private var productList: List<Product>? = null
 
     @FXML private lateinit var networkStatus: Label
@@ -73,19 +70,16 @@ class CashboxViewController {
         loadProducts()
         //---------------------------------------------------------------------------------------
 
-        api.addStateListener(object : StateListener {
-            override fun stateChanged(state: State) {
-                launch(JavaFx) {
-                    networkStatus.text = state.toString()
-                }
+        api.addStateListener {
+            launch(JavaFx) {
+                networkStatus.text = it.toString()
             }
-        })
+        }
     }
 
     private fun loadOperationData() = launch(JavaFx) {
         val result = api.operations().await()
         if (result.isSuccessful()) {
-            operationList = result.result
             operationOL = FXCollections.observableArrayList(result.result)
             operationTable.setItems(operationOL)
         }

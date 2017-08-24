@@ -36,7 +36,7 @@ object APIMiddlewareImpl : API {
             if (ref.get() == null) {
                 i.remove()
             } else {
-                ref.get()?.stateChanged(state)
+                ref.get()?.invoke(state)
             }
         }
         if (state == State.ONLINE) {
