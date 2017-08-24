@@ -1,8 +1,9 @@
 package controllers.cashbox
 
+import api.API
+import api.APIMiddlewareImpl
 import controllers.LoadController
 import controllers.products.ProductViewController
-import javafx.application.Platform
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.event.ActionEvent
@@ -20,13 +21,11 @@ import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.control.cell.TextFieldTableCell
 import javafx.stage.Modality
 import javafx.stage.Stage
+import kotlinx.coroutines.experimental.javafx.JavaFx
+import kotlinx.coroutines.experimental.launch
 import models.Operation
 import models.Position
 import models.Product
-import network.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import utils.CloseListener
 import utils.Dialogs
 import java.text.SimpleDateFormat
@@ -34,7 +33,7 @@ import java.util.*
 
 class NewOperationController : LoadController<Boolean>() {
 
-    private var api = RetrofitClient.getApiService()
+    private var api: API = APIMiddlewareImpl
 
     private var positionsOL: ObservableList<Position>? = FXCollections.observableArrayList()
     private var positionList: List<Position>? = null
@@ -130,23 +129,14 @@ class NewOperationController : LoadController<Boolean>() {
 
     }
 
-    private fun addOperation(operation: Operation) {
-        val call = api.addOperation(operation)
-        call.enqueue(object : Callback<Void> {
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.code() == 201) {
-                    Dialogs.showDialog("Операция проведена успешно!")
-                    Platform.runLater { close(true) }
-                } else {
-                    Dialogs.showExeptionDialog(response.message())
-                }
-            }
-
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Dialogs.showExeptionDialog(t.message ?: "Unknown error")
-            }
-        })
-
+    private fun addOperation(operation: Operation) = launch(JavaFx) {
+        val result = api.addOperation(operation).await()
+        if (result.isSuccessful()) {
+            Dialogs.showDialog("Операция проведена успешно!")
+            close(true)
+        } else {
+            Dialogs.showExeptionDialog(result.error)
+        }
     }
 
     private fun refresh() {

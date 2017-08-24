@@ -1,8 +1,5 @@
 package start;
 
-import java.io.IOException;
-
-import models.Product;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import models.Product;
+
+import java.io.IOException;
 
 public class Main extends Application {
 
@@ -20,6 +20,10 @@ public class Main extends Application {
     private ObservableList<Product> productsData = FXCollections.observableArrayList();
 
     public Main(){
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     public ObservableList<Product> getProductsData() {
@@ -48,7 +52,6 @@ public class Main extends Application {
         }
     }
 
-
     public void showProductsOverview() {
         try {
 
@@ -63,9 +66,5 @@ public class Main extends Application {
 
     public Stage getPrimaryStage() {
         return primaryStage;
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

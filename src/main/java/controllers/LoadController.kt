@@ -14,7 +14,7 @@ abstract class LoadController<T> {
     private lateinit var stage: Stage
     private lateinit var callback: CloseListener<T>
 
-    protected fun close(result: T) {
+    public fun close(result: T) {
         stage.close()
         callback.invoke(result)
     }
