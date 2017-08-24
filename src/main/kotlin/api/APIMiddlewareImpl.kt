@@ -16,7 +16,7 @@ object APIMiddlewareImpl : API {
     private val CREATED = 201
     private val DELETED = 201
 
-    private val networkAPI = RetrofitClient.getApiService()
+    private val networkAPI = RetrofitClient.apiService
     private val localAPI: ILocalBase = LocalBase
 
     private var state = State.OFFLINE

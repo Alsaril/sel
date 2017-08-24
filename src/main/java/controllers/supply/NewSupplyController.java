@@ -33,7 +33,7 @@ import java.util.List;
  */
 public class NewSupplyController {
     Product firstSupplyProduct;
-    Api api = RetrofitClient.getApiService();
+    Api api = RetrofitClient.INSTANCE.getApiService();
     @FXML
     private ComboBox<Supplier> supplierCombobox;
     @FXML

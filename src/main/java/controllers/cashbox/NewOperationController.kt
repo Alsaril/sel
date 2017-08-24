@@ -1,10 +1,7 @@
 package controllers.cashbox
 
-import api.API
-import api.APIMiddlewareImpl
 import controllers.LoadController
 import controllers.products.ProductViewController
-import javafx.application.Platform
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.event.ActionEvent
@@ -27,10 +24,6 @@ import kotlinx.coroutines.experimental.launch
 import models.Operation
 import models.Position
 import models.Product
-import network.RetrofitClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import utils.CloseListener
 import utils.Dialogs
 import java.text.SimpleDateFormat
@@ -103,9 +96,7 @@ class NewOperationController : LoadController<Boolean>() {
         stage.showAndWait()
 
         val product = controller.selectProduct
-        if (product != null) {
-            newPosition(product)
-        }
+        newPosition(product)
     }
 
     private fun newPosition(product: Product) {

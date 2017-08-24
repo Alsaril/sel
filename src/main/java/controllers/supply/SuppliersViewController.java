@@ -28,7 +28,7 @@ import java.util.List;
  * Created by andrey on 25.07.17.
  */
 public class SuppliersViewController {
-    Api api = RetrofitClient.getApiService();
+    Api api = RetrofitClient.INSTANCE.getApiService();
     private ObservableList<Supplier> suppliersOL = FXCollections.observableArrayList();
 
     @FXML

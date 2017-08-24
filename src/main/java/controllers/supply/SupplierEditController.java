@@ -21,7 +21,7 @@ import java.util.Objects;
  * Created by andrey on 25.07.17.
  */
 public class SupplierEditController {
-    static Api api = RetrofitClient.getApiService();
+    static Api api = RetrofitClient.INSTANCE.getApiService();
     public boolean okClicked = false;
     public boolean edit = false;
 //    Supplier supplier = new Supplier();
