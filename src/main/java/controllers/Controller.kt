@@ -77,21 +77,9 @@ class Controller {
     }
 
     fun showSettings(actionEvent: ActionEvent) {
-        try {
-            val stage = Stage()
-            val categoryAddFXML = FXMLLoader.load<Parent>(javaClass.getResource("/view/SettingsView.fxml"))
-            stage.title = "Настройки"
-            stage.minHeight = 800.0
-            stage.minWidth = 900.0
-            stage.setResizable(false);
-            stage.scene = Scene(categoryAddFXML)
-            stage.initModality(Modality.WINDOW_MODAL)
-            stage.initOwner((actionEvent.source as Node).scene.window)
-            stage.show()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+         SettingsController.show(actionEvent.source as Node){
 
+         }
     }
 
     fun showClients(actionEvent: ActionEvent) {
