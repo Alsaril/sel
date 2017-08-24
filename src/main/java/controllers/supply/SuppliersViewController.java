@@ -48,13 +48,13 @@ public class SuppliersViewController {
                     suppliersOL = FXCollections.observableArrayList(response.body());
                     suppliersTable.setItems(suppliersOL);
                 } else {
-                    Dialogs.showErrorDialog("Ошибка запроса на сервер!");
+                    Dialogs.INSTANCE.showErrorDialog("Ошибка запроса на сервер!");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Supplier>> call, Throwable t) {
-                Dialogs.showExeptionDialog(t.getMessage());
+                Dialogs.INSTANCE.showExeptionDialog(t.getMessage());
             }
         });
     }

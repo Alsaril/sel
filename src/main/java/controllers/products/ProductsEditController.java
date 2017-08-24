@@ -83,7 +83,7 @@ public class ProductsEditController {
                 addProduct(product);
             }
         } else {
-            Dialogs.showDialog("Введите название и цену!");
+            Dialogs.INSTANCE.showDialog("Введите название и цену!");
         }
     }
 
@@ -100,13 +100,13 @@ public class ProductsEditController {
                         }
                     });
                 } else {
-                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
+                    Dialogs.INSTANCE.showExeptionDialog("code:" + response.code() + " " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Barcode> call, Throwable t) {
-                Dialogs.showExeptionDialog(t.getMessage());
+                Dialogs.INSTANCE.showExeptionDialog(t.getMessage());
             }
         });
     }
@@ -155,16 +155,16 @@ public class ProductsEditController {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 204) {
-                    Dialogs.showDialog("Товар удален успешно!");
+                    Dialogs.INSTANCE.showDialog("Товар удален успешно!");
                     ok = true;
                     closeDelDialog();
                 } else {
-                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
+                    Dialogs.INSTANCE.showExeptionDialog("code:" + response.code() + " " + response.message());
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Dialogs.showExeptionDialog(t.getMessage());
+                Dialogs.INSTANCE.showExeptionDialog(t.getMessage());
             }
         });
     }
@@ -178,20 +178,20 @@ public class ProductsEditController {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            Dialogs.showDialog("Товар добавлен успешно!");
+                            Dialogs.INSTANCE.showDialog("Товар добавлен успешно!");
                             ok = true;
                             addFirstSupply(response.body());
                             close();
                         }
                     });
                 } else {
-                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
+                    Dialogs.INSTANCE.showExeptionDialog("code:" + response.code() + " " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Product> call, Throwable t) {
-                Dialogs.showExeptionDialog(t.getMessage());
+                Dialogs.INSTANCE.showExeptionDialog(t.getMessage());
             }
         });
     }
@@ -203,16 +203,16 @@ public class ProductsEditController {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 200) {
-                    Dialogs.showDialog("Товар изменен успешно!");
+                    Dialogs.INSTANCE.showDialog("Товар изменен успешно!");
                     ok = true;
                     close();
                 } else {
-                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
+                    Dialogs.INSTANCE.showExeptionDialog("code:" + response.code() + " " + response.message());
                 }
             }
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Dialogs.showExeptionDialog(t.getMessage());
+                Dialogs.INSTANCE.showExeptionDialog(t.getMessage());
             }
         });
     }

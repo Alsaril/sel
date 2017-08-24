@@ -82,7 +82,7 @@ public class SupplierEditController {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 201) {
-                    Dialogs.showDialog("Поставщик добавлен");
+                    Dialogs.INSTANCE.showDialog("Поставщик добавлен");
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
@@ -93,13 +93,13 @@ public class SupplierEditController {
                     });
 
                 } else {
-                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
+                    Dialogs.INSTANCE.showExeptionDialog("code:" + response.code() + " " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Dialogs.showExeptionDialog(t.getMessage());
+                Dialogs.INSTANCE.showExeptionDialog(t.getMessage());
             }
         });
     }
@@ -114,20 +114,20 @@ public class SupplierEditController {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            Dialogs.showDialog("Поставщик изменен успешно!");
+                            Dialogs.INSTANCE.showDialog("Поставщик изменен успешно!");
                             okClicked = true;
                             close();
 
                         }
                     });
                 }else{
-                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
+                    Dialogs.INSTANCE.showExeptionDialog("code:" + response.code() + " " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Dialogs.showExeptionDialog(t.getMessage());
+                Dialogs.INSTANCE.showExeptionDialog(t.getMessage());
             }
         });
     }
@@ -141,20 +141,20 @@ public class SupplierEditController {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            Dialogs.showDialog("Поставщик удален!");
+                            Dialogs.INSTANCE.showDialog("Поставщик удален!");
                             okClicked = true;
                             closeDelDialog();
 
                         }
                     });
                 }else{
-                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
+                    Dialogs.INSTANCE.showExeptionDialog("code:" + response.code() + " " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Dialogs.showExeptionDialog(t.getMessage());
+                Dialogs.INSTANCE.showExeptionDialog(t.getMessage());
             }
         });
     }
