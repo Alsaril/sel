@@ -56,12 +56,19 @@ class ProductViewController : LoadController<Boolean>() {
         }
 
         val delProduct = MenuItem("Удалить")
-        delProduct.onAction = EventHandler { val item = productTable.selectionModel.selectedItem }
+        delProduct.onAction = EventHandler {
+            val item = productTable.selectionModel.selectedItem
+            delProduct(item)
+        }
         val infoProduct = MenuItem("Информация")
-        infoProduct.onAction = EventHandler { val item = productTable.selectionModel.selectedItem }
+        infoProduct.onAction = EventHandler {
+            val item = productTable.selectionModel.selectedItem
+            infoProduct(item)
+        }
         productTableContextMenu.items.setAll(editProduct, delProduct, infoProduct)
         productTable.contextMenu = productTableContextMenu
 
+        val treeItemContextMenu = ContextMenu()
 
         loadProductsData()
 
@@ -121,7 +128,11 @@ class ProductViewController : LoadController<Boolean>() {
 
     }
 
-    private fun delProduct() {
+    private fun delProduct(product: Product) {
+
+    }
+
+    private fun infoProduct(product: Product) {
 
     }
 
