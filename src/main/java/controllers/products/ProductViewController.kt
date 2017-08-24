@@ -1,33 +1,27 @@
 package controllers.products
 
-import api.APIMiddlewareImpl
-import api.API
 import controllers.LoadController
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.fxml.FXMLLoader
-import javafx.scene.Node
 import javafx.scene.Parent
 import javafx.scene.Scene
-import javafx.scene.control.ContextMenu
-import javafx.scene.control.MenuItem
-import javafx.scene.control.TableColumn
-import javafx.scene.control.TableView
+import javafx.scene.control.*
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.stage.Modality
 import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
+import models.Node
 import models.Operation
 import models.Product
-import network.RetrofitClient
 import utils.CloseListener
 import java.io.IOException
 
 
-class ProductViewController: LoadController<Boolean>() {
+class ProductViewController : LoadController<Boolean>() {
 
     private var operationOL = FXCollections.observableArrayList<Operation>()
     private var productList: List<Product>? = null
@@ -44,6 +38,7 @@ class ProductViewController: LoadController<Boolean>() {
     @FXML private lateinit var countColumn: TableColumn<Product, String>
     @FXML private lateinit var reserveColumn: TableColumn<Product, String>
     @FXML private lateinit var priceColumn: TableColumn<Product, String>
+    @FXML private lateinit var nodeTreeView: TreeView<Node>
 
     @FXML private fun initialize() {
         nameColumn.setCellValueFactory(PropertyValueFactory("productName"))
@@ -83,7 +78,7 @@ class ProductViewController: LoadController<Boolean>() {
             stage.minWidth = 400.0
             stage.scene = Scene(categoryAddFXML)
             stage.initModality(Modality.WINDOW_MODAL)
-            stage.initOwner((actionEvent.source as Node).scene.window)
+            stage.initOwner((actionEvent.source as javafx.scene.Node).scene.window)
 
             val controller = loader.getController<ProductsEditController>()
             //controller.setCategoriesAndSubcategories(categoryList, subcategoryList);
@@ -133,9 +128,25 @@ class ProductViewController: LoadController<Boolean>() {
 
     private fun loadProductsData() = launch(JavaFx) {
         val result = api.productsData().await()
-        if (result.isSuccessful()) {
-            productsOL = FXCollections.observableArrayList(result.result?.products)
-            productTable.setItems(productsOL)
+        if (!result.isSuccessful()) return@launch
+        productsOL = FXCollections.observableArrayList(result.notNullResult().products)
+        productTable.setItems(productsOL)
+
+        val items = result.notNullResult().nodes.map { TreeItem(it) }
+        val roots = mutableListOf<TreeItem<Node>>()
+        items.forEach {
+            if (it.value.parent == null) {
+                roots.add(it)
+            } else {
+                items[it.value.parent!! - 1].children.add(it)
+            }
+        }
+        if (roots.size == 1) {
+            nodeTreeView.root = roots[0]
+        } else {
+            val root = TreeItem<Node>(Node("Single root"))
+            root.children.addAll(roots)
+            nodeTreeView.root = root
         }
     }
 
@@ -146,7 +157,7 @@ class ProductViewController: LoadController<Boolean>() {
     }
 
     companion object {
-        fun show(owner: Node, callback: CloseListener<Boolean>) {
+        fun show(owner: javafx.scene.Node, callback: CloseListener<Boolean>) {
             LoadController.show(owner, callback,
                     path = "/view/products/ProductsView.fxml",
                     title = "Товары",

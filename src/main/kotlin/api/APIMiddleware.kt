@@ -11,6 +11,8 @@ class Result<T>(val result: T?, val state: State, private val success: Boolean, 
 
     fun isSuccessful() = success
 
+    fun notNullResult(): T = result!!
+
     companion object {
         fun successVoidResult(state: State) = Result<Void>(null, state, true, "")
     }
