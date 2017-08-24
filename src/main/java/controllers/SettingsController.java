@@ -5,7 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import models.auth.AuthRequest;
 import models.auth.Token;
-import network.*;
+import network.AuthApi;
+import network.AuthRetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,14 +19,11 @@ import utils.FileHelper;
  */
 public class SettingsController {
 
+    static AuthApi api = AuthRetrofitClient.getApiService();
     @FXML
     private TextField login;
-
     @FXML
     private TextField password;
-
-
-    static AuthApi api = AuthRetrofitClient.getApiService();
 
     public void save(ActionEvent actionEvent) {
         Call<Token> call = api.auth(new AuthRequest(login.getText(), password.getText()));
@@ -35,13 +33,13 @@ public class SettingsController {
                 if (response.code() == 200) {
                     FileHelper.saveToken(response.body().getToken());
                 } else {
-                    Dialogs.showErrorDialog("Не удалось получить токен!");
+                    Dialogs.INSTANCE.showErrorDialog("Не удалось получить токен!");
                 }
             }
 
             @Override
             public void onFailure(Call<Token> call, Throwable t) {
-                Dialogs.showExeptionDialog(t.getMessage());
+                Dialogs.INSTANCE.showExeptionDialog(t.getMessage());
             }
         });
     }

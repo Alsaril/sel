@@ -2,32 +2,26 @@ package controllers.cashbox
 
 import api.API
 import api.APIMiddlewareImpl
+import controllers.LoadController
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
-import javafx.event.EventHandler
 import javafx.fxml.FXML
-import javafx.fxml.FXMLLoader
 import javafx.scene.Node
-import javafx.scene.Parent
-import javafx.scene.Scene
 import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.cell.PropertyValueFactory
-import javafx.stage.Modality
-import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Operation
 import models.Position
 import models.Product
 import start.Main
-import java.io.IOException
 
-class CashboxViewController {
+class OperationController : LoadController<Boolean>() {
     private val mainApp: Main? = null
 
-    internal var api: API = APIMiddlewareImpl
+    private var api: API = APIMiddlewareImpl
 
     private var operationOL = FXCollections.observableArrayList<Operation>()
     private var productList: List<Product>? = null
@@ -86,28 +80,10 @@ class CashboxViewController {
     }
 
     fun newOperation(actionEvent: ActionEvent) {
-        try {
-            val stage = Stage()
-            val loader = FXMLLoader()
-            loader.location = javaClass.getResource("/view/cashbox/NewCashboxView.fxml")
-            val categoryAddFXML = loader.load<Parent>()
-            stage.title = "Кассовая операция"
-            stage.minHeight = 600.0
-            stage.minWidth = 800.0
-            stage.isResizable = false
-            stage.scene = Scene(categoryAddFXML)
-            stage.initModality(Modality.WINDOW_MODAL)
-            stage.initOwner((actionEvent.source as Node).scene.window)
-            val controller = loader.getController<NewCashboxController>()
-            stage.onCloseRequest = EventHandler { }
-            stage.showAndWait()
-
-            if (controller.isOkClicked) {
+        NewOperationController.show(actionEvent.source as Node) { result ->
+            if (result) {
                 loadOperationData()
             }
-
-        } catch (e: IOException) {
-            e.printStackTrace()
         }
     }
 

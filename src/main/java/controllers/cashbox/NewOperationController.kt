@@ -1,5 +1,6 @@
 package controllers.cashbox
 
+import controllers.LoadController
 import controllers.products.ProductViewController
 import javafx.application.Platform
 import javafx.collections.FXCollections
@@ -26,18 +27,17 @@ import network.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import utils.CloseListener
 import utils.Dialogs
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NewCashboxController {
+class NewOperationController : LoadController<Boolean>() {
 
-    internal var api = RetrofitClient.getApiService()
+    private var api = RetrofitClient.getApiService()
 
-    internal var positionsOL: ObservableList<Position>? = FXCollections.observableArrayList()
-    internal var positionList: List<Position>? = null
-    var isOkClicked = false
-
+    private var positionsOL: ObservableList<Position>? = FXCollections.observableArrayList()
+    private var positionList: List<Position>? = null
 
     @FXML private lateinit var returnCheckBox: CheckBox
     @FXML private lateinit var totalSum: Label
@@ -130,21 +130,20 @@ class NewCashboxController {
 
     }
 
-    fun addOperation(operation: Operation) {
+    private fun addOperation(operation: Operation) {
         val call = api.addOperation(operation)
         call.enqueue(object : Callback<Void> {
             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                 if (response.code() == 201) {
                     Dialogs.showDialog("Операция проведена успешно!")
-                    isOkClicked = true
-                    Platform.runLater { close() }
+                    Platform.runLater { close(true) }
                 } else {
                     Dialogs.showExeptionDialog(response.message())
                 }
             }
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
-                Dialogs.showExeptionDialog(t.message)
+                Dialogs.showExeptionDialog(t.message ?: "Unknown error")
             }
         })
 
@@ -161,8 +160,15 @@ class NewCashboxController {
         positionTable.items = positionsOL
     }
 
-    private fun close() {
-        val stage = totalSum.scene.window as Stage
-        stage.close()
+    companion object {
+        fun show(owner: Node, callback: CloseListener<Boolean>) {
+            LoadController.show(owner, callback,
+                    path = "/view/cashbox/NewCashboxView.fxml",
+                    title = "Кассовая операция",
+                    minHeight = 600.0,
+                    minWidth = 800.0,
+                    isResizable = false,
+                    modality = Modality.WINDOW_MODAL)
+        }
     }
 }

@@ -60,7 +60,7 @@ public class NewSupplyController {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
-                            Dialogs.showErrorDialog("Ошибка запроса на сервер!");
+                            Dialogs.INSTANCE.showErrorDialog("Ошибка запроса на сервер!");
                         }
                     });
                 }
@@ -71,7 +71,7 @@ public class NewSupplyController {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        Dialogs.showErrorDialog("Ошибка запроса! Проверьте соеденение с интернетом!");
+                        Dialogs.INSTANCE.showErrorDialog("Ошибка запроса! Проверьте соеденение с интернетом!");
                         //Dialogs.showExeptionDialog(t.getMessage());
                     }
                 });
@@ -134,15 +134,15 @@ public class NewSupplyController {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.code() == 201) {
-                    Dialogs.showDialog("Поставка добавлена успешно!");
+                    Dialogs.INSTANCE.showDialog("Поставка добавлена успешно!");
                 } else {
-                    Dialogs.showExeptionDialog("code:" + response.code() + " " + response.message());
+                    Dialogs.INSTANCE.showExeptionDialog("code:" + response.code() + " " + response.message());
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                Dialogs.showExeptionDialog(t.getMessage());
+                Dialogs.INSTANCE.showExeptionDialog(t.getMessage());
             }
         });
     }

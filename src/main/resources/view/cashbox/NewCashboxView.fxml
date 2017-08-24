@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane prefHeight="587.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.cashbox.NewCashboxController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="587.0" prefWidth="839.0"
+            xmlns="http://javafx.com/javafx/8.0.111" fx:controller="controllers.cashbox.NewOperationController">
    <children>
       <TableView fx:id="positionTable" layoutX="14.0" layoutY="113.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0">
         <columns>
