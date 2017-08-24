@@ -1,7 +1,5 @@
 package controllers.supply;
 
-import controllers.products.ProductsEditController;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,11 +10,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import models.*;
+import models.Supplier;
 import network.Api;
 import network.RetrofitClient;
 import retrofit2.Call;
@@ -43,7 +40,7 @@ public class SuppliersViewController {
 
 
     private void loadSuppliersData() {
-        Call<List<Supplier>> call = api.suppliersData();
+        Call<List<Supplier>> call = api.suppliers();
         call.enqueue(new Callback<List<Supplier>>() {
             @Override
             public void onResponse(Call<List<Supplier>> call, Response<List<Supplier>> response) {

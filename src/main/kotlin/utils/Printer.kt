@@ -3,8 +3,7 @@ package utils
 object Printer {
     fun printBarcode(barcode: String) {
         val pj = java.awt.print.PrinterJob.getPrinterJob()
-        pj.setPrintable({
-            graphics, page, pageIndex ->
+        pj.setPrintable({ graphics, _, pageIndex ->
             run {
                 if (pageIndex > 0) {
                     java.awt.print.Printable.NO_SUCH_PAGE
@@ -49,7 +48,7 @@ object Printer {
         val headerLength = utils.Printer.NAME.length
 
         val headerBuilder = StringBuilder()
-        for (i in 0..headerLength + 2) {
+        for (i in 1..headerLength + 2) {
             headerBuilder.append('*')
         }
 
@@ -57,9 +56,8 @@ object Printer {
 
         val header = headerTemplate.format(asteriskHeader, "*${utils.Printer.NAME}*", asteriskHeader, cashbox, inn, date, number, time)
 
-        val rows: String = positions
+        val rows: String = positions.stream()
                 .map { (vendor, name, price, count, sum) -> rowTemplate.format(vendor, name, price, count, sum) }
-                .stream()
                 .collect(java.util.stream.Collectors.joining(""))
 
         val footer = footerTemplate.format(sum, cash, odd, operator)
