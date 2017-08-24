@@ -1,5 +1,7 @@
 package controllers
 
+import api.API
+import api.APIMiddlewareImpl
 import controllers.cashbox.PasswordController
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
@@ -10,6 +12,8 @@ import javafx.stage.Stage
 import utils.CloseListener
 
 abstract class LoadController<T> {
+
+    protected var api: API = APIMiddlewareImpl
 
     private lateinit var stage: Stage
     private lateinit var callback: CloseListener<T>

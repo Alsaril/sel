@@ -4,6 +4,7 @@ import api.API
 import api.APIMiddlewareImpl
 import controllers.LoadController
 import controllers.products.ProductViewController
+import javafx.application.Platform
 import javafx.collections.FXCollections
 import javafx.collections.ObservableList
 import javafx.event.ActionEvent
@@ -21,11 +22,13 @@ import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.control.cell.TextFieldTableCell
 import javafx.stage.Modality
 import javafx.stage.Stage
-import kotlinx.coroutines.experimental.javafx.JavaFx
-import kotlinx.coroutines.experimental.launch
 import models.Operation
 import models.Position
 import models.Product
+import network.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import utils.CloseListener
 import utils.Dialogs
 import java.text.SimpleDateFormat
