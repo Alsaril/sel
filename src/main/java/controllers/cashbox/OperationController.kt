@@ -2,6 +2,7 @@ package controllers.cashbox
 
 import api.API
 import api.APIMiddlewareImpl
+import controllers.LoadController
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
@@ -17,7 +18,7 @@ import models.Position
 import models.Product
 import start.Main
 
-class OperationController {
+class OperationController: LoadController<Boolean>(){
     private val mainApp: Main? = null
 
     private var operationOL = FXCollections.observableArrayList<Operation>()

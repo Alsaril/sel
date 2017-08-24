@@ -22,6 +22,8 @@ import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.control.cell.TextFieldTableCell
 import javafx.stage.Modality
 import javafx.stage.Stage
+import kotlinx.coroutines.experimental.javafx.JavaFx
+import kotlinx.coroutines.experimental.launch
 import models.Operation
 import models.Position
 import models.Product
@@ -35,8 +37,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class NewOperationController : LoadController<Boolean>() {
-
-    private var api: API = APIMiddlewareImpl
 
     private var positionsOL: ObservableList<Position>? = FXCollections.observableArrayList()
     private var positionList: List<Position>? = null
