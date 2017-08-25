@@ -12,6 +12,9 @@ interface Api {
     @GET("operations")
     fun operations(): Call<List<Operation>>
 
+    @GET("/operations_by_date?start={start}&end={end}")
+    fun operationsByDate(@Query("start") start: String, @Query("end") end: String): Call<List<Operation>>
+
     @POST("operations/")
     fun addOperation(@Body operation: Operation): Call<Void>
 
@@ -41,6 +44,9 @@ interface Api {
 
     @GET("supplies")
     fun supplies(): Call<List<Supply>>
+
+    @GET("product_supplies/{id}")
+    fun productSupplies(@Path("id") id: String): Call<List<PositionSupplyFull>>
 
     @POST("supplies/")
     fun addSupply(@Body supplyMin: SupplyMin): Call<Void>

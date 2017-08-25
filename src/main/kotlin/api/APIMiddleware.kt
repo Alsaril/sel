@@ -27,6 +27,8 @@ interface API {
 
     fun operations(): Deferred<Result<List<Operation>>>
 
+    fun operationsByDate(start: String, end: String): Deferred<Result<List<Operation>>>
+
     fun addOperation(@Body operation: Operation): Deferred<Result<Void>>
 
     fun suppliers(): Deferred<Result<List<Supplier>>>
@@ -52,6 +54,8 @@ interface API {
     fun delNode(@Path("id") id: String): Deferred<Result<Void>>
 
     fun supplies(): Deferred<Result<List<Supply>>>
+
+    fun productSupplies(id: String): Deferred<Result<List<PositionSupplyFull>>>
 
     fun addSupply(@Body supplyMin: SupplyMin): Deferred<Result<Void>>
 

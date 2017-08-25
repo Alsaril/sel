@@ -89,6 +89,23 @@ object APIMiddlewareImpl : API {
         }
     }
 
+    override fun operationsByDate(start: String, end: String): Deferred<Result<List<Operation>>> = async(CommonPool) {
+        val response: Response<List<Operation>>
+        try {
+            response = networkAPI.operationsByDate(start, end).awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result(localAPI.operations(), State.OFFLINE)
+        }
+        val data = response.body()
+        state = State.ONLINE
+        if (response.code() == OK && data != null) {
+            Result(data, State.ONLINE)
+        } else {
+            Result<List<Operation>>("response code != ${OK} or response body == null", State.ONLINE)
+        }
+    }
+
     override fun addOperation(operation: Operation): Deferred<Result<Void>> = async(CommonPool) {
         val response: Response<Void>
         try {
@@ -299,6 +316,23 @@ object APIMiddlewareImpl : API {
             Result(data, State.ONLINE)
         } else {
             Result<List<Supply>>("response code != ${OK} or response body == null", State.ONLINE)
+        }
+    }
+
+    override fun productSupplies(id: String): Deferred<Result<List<PositionSupplyFull>>> = async(CommonPool) {
+        val response: Response<List<PositionSupplyFull>>
+        try {
+            response = networkAPI.productSupplies(id).awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result<List<PositionSupplyFull>>("Exception: ${t.message}", State.OFFLINE)
+        }
+        val data = response.body()
+        state = State.ONLINE
+        if (response.code() == OK && data != null) {
+            Result(data, State.ONLINE)
+        } else {
+            Result<List<PositionSupplyFull>>("response code != ${OK} or response body == null", State.ONLINE)
         }
     }
 
