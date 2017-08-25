@@ -14,7 +14,7 @@ object APIMiddlewareImpl : API {
 
     private val OK = 200
     private val CREATED = 201
-    private val DELETED = 201
+    private val DELETED = 204
 
     private val networkAPI = RetrofitClient.apiService
     private val localAPI: ILocalBase = LocalBase
@@ -98,9 +98,8 @@ object APIMiddlewareImpl : API {
             localAPI.saveOperation(operation)
             return@async Result.successVoidResult(State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == CREATED && data != null) {
+        if (response.code() == CREATED) {
             Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${CREATED} or response body == null", State.ONLINE)
@@ -132,9 +131,8 @@ object APIMiddlewareImpl : API {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == CREATED && data != null) {
+        if (response.code() == CREATED) {
             Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${CREATED} or response body == null", State.ONLINE)
@@ -149,9 +147,8 @@ object APIMiddlewareImpl : API {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == OK && data != null) {
+        if (response.code() == OK) {
             Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${OK} or response body == null", State.ONLINE)
@@ -166,9 +163,8 @@ object APIMiddlewareImpl : API {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == DELETED && data != null) {
+        if (response.code() == DELETED) {
             Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${DELETED} or response body == null", State.ONLINE)
@@ -217,9 +213,8 @@ object APIMiddlewareImpl : API {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == OK && data != null) {
+        if (response.code() == OK) {
             Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${OK} or response body == null", State.ONLINE)
@@ -234,9 +229,8 @@ object APIMiddlewareImpl : API {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == DELETED && data != null) {
+        if (response.code() == DELETED) {
             Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${DELETED} or response body == null", State.ONLINE)
@@ -251,10 +245,9 @@ object APIMiddlewareImpl : API {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == CREATED && data != null) {
-            Result(data, State.ONLINE)
+        if (response.code() == CREATED) {
+            Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${CREATED} or response body == null", State.ONLINE)
         }
@@ -268,10 +261,9 @@ object APIMiddlewareImpl : API {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == OK && data != null) {
-            Result(data, State.ONLINE)
+        if (response.code() == OK) {
+            Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${OK} or response body == null", State.ONLINE)
         }
@@ -285,9 +277,8 @@ object APIMiddlewareImpl : API {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == DELETED && data != null) {
+        if (response.code() == DELETED) {
             Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${DELETED} or response body == null", State.ONLINE)
@@ -319,9 +310,8 @@ object APIMiddlewareImpl : API {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == CREATED && data != null) {
+        if (response.code() == CREATED) {
             Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${CREATED} or response body == null", State.ONLINE)
@@ -336,9 +326,8 @@ object APIMiddlewareImpl : API {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == OK && data != null) {
+        if (response.code() == OK) {
             Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${OK} or response body == null", State.ONLINE)
@@ -353,9 +342,8 @@ object APIMiddlewareImpl : API {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
-        val data = response.body()
         state = State.ONLINE
-        if (response.code() == DELETED && data != null) {
+        if (response.code() == DELETED) {
             Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${DELETED} or response body == null", State.ONLINE)
