@@ -2,34 +2,19 @@ package controllers.products
 
 import controllers.LoadController
 import javafx.collections.FXCollections
-import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.fxml.FXML
-import javafx.fxml.FXMLLoader
-import javafx.scene.Parent
-import javafx.scene.Scene
 import javafx.scene.control.*
+import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.stage.Modality
-import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Node
 import models.Operation
 import models.Product
 import utils.CloseListener
-import java.io.IOException
-import javafx.scene.control.TextInputDialog
 import utils.Dialogs
-import java.util.Optional
-import javafx.scene.control.Alert.AlertType
-import javafx.scene.control.Alert
-
-
-
-
-
-
 
 
 class ProductViewController : LoadController<Boolean>() {
@@ -104,13 +89,13 @@ class ProductViewController : LoadController<Boolean>() {
 
     }
 
-    private fun addProduct(node: Node){
-        ProductsEditController.show(productTable as javafx.scene.Node){
+    private fun addProduct(node: Node) {
+        ProductsEditController.show(productTable as javafx.scene.Node) {
         }
     }
 
     private fun editProduct(product: Product) {
-        
+
     }
 
     private fun delProduct(product: Product) {
@@ -122,15 +107,14 @@ class ProductViewController : LoadController<Boolean>() {
     }
 
 
-
-    private fun createNode(parentNode: Node){
+    private fun createNode(parentNode: Node) {
         val dialog = TextInputDialog()
         dialog.title = "Новый раздел"
         dialog.headerText = "Добавление раздела"
         dialog.contentText = "Имя:"
         val result = dialog.showAndWait()
 
-        result.ifPresent({ name ->  addNode(name, parentNode)})
+        result.ifPresent({ name -> addNode(name, parentNode) })
     }
 
 
@@ -147,20 +131,20 @@ class ProductViewController : LoadController<Boolean>() {
         }
     }
 
-     private fun deleteNode(node:Node){
-         val alert = Alert(AlertType.CONFIRMATION)
-         alert.title = "Удаление раздела"
-         alert.headerText = "Удалить раздел: "+node.name+" ?"
+    private fun deleteNode(node: Node) {
+        val alert = Alert(AlertType.CONFIRMATION)
+        alert.title = "Удаление раздела"
+        alert.headerText = "Удалить раздел: ${node.name}?"
 
-         val result = alert.showAndWait()
-         if (result.get() === ButtonType.OK) {
-              deleteNode(node)
-         } else {
+        val result = alert.showAndWait()
+        if (result.get() === ButtonType.OK) {
+            delNode(node)
+        } else {
 
-         }
-     }
+        }
+    }
 
-    private fun delNode(node:Node) = launch(JavaFx){
+    private fun delNode(node: Node) = launch(JavaFx) {
         val id = node.id.toString()
         val result = api.delNode(id).await()
         if (result.isSuccessful()) {

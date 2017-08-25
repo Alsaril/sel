@@ -2,7 +2,6 @@ package controllers
 
 import api.API
 import api.APIMiddlewareImpl
-import controllers.cashbox.PasswordController
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
 import javafx.scene.Parent
@@ -30,13 +29,15 @@ abstract class LoadController<T> {
                                                    minWidth: Double = 0.0,
                                                    minHeight: Double = 0.0,
                                                    isResizable: Boolean = true,
-                                                   modality: Modality = Modality.NONE) {
+                                                   modality: Modality = Modality.NONE,
+                                                   init: (C.() -> Unit)? = null) {
             val stage = Stage()
-            val loader = FXMLLoader(PasswordController::class.java.getResource(path))
+            val loader = FXMLLoader(LoadController::class.java.getResource(path))
             val parent = loader.load<Parent>()
             val controller = loader.getController<C>()
             controller.stage = stage
             controller.callback = callback
+            init?.invoke(controller)
             stage.title = title
             stage.minWidth = minWidth
             stage.minHeight = minHeight
