@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 import com.j256.ormlite.field.DatabaseField
 
 class Node(@SerializedName("id")
-           @Expose
+           @Expose(serialize = false)
            @DatabaseField(id = true)
            var id: Int,
 

@@ -19,6 +19,17 @@ import models.Operation
 import models.Product
 import utils.CloseListener
 import java.io.IOException
+import javafx.scene.control.TextInputDialog
+import utils.Dialogs
+import java.util.Optional
+import javafx.scene.control.Alert.AlertType
+import javafx.scene.control.Alert
+
+
+
+
+
+
 
 
 class ProductViewController : LoadController<Boolean>() {
@@ -69,63 +80,37 @@ class ProductViewController : LoadController<Boolean>() {
         productTable.contextMenu = productTableContextMenu
 
         val treeItemContextMenu = ContextMenu()
+        val addNode = MenuItem("Добавить раздел")
+        addNode.onAction = EventHandler {
+            val item = nodeTreeView.selectionModel.selectedItem.value
+            createNode(item)
+        }
+        val delNode = MenuItem("Удалть раздел")
+        delNode.onAction = EventHandler {
+            val item = nodeTreeView.selectionModel.selectedItem.value
+            deleteNode(item)
+        }
+        val addProduct = MenuItem("Добавить товар")
+        addProduct.onAction = EventHandler {
+            val item = nodeTreeView.selectionModel.selectedItem.value
+            addProduct(item)
+        }
+
+        treeItemContextMenu.items.setAll(addNode, delNode, addProduct)
+        nodeTreeView.contextMenu = treeItemContextMenu
 
         loadProductsData()
 
+
     }
 
-    fun showAddProductDialog(actionEvent: ActionEvent) {
-        try {
-            val stage = Stage()
-            val loader = FXMLLoader()
-            loader.location = javaClass.getResource("/view/products/ProductEditView.fxml")
-            val categoryAddFXML = loader.load<Parent>()
-            stage.title = "Новый товар"
-            stage.minHeight = 150.0
-            stage.minWidth = 400.0
-            stage.scene = Scene(categoryAddFXML)
-            stage.initModality(Modality.WINDOW_MODAL)
-            stage.initOwner((actionEvent.source as javafx.scene.Node).scene.window)
-
-            val controller = loader.getController<ProductsEditController>()
-            //controller.setCategoriesAndSubcategories(categoryList, subcategoryList);
-
-            stage.showAndWait()
-
-            if (controller.isOk) {
-                loadProductsData()
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
+    private fun addProduct(node: Node){
+        ProductsEditController.show(productTable as javafx.scene.Node){
         }
-
     }
 
     private fun editProduct(product: Product) {
-        try {
-            val stage = Stage()
-            val loader = FXMLLoader()
-            loader.location = javaClass.getResource("/view/products/ProductEditView.fxml")
-            val categoryAddFXML = loader.load<Parent>()
-            stage.title = "Редактирование товара"
-            stage.minHeight = 150.0
-            stage.minWidth = 400.0
-            stage.scene = Scene(categoryAddFXML)
-            stage.initModality(Modality.WINDOW_MODAL)
-
-            val controller = loader.getController<ProductsEditController>()
-            //controller.setCategoriesAndSubcategories(categoryList, subcategoryList);
-            controller.setProduct(product)
-
-            stage.showAndWait()
-
-            if (controller.isOk) {
-                loadProductsData()
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
+        
     }
 
     private fun delProduct(product: Product) {
@@ -134,6 +119,56 @@ class ProductViewController : LoadController<Boolean>() {
 
     private fun infoProduct(product: Product) {
 
+    }
+
+
+
+    private fun createNode(parentNode: Node){
+        val dialog = TextInputDialog()
+        dialog.title = "Новый раздел"
+        dialog.headerText = "Добавление раздела"
+        dialog.contentText = "Имя:"
+        val result = dialog.showAndWait()
+
+        result.ifPresent({ name ->  addNode(name, parentNode)})
+    }
+
+
+    private fun addNode(name: String, parentNode: Node) = launch(JavaFx) {
+        val node = Node()
+        node.parent = parentNode.id
+        node.name = name
+        val result = api.addNode(node).await()
+        if (result.isSuccessful()) {
+            Dialogs.showDialog("Раздел добавлен!")
+            loadProductsData()
+        } else {
+            Dialogs.showExeptionDialog(result.error)
+        }
+    }
+
+     private fun deleteNode(node:Node){
+         val alert = Alert(AlertType.CONFIRMATION)
+         alert.title = "Удаление раздела"
+         alert.headerText = "Удалить раздел: "+node.name+" ?"
+
+         val result = alert.showAndWait()
+         if (result.get() === ButtonType.OK) {
+              deleteNode(node)
+         } else {
+
+         }
+     }
+
+    private fun delNode(node:Node) = launch(JavaFx){
+        val id = node.id.toString()
+        val result = api.delNode(id).await()
+        if (result.isSuccessful()) {
+            Dialogs.showDialog("Раздел удален!")
+            loadProductsData()
+        } else {
+            Dialogs.showExeptionDialog(result.error)
+        }
     }
 
 

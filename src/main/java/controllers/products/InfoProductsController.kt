@@ -1,0 +1,3 @@
+package controllers.products
+
+class InfoProductsController
