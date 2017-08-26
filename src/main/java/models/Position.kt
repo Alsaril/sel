@@ -40,9 +40,9 @@ class Position(@SerializedName("id")
 
     fun sum() = (price - discount) * count
 
-    val priceFormat = String.format("%.2f", price)
+    val getPriceFormat = String.format("%.2f", price)
 
-    val sumFormat = String.format("%.2f", sum())
+    val getSumFormat = String.format("%.2f", sum())
 
     fun setOperation(operation: Operation) {
         this.operation = operation.id
@@ -55,5 +55,5 @@ class Position(@SerializedName("id")
                 String.format("%.2f", d)
             }
 
-    fun strCount() = str(count)
+    fun getStrCount() = str(count)
 }
