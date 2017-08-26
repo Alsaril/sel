@@ -90,11 +90,19 @@ class ProductViewController : LoadController<Boolean>() {
     }
 
     private fun addProduct(node: Node) {
-        ProductsEditController.show(productTable as javafx.scene.Node) {
+        ProductsEditController.show(node = node, owner = productTable as javafx.scene.Node) {result ->
+            if (result) {
+                loadProductsData()
+            }
         }
     }
 
     private fun editProduct(product: Product) {
+        ProductsEditController.show(product = product, owner = productTable as javafx.scene.Node) {result ->
+        if (result) {
+            loadProductsData()
+        }
+    }
 
     }
 

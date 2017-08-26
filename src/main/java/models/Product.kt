@@ -4,8 +4,8 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.j256.ormlite.field.DatabaseField
 
-class Product(@SerializedName("id")
-              @Expose
+public class Product(@SerializedName("id")
+              @Expose(serialize = false)
               @DatabaseField(id = true)
               var id: Int = 0,
 
@@ -52,12 +52,12 @@ class Product(@SerializedName("id")
               @SerializedName("count")
               @Expose
               @DatabaseField
-              var count: String,
+              var count: Double,
 
               @SerializedName("reserved")
               @Expose
               @DatabaseField
-              var reserved: String,
+              var reserved: Double,
 
               @SerializedName("min_count")
               @Expose
@@ -69,7 +69,7 @@ class Product(@SerializedName("id")
               @DatabaseField(columnName = "sub_category")
               var parent: Int) {
 
-    constructor() : this(0, "", "", "", false, "", "", "", 0.0, "", "", 0.0, 0)
+    constructor() : this(0, "", "", "", false, "", "", "", 0.0, 0.0, 0.0, 0.0, 0)
 
     fun minCountFormat() = String.format("%.2f", minCount)
     fun priceFormat() = String.format("%.2f", price)
