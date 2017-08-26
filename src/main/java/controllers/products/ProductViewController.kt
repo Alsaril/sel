@@ -90,7 +90,7 @@ class ProductViewController : LoadController<Boolean>() {
     }
 
     private fun addProduct(node: Node) {
-        ProductsEditController.show(node = node, owner = productTable as javafx.scene.Node) {result ->
+        ProductsEditController.show(node = node, owner = productTable as javafx.scene.Node) { result ->
             if (result) {
                 loadProductsData()
             }
@@ -98,11 +98,11 @@ class ProductViewController : LoadController<Boolean>() {
     }
 
     private fun editProduct(product: Product) {
-        ProductsEditController.show(product = product, owner = productTable as javafx.scene.Node) {result ->
-        if (result) {
-            loadProductsData()
+        ProductsEditController.show(product = product, owner = productTable as javafx.scene.Node) { result ->
+            if (result) {
+                loadProductsData()
+            }
         }
-    }
 
     }
 
@@ -182,6 +182,21 @@ class ProductViewController : LoadController<Boolean>() {
         val root = TreeItem<Node>(Node("Все"))
         root.children.addAll(roots)
         nodeTreeView.root = root
+
+        nodeTreeView.selectionModel.selectedItemProperty().addListener { _, _, newValue ->
+            showProducts(result.notNullResult().products, newValue)
+        }
+    }
+
+    private fun showProducts(products: List<Product>, node: TreeItem<Node>) {
+        fun subProducts(node: TreeItem<Node>): MutableList<Product> {
+            val result = mutableListOf<Product>()
+            result.addAll(products.filter { it.parent == node.value.id })
+            result.addAll(node.children.flatMap { subProducts(it) })
+            return result
+        }
+
+        productTable.items.setAll(subProducts(node))
     }
 
 
