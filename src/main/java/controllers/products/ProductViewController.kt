@@ -85,7 +85,7 @@ class ProductViewController : LoadController<Boolean>() {
         treeItemContextMenu.items.setAll(addNode, delNode, addProduct)
         nodeTreeView.contextMenu = treeItemContextMenu
 
-        search.setOnKeyPressed {
+        search.setOnKeyReleased {
             showProducts(products, nodeTreeView.selectionModel.selectedItem) {
                 it.name.contains(search.text, ignoreCase = true)
             }
