@@ -1,6 +1,7 @@
 package controllers.supply
 
 import controllers.LoadController
+import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
@@ -8,6 +9,8 @@ import javafx.scene.Parent
 import javafx.scene.Scene
 import javafx.stage.Modality
 import javafx.stage.Stage
+import kotlinx.coroutines.experimental.javafx.JavaFx
+import kotlinx.coroutines.experimental.launch
 import utils.CloseListener
 
 import java.io.IOException
@@ -25,7 +28,12 @@ class SuppliesViewController : LoadController<Boolean>(){
 
     }
 
+    private fun loadSuppliesData() = launch(JavaFx) {
+        val result = api.operations().await()
+        if (result.isSuccessful()) {
 
+        }
+    }
 
     companion object {
         fun show(owner: Node, callback: CloseListener<Boolean>) {
