@@ -15,13 +15,24 @@ import java.io.IOException
 /**
  * Created by andrey on 25.07.17.
  */
-class SupplyViewController: LoadController<Boolean>(){
+class SuppliesViewController : LoadController<Boolean>(){
+
+
+    fun newSupply(){
+
+    }
+    fun showSupppliers(){
+
+    }
+
+
+
     companion object {
         fun show(owner: Node, callback: CloseListener<Boolean>) {
             LoadController.show(owner, callback,
                     path = "/view/supply/SuppliesView.fxml",
                     title = "Поставки",
-                    isResizable = false,
+                    isResizable = true,
                     modality = Modality.WINDOW_MODAL)
         }
     }

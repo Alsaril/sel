@@ -37,7 +37,7 @@ class ProductViewController : LoadController<Boolean>() {
     @FXML private lateinit var nodeTreeView: TreeView<Node>
 
     @FXML private fun initialize() {
-        nameColumn.setCellValueFactory(PropertyValueFactory("productName"))
+        nameColumn.setCellValueFactory(PropertyValueFactory("name"))
         measurementColumn.setCellValueFactory(PropertyValueFactory("unit"))
         barcodeColumn.setCellValueFactory(PropertyValueFactory("barcode"))
         countColumn.setCellValueFactory(PropertyValueFactory("count"))

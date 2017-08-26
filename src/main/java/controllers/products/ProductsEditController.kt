@@ -38,6 +38,7 @@ class ProductsEditController : LoadController<Boolean>() {
 
     fun handleBarcode() {}
     fun handleAdd() {
+        var valid = true
         val product = Product()
         product.name = productName.text
         product.shortName = productLName.text
@@ -49,13 +50,16 @@ class ProductsEditController : LoadController<Boolean>() {
         try {
             product.minCount = productMinCount.text.toDouble()
         } catch (e: NumberFormatException) {
-            Dialogs.showExeptionDialog("Ошибка в поле: минимальное кол-во!")
+            Dialogs.showErrorDialog("Ошибка в поле: минимальное кол-во!")
+            valid = false
         }
         product.parent = editProduct.parent
-        if (edit) {
-            editProduct(editProduct.id.toString(), product)
-        } else {
-            addProduct(product)
+        if (valid) {
+            if (edit) {
+                editProduct(editProduct.id.toString(), product)
+            } else {
+                addProduct(product)
+            }
         }
     }
 
