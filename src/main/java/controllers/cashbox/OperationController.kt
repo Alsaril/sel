@@ -1,7 +1,5 @@
 package controllers.cashbox
 
-import api.API
-import api.APIMiddlewareImpl
 import controllers.LoadController
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
@@ -51,7 +49,7 @@ class OperationController: LoadController<Boolean>(){
 
         nameColumn.setCellValueFactory(PropertyValueFactory("productName"))
         priceColumn.setCellValueFactory(PropertyValueFactory("priceFormat"))
-        countColumn.setCellValueFactory(PropertyValueFactory("countString"))
+        countColumn.setCellValueFactory(PropertyValueFactory("strCount"))
         discountColumn.setCellValueFactory(PropertyValueFactory("discountString"))
         sumColumn.setCellValueFactory(PropertyValueFactory("sumFormat"))
         unitColumn.setCellValueFactory(PropertyValueFactory("unit"))
@@ -97,6 +95,7 @@ class OperationController: LoadController<Boolean>(){
             getProductById(position.product)?.let {
                 position.productName = it.name
                 position.unit = it.unit
+                position.isInteger = it.isInteger
                 sum += position.sum()
             }
         }

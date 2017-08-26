@@ -59,7 +59,7 @@ class NewOperationController : LoadController<Boolean>() {
             refresh()
         }
 
-        countColumn.cellValueFactory = PropertyValueFactory("countString")
+        countColumn.cellValueFactory = PropertyValueFactory("strCount")
         countColumn.cellFactory = TextFieldTableCell.forTableColumn()
         countColumn.onEditCommit = EventHandler { t ->
             val position = t.tableView.items[t.tablePosition.row] as Position

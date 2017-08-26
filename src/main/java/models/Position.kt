@@ -33,6 +33,7 @@ class Position(@SerializedName("id")
 
     lateinit var productName: String
     lateinit var unit: String
+    var isInteger = false
 
     @DatabaseField
     private var operation: Int = 0
@@ -46,4 +47,13 @@ class Position(@SerializedName("id")
     fun setOperation(operation: Operation) {
         this.operation = operation.id
     }
+
+    private fun str(d: Double) =
+            if (isInteger) {
+                d.toInt().toString()
+            } else {
+                String.format("%.2f", d)
+            }
+
+    fun strCount() = str(count)
 }

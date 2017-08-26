@@ -41,8 +41,8 @@ class ProductViewController : LoadController<Boolean>() {
         nameColumn.setCellValueFactory(PropertyValueFactory("name"))
         measurementColumn.setCellValueFactory(PropertyValueFactory("unit"))
         barcodeColumn.setCellValueFactory(PropertyValueFactory("barcode"))
-        countColumn.setCellValueFactory(PropertyValueFactory("count"))
-        reserveColumn.setCellValueFactory(PropertyValueFactory("reserved"))
+        countColumn.setCellValueFactory(PropertyValueFactory("strCount"))
+        reserveColumn.setCellValueFactory(PropertyValueFactory("strReserved"))
         priceColumn.setCellValueFactory(PropertyValueFactory("priceFormat"))
 
         val productTableContextMenu = ContextMenu()
