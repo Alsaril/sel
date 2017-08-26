@@ -20,7 +20,7 @@ import utils.Dialogs
 class ProductViewController : LoadController<Boolean>() {
 
     private var operationOL = FXCollections.observableArrayList<Operation>()
-    private var productList: List<Product>? = null
+    private var products: List<Product> = listOf()
 
     private var productsOL = FXCollections.observableArrayList<Product>()
     private var productsFiltredOL = FXCollections.observableArrayList<Product>()
@@ -35,6 +35,7 @@ class ProductViewController : LoadController<Boolean>() {
     @FXML private lateinit var reserveColumn: TableColumn<Product, String>
     @FXML private lateinit var priceColumn: TableColumn<Product, String>
     @FXML private lateinit var nodeTreeView: TreeView<Node>
+    @FXML private lateinit var search: TextField
 
     @FXML private fun initialize() {
         nameColumn.setCellValueFactory(PropertyValueFactory("name"))
@@ -84,9 +85,13 @@ class ProductViewController : LoadController<Boolean>() {
         treeItemContextMenu.items.setAll(addNode, delNode, addProduct)
         nodeTreeView.contextMenu = treeItemContextMenu
 
+        search.setOnKeyPressed {
+            showProducts(products, nodeTreeView.selectionModel.selectedItem) {
+                it.name.contains(search.text, ignoreCase = true)
+            }
+        }
+
         loadProductsData()
-
-
     }
 
     private fun addProduct(node: Node) {
@@ -167,6 +172,7 @@ class ProductViewController : LoadController<Boolean>() {
     private fun loadProductsData() = launch(JavaFx) {
         val result = api.productsData().await()
         if (!result.isSuccessful()) return@launch
+        products = result.notNullResult().products
         productsOL = FXCollections.observableArrayList(result.notNullResult().products)
         productTable.setItems(productsOL)
 
@@ -182,21 +188,26 @@ class ProductViewController : LoadController<Boolean>() {
         val root = TreeItem<Node>(Node("Все"))
         root.children.addAll(roots)
         nodeTreeView.root = root
+        nodeTreeView.selectionModel.select(0)
 
         nodeTreeView.selectionModel.selectedItemProperty().addListener { _, _, newValue ->
             showProducts(result.notNullResult().products, newValue)
         }
     }
 
-    private fun showProducts(products: List<Product>, node: TreeItem<Node>) {
-        fun subProducts(node: TreeItem<Node>): MutableList<Product> {
-            val result = mutableListOf<Product>()
-            result.addAll(products.filter { it.parent == node.value.id })
-            result.addAll(node.children.flatMap { subProducts(it) })
-            return result
-        }
+    fun subProducts(products: List<Product>, node: TreeItem<Node>): List<Product> {
+        val result = mutableListOf<Product>()
+        result.addAll(products.filter { it.parent == node.value.id })
+        result.addAll(node.children.flatMap { subProducts(products, it) })
+        return result
+    }
 
-        productTable.items.setAll(subProducts(node))
+    private fun showProducts(products: List<Product>, node: TreeItem<Node>, predicate: ((product: Product) -> Boolean)? = null) {
+        var result = subProducts(products, node)
+        predicate?.let {
+            result = result.filter(it)
+        }
+        productTable.items.setAll(result)
     }
 
 
