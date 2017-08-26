@@ -30,7 +30,7 @@
       <Label layoutX="22.0" layoutY="377.0" text="Минимальное кол-во:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="260.0" />
       <TextField fx:id="productMinCount" layoutX="182.0" layoutY="375.0" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="255.0" />
       <Label layoutX="20.0" layoutY="297.0" text="Раздел :" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="300.0" />
-      <Label layoutX="108.0" layoutY="297.0" text="не выбран" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="300.0" />
-      <Button layoutX="180.0" layoutY="295.0" mnemonicParsing="false" text="Изменить" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="295.0" />
+      <Label fx:id="nodeLabel" layoutX="108.0" layoutY="297.0" text="не выбран" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="300.0" />
+      <Button layoutX="180.0" layoutY="295.0" mnemonicParsing="false" onAction="#handleNode" text="Изменить" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="295.0" />
    </children>
 </AnchorPane>

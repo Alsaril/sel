@@ -3,7 +3,7 @@ package controllers
 import controllers.cashbox.OperationController
 import controllers.cashbox.PasswordController
 import controllers.products.ProductViewController
-import controllers.supply.SupplyViewController
+import controllers.supply.SuppliesViewController
 import javafx.event.ActionEvent
 import javafx.scene.Node
 
@@ -25,7 +25,7 @@ class Controller {
     }
 
     fun showSupply(actionEvent: ActionEvent) {
-        SupplyViewController.show(actionEvent.source as Node) {}
+        SuppliesViewController.show(actionEvent.source as Node) {}
     }
 
     fun showSettings(actionEvent: ActionEvent) {
