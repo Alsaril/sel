@@ -1,7 +1,6 @@
 package api
 
 import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import models.*
@@ -54,7 +53,7 @@ object APIMiddlewareImpl : API {
         stateListeners.add(WeakReference(stateListener))
     }
 
-    override fun productsData(): Deferred<Result<ProductsData>> = async(CommonPool) {
+    override fun productsData(): DeferredResult<ProductsData> = async(CommonPool) {
         val response: Response<ProductsData>
         try {
             response = networkAPI.productsData().awaitResponse()
@@ -72,7 +71,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun operations(): Deferred<Result<List<Operation>>> = async(CommonPool) {
+    override fun operations(): DeferredResult<List<Operation>> = async(CommonPool) {
         val response: Response<List<Operation>>
         try {
             response = networkAPI.operations().awaitResponse()
@@ -89,7 +88,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun operationsByDate(start: String, end: String): Deferred<Result<List<Operation>>> = async(CommonPool) {
+    override fun operationsByDate(start: String, end: String): DeferredResult<List<Operation>> = async(CommonPool) {
         val response: Response<List<Operation>>
         try {
             response = networkAPI.operationsByDate(start, end).awaitResponse()
@@ -106,7 +105,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun addOperation(operation: Operation): Deferred<Result<Void>> = async(CommonPool) {
+    override fun addOperation(operation: Operation): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.addOperation(operation).awaitResponse()
@@ -123,7 +122,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun suppliers(): Deferred<Result<List<Supplier>>> = async(CommonPool) {
+    override fun suppliers(): DeferredResult<List<Supplier>> = async(CommonPool) {
         val response: Response<List<Supplier>>
         try {
             response = networkAPI.suppliers().awaitResponse()
@@ -140,7 +139,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun addSupplier(supplier: Supplier): Deferred<Result<Void>> = async(CommonPool) {
+    override fun addSupplier(supplier: Supplier): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.addSupplier(supplier).awaitResponse()
@@ -156,7 +155,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun editSupplier(id: String, supplier: Supplier): Deferred<Result<Void>> = async(CommonPool) {
+    override fun editSupplier(id: String, supplier: Supplier): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.editSupplier(id, supplier).awaitResponse()
@@ -172,7 +171,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun delSupplier(id: String): Deferred<Result<Void>> = async(CommonPool) {
+    override fun delSupplier(id: String): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.delSupplier(id).awaitResponse()
@@ -188,7 +187,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun barcode(): Deferred<Result<Barcode>> = async(CommonPool) {
+    override fun barcode(): DeferredResult<Barcode> = async(CommonPool) {
         val response: Response<Barcode>
         try {
             response = networkAPI.barcode().awaitResponse()
@@ -205,7 +204,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun addProduct(product: Product): Deferred<Result<Product>> = async(CommonPool) {
+    override fun addProduct(product: Product): DeferredResult<Product> = async(CommonPool) {
         val response: Response<Product>
         try {
             response = networkAPI.addProduct(product).awaitResponse()
@@ -222,7 +221,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun editProduct(id: String, product: Product): Deferred<Result<Void>> = async(CommonPool) {
+    override fun editProduct(id: String, product: Product): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.editProduct(id, product).awaitResponse()
@@ -238,7 +237,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun delProduct(id: String): Deferred<Result<Void>> = async(CommonPool) {
+    override fun delProduct(id: String): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.delProduct(id).awaitResponse()
@@ -254,7 +253,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun addNode(node: Node): Deferred<Result<Void>> = async(CommonPool) {
+    override fun addNode(node: Node): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.addNode(node).awaitResponse()
@@ -270,7 +269,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun editNode(id: String, node: Node): Deferred<Result<Void>> = async(CommonPool) {
+    override fun editNode(id: String, node: Node): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.editNode(id, node).awaitResponse()
@@ -286,7 +285,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun delNode(id: String): Deferred<Result<Void>> = async(CommonPool) {
+    override fun delNode(id: String): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.delNode(id).awaitResponse()
@@ -302,7 +301,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun supplies(): Deferred<Result<List<Supply>>> = async(CommonPool) {
+    override fun supplies(): DeferredResult<List<Supply>> = async(CommonPool) {
         val response: Response<List<Supply>>
         try {
             response = networkAPI.supplies().awaitResponse()
@@ -319,7 +318,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun productSupplies(id: String): Deferred<Result<List<PositionSupplyFull>>> = async(CommonPool) {
+    override fun productSupplies(id: String): DeferredResult<List<PositionSupplyFull>> = async(CommonPool) {
         val response: Response<List<PositionSupplyFull>>
         try {
             response = networkAPI.productSupplies(id).awaitResponse()
@@ -336,7 +335,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun addSupply(supplyMin: SupplyMin): Deferred<Result<Void>> = async(CommonPool) {
+    override fun addSupply(supplyMin: SupplyMin): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.addSupply(supplyMin).awaitResponse()
@@ -352,7 +351,7 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun editSupply(id: String, supplyMin: SupplyMin): Deferred<Result<Void>> = async(CommonPool) {
+    override fun editSupply(id: String, supplyMin: SupplyMin): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.editSupply(id, supplyMin).awaitResponse()
@@ -368,10 +367,142 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun delSupply(id: String): Deferred<Result<Void>> = async(CommonPool) {
+    override fun delSupply(id: String): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
             response = networkAPI.delSupply(id).awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
+        }
+        state = State.ONLINE
+        if (response.code() == DELETED) {
+            Result.successVoidResult(State.ONLINE)
+        } else {
+            Result<Void>("response code != ${DELETED} or response body == null", State.ONLINE)
+        }
+    }
+
+    override fun clients(): DeferredResult<List<Client>> = async(CommonPool) {
+        val response: Response<List<Client>>
+        try {
+            response = networkAPI.clients().awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result<List<Client>>("Exception: ${t.message}", State.OFFLINE)
+        }
+        val data = response.body()
+        state = State.ONLINE
+        if (response.code() == OK && data != null) {
+            Result(data, State.ONLINE)
+        } else {
+            Result<List<Client>>("response code != ${OK} or response body == null", State.ONLINE)
+        }
+    }
+
+    override fun addClient(client: Client): DeferredResult<Void> = async(CommonPool) {
+        val response: Response<Void>
+        try {
+            response = networkAPI.addClient(client).awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
+        }
+        state = State.ONLINE
+        if (response.code() == CREATED) {
+            Result.successVoidResult(State.ONLINE)
+        } else {
+            Result<Void>("response code != ${CREATED} or response body == null", State.ONLINE)
+        }
+    }
+
+    override fun editClient(id: String, client: Client): DeferredResult<Void> = async(CommonPool) {
+        val response: Response<Void>
+        try {
+            response = networkAPI.editClient(id, client).awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
+        }
+        state = State.ONLINE
+        if (response.code() == OK) {
+            Result.successVoidResult(State.ONLINE)
+        } else {
+            Result<Void>("response code != ${OK} or response body == null", State.ONLINE)
+        }
+    }
+
+    override fun delClient(id: String): DeferredResult<Void> = async(CommonPool) {
+        val response: Response<Void>
+        try {
+            response = networkAPI.delClient(id).awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
+        }
+        state = State.ONLINE
+        if (response.code() == DELETED) {
+            Result.successVoidResult(State.ONLINE)
+        } else {
+            Result<Void>("response code != ${DELETED} or response body == null", State.ONLINE)
+        }
+    }
+
+
+    override fun reserves(): DeferredResult<List<Reserve>> = async(CommonPool) {
+        val response: Response<List<Reserve>>
+        try {
+            response = networkAPI.reserves().awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result<List<Reserve>>("Exception: ${t.message}", State.OFFLINE)
+        }
+        val data = response.body()
+        state = State.ONLINE
+        if (response.code() == OK && data != null) {
+            Result(data, State.ONLINE)
+        } else {
+            Result<List<Reserve>>("response code != ${OK} or response body == null", State.ONLINE)
+        }
+    }
+
+
+    override fun addReserve(reserveMin: ReserveMin): DeferredResult<Void> = async(CommonPool) {
+        val response: Response<Void>
+        try {
+            response = networkAPI.addReserve(reserveMin).awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
+        }
+        state = State.ONLINE
+        if (response.code() == CREATED) {
+            Result.successVoidResult(State.ONLINE)
+        } else {
+            Result<Void>("response code != ${CREATED} or response body == null", State.ONLINE)
+        }
+    }
+
+    override fun editReserve(id: String, reserveMin: ReserveMin): DeferredResult<Void> = async(CommonPool) {
+        val response: Response<Void>
+        try {
+            response = networkAPI.editResereve(id, reserveMin).awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
+        }
+        state = State.ONLINE
+        if (response.code() == OK) {
+            Result.successVoidResult(State.ONLINE)
+        } else {
+            Result<Void>("response code != ${OK} or response body == null", State.ONLINE)
+        }
+    }
+
+    override fun delReserve(id: String): DeferredResult<Void> = async(CommonPool) {
+        val response: Response<Void>
+        try {
+            response = networkAPI.delReserve(id).awaitResponse()
         } catch (t: Throwable) {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)

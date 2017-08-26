@@ -65,4 +65,28 @@ interface Api {
 
     @DELETE("nodes/{id}/")
     fun delNode(@Path("id") id: String): Call<Void>
+
+    @GET("clients")
+    fun clients(): Call<List<Client>>
+
+    @POST("clients/")
+    fun addClient(@Body client: Client): Call<Void>
+
+    @PUT("clients/{id}/")
+    fun editClient(@Path("id") id: String, @Body client: Client): Call<Void>
+
+    @DELETE("clients/{id}/")
+    fun delClient(@Path("id") id: String): Call<Void>
+
+    @GET("reserves")
+    fun reserves(): Call<List<Reserve>>
+
+    @POST("reserves/")
+    fun addReserve(@Body reserveMin: ReserveMin): Call<Void>
+
+    @PUT("reserves/{id}/")
+    fun editReserve(@Path("id") id: String, @Body reserveMin: ReserveMin): Call<Void>
+
+    @DELETE("reserves/{id}/")
+    fun delReserve(@Path("id") id: String): Call<Void>
 }

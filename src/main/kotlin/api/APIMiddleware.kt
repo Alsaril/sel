@@ -22,46 +22,64 @@ enum class State {ONLINE, OFFLINE }
 
 typealias StateListener = (state: State) -> Unit
 
+typealias DeferredResult<T> = Deferred<Result<T>>
+
 interface API {
-    fun productsData(): Deferred<Result<ProductsData>>
+    fun productsData(): DeferredResult<ProductsData>
 
-    fun operations(): Deferred<Result<List<Operation>>>
+    fun operations(): DeferredResult<List<Operation>>
 
-    fun operationsByDate(start: String, end: String): Deferred<Result<List<Operation>>>
+    fun operationsByDate(start: String, end: String): DeferredResult<List<Operation>>
 
-    fun addOperation(@Body operation: Operation): Deferred<Result<Void>>
+    fun addOperation(@Body operation: Operation): DeferredResult<Void>
 
-    fun suppliers(): Deferred<Result<List<Supplier>>>
+    fun suppliers(): DeferredResult<List<Supplier>>
 
-    fun addSupplier(@Body supplier: Supplier): Deferred<Result<Void>>
+    fun addSupplier(@Body supplier: Supplier): DeferredResult<Void>
 
-    fun editSupplier(@Path("id") id: String, @Body supplier: Supplier): Deferred<Result<Void>>
+    fun editSupplier(@Path("id") id: String, @Body supplier: Supplier): DeferredResult<Void>
 
-    fun delSupplier(@Path("id") id: String): Deferred<Result<Void>>
+    fun delSupplier(@Path("id") id: String): DeferredResult<Void>
 
-    fun barcode(): Deferred<Result<Barcode>>
+    fun barcode(): DeferredResult<Barcode>
 
-    fun addProduct(@Body product: Product): Deferred<Result<Product>>
+    fun addProduct(@Body product: Product): DeferredResult<Product>
 
-    fun editProduct(@Path("id") id: String, @Body product: Product): Deferred<Result<Void>>
+    fun editProduct(@Path("id") id: String, @Body product: Product): DeferredResult<Void>
 
-    fun delProduct(@Path("id") id: String): Deferred<Result<Void>>
+    fun delProduct(@Path("id") id: String): DeferredResult<Void>
 
-    fun addNode(@Body node: Node): Deferred<Result<Void>>
+    fun addNode(@Body node: Node): DeferredResult<Void>
 
-    fun editNode(@Path("id") id: String, @Body node: Node): Deferred<Result<Void>>
+    fun editNode(@Path("id") id: String, @Body node: Node): DeferredResult<Void>
 
-    fun delNode(@Path("id") id: String): Deferred<Result<Void>>
+    fun delNode(@Path("id") id: String): DeferredResult<Void>
 
-    fun supplies(): Deferred<Result<List<Supply>>>
+    fun supplies(): DeferredResult<List<Supply>>
 
-    fun productSupplies(id: String): Deferred<Result<List<PositionSupplyFull>>>
+    fun productSupplies(id: String): DeferredResult<List<PositionSupplyFull>>
 
-    fun addSupply(@Body supplyMin: SupplyMin): Deferred<Result<Void>>
+    fun addSupply(@Body supplyMin: SupplyMin): DeferredResult<Void>
 
-    fun editSupply(@Path("id") id: String, @Body supplyMin: SupplyMin): Deferred<Result<Void>>
+    fun editSupply(@Path("id") id: String, @Body supplyMin: SupplyMin): DeferredResult<Void>
 
-    fun delSupply(@Path("id") id: String): Deferred<Result<Void>>
+    fun delSupply(@Path("id") id: String): DeferredResult<Void>
+
+    fun clients(): DeferredResult<List<Client>>
+
+    fun addClient(@Body client: Client): DeferredResult<Void>
+
+    fun editClient(@Path("id") id: String, @Body client: Client): DeferredResult<Void>
+
+    fun delClient(@Path("id") id: String): DeferredResult<Void>
+
+    fun reserves(): DeferredResult<List<Reserve>>
+
+    fun addReserve(@Body reserveMin: ReserveMin): DeferredResult<Void>
+
+    fun editReserve(@Path("id") id: String, @Body reserveMin: ReserveMin): DeferredResult<Void>
+
+    fun delReserve(@Path("id") id: String): DeferredResult<Void>
 
     fun addStateListener(stateListener: StateListener)
 }
