@@ -4,6 +4,9 @@ import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import models.*
+import models.position.PositionSupplyFull
+import models.reserve.Reserve
+import models.reserve.ReserveMin
 import network.RetrofitClient
 import retrofit2.Response
 import utils.awaitResponse
@@ -486,7 +489,7 @@ object APIMiddlewareImpl : API {
     override fun editReserve(id: String, reserveMin: ReserveMin): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
-            response = networkAPI.editResereve(id, reserveMin).awaitResponse()
+            response = networkAPI.editReserve(id, reserveMin).awaitResponse()
         } catch (t: Throwable) {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)

@@ -2,6 +2,9 @@ package api
 
 import kotlinx.coroutines.experimental.Deferred
 import models.*
+import models.position.PositionSupplyFull
+import models.reserve.Reserve
+import models.reserve.ReserveMin
 import retrofit2.http.Body
 import retrofit2.http.Path
 

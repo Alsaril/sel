@@ -1,7 +1,6 @@
 package controllers.products
 
 import controllers.LoadController
-import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control.TreeItem
 import javafx.scene.control.TreeView

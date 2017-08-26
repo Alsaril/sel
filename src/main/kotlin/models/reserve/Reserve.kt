@@ -2,6 +2,7 @@ package models.reserve
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import models.Client
 
 class Reserve(@SerializedName("id")
               @Expose(serialize = false)

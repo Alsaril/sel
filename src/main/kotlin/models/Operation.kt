@@ -3,6 +3,7 @@ package models
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.j256.ormlite.field.DatabaseField
+import models.position.Position
 import utils.Utils
 
 class Operation(@SerializedName("id")

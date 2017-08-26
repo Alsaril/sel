@@ -1,9 +1,8 @@
-package models
+package models.position
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.j256.ormlite.field.DatabaseField
-
+import models.Product
 
 
 class PositionSupplyFull(@SerializedName("id")
@@ -20,4 +19,4 @@ class PositionSupplyFull(@SerializedName("id")
 
                @SerializedName("product")
                @Expose
-               val product:Product)
+                         val product: Product)

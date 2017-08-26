@@ -32,8 +32,9 @@ class SettingsController : LoadController<Boolean>() {
             Dialogs.showErrorDialog("Не удалось получить токен!")
             return@launch
         }
-        if (response.code() == 200) {
-            FileHelper.saveToken(response.body()?.token)
+        val body = response.body()
+        if (response.code() == 200 && body != null) {
+            FileHelper.saveToken(body.token)
             Dialogs.showDialog("Токен получен!")
             close(true)
         } else {

@@ -13,8 +13,8 @@ import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Operation
-import models.Position
 import models.Product
+import models.position.Position
 import start.Main
 import utils.CloseListener
 

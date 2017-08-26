@@ -1,19 +1,11 @@
 package controllers.supply
 
 import controllers.LoadController
-import javafx.collections.FXCollections
-import javafx.event.ActionEvent
-import javafx.fxml.FXMLLoader
 import javafx.scene.Node
-import javafx.scene.Parent
-import javafx.scene.Scene
 import javafx.stage.Modality
-import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import utils.CloseListener
-
-import java.io.IOException
 
 /**
  * Created by andrey on 25.07.17.

@@ -22,10 +22,11 @@ import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Operation
-import models.Position
 import models.Product
+import models.position.Position
 import utils.CloseListener
 import utils.Dialogs
+import java.lang.Double
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -102,7 +103,7 @@ class NewOperationController : LoadController<Boolean>() {
     private fun newPosition(product: Product) {
         val position = Position(
                 count = 1.0,
-                price = java.lang.Double.parseDouble(product.price.toString()),
+                price = Double.parseDouble(product.price.toString()),
                 product = product.id)
 
         positionsOL?.addAll(position)

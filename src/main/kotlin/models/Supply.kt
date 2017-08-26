@@ -1,14 +1,10 @@
 package models
 
-/**
- * Created by andrey on 22.08.17.
- */
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import models.Position
-import models.Supplier
+import models.position.PositionSupplyFull
 
-class SupplyMin(@SerializedName("id")
+class Supply(@SerializedName("id")
              @Expose(serialize = false)
              var id: Int,
 
@@ -34,8 +30,8 @@ class SupplyMin(@SerializedName("id")
 
              @SerializedName("supplier")
              @Expose
-             var supplier: Int,
+             var supplier: Supplier,
 
              @SerializedName("positions")
              @Expose
-             var positions: List<PositionSupplyMin>)
+             var positions: List<PositionSupplyFull>)
