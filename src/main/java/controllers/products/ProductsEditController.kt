@@ -79,7 +79,7 @@ class ProductsEditController : LoadController<Boolean>() {
         productVendor.text = product.vendor
         productProducer.text = product.producer
         productIntegerOnly.isSelected = product.isInteger
-        productMinCount.text = product.minCountFormat()
+        productMinCount.text = product.getStrMinCount()
         nodeLabel.text = product.parent.toString()
 
 

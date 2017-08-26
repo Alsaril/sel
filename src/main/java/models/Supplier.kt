@@ -29,4 +29,20 @@ class Supplier(@SerializedName("id")
 
                @SerializedName("requisites")
                @Expose
-               val requisites: String)
+               val requisites: String,
+
+               @SerializedName("name1")
+               @Expose
+               val name1: String,
+
+               @SerializedName("phone1")
+               @Expose
+               val phone1: String,
+
+               @SerializedName("name2")
+               @Expose
+               val name2: String,
+
+               @SerializedName("phone2")
+               @Expose
+               val phone2: String)
