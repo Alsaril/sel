@@ -4,7 +4,7 @@ import api.LocalBase
 import com.j256.ormlite.dao.DaoManager
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
-import models.Operation
+import models.operation.Operation
 
 class OperationDAO(private val connectionSource: ConnectionSource) {
     private val modelClass = Operation::class.java

@@ -1,9 +1,8 @@
-package models.position
+package models.operation
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.j256.ormlite.field.DatabaseField
-import models.Operation
 
 class Position(@SerializedName("id")
                @Expose(serialize = false)

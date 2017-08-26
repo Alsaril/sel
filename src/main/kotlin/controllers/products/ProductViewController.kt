@@ -11,7 +11,7 @@ import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Node
-import models.Operation
+import models.operation.Operation
 import models.Product
 import utils.CloseListener
 import utils.Dialogs

@@ -12,9 +12,9 @@ import javafx.scene.control.cell.PropertyValueFactory
 import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
-import models.Operation
+import models.operation.Operation
 import models.Product
-import models.position.Position
+import models.operation.Position
 import start.Main
 import utils.CloseListener
 

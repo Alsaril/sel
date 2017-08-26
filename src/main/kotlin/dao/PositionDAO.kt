@@ -3,8 +3,8 @@ package dao
 import com.j256.ormlite.dao.DaoManager
 import com.j256.ormlite.support.ConnectionSource
 import com.j256.ormlite.table.TableUtils
-import models.Operation
-import models.position.Position
+import models.operation.Operation
+import models.operation.Position
 
 class PositionDAO(private val connectionSource: ConnectionSource) {
     private val modelClass = Position::class.java

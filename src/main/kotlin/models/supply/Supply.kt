@@ -1,8 +1,8 @@
-package models
+package models.supply
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import models.position.PositionSupplyFull
+import utils.Utils
 
 class Supply(@SerializedName("id")
              @Expose(serialize = false)
@@ -34,4 +34,14 @@ class Supply(@SerializedName("id")
 
              @SerializedName("positions")
              @Expose
-             var positions: List<PositionSupplyFull>)
+             var positions: List<PositionSupplyFull>){
+
+    fun getSupplierName():String{
+        return supplier.name
+    }
+
+    fun getDateFormat() = Utils.formatDate(date)
+
+}
+
+

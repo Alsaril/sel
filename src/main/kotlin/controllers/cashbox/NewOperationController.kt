@@ -21,9 +21,9 @@ import javafx.stage.Modality
 import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
-import models.Operation
+import models.operation.Operation
 import models.Product
-import models.position.Position
+import models.operation.Position
 import utils.CloseListener
 import utils.Dialogs
 import java.lang.Double

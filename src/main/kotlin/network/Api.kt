@@ -1,9 +1,14 @@
 package network
 
 import models.*
-import models.position.PositionSupplyFull
+import models.operation.Operation
+import models.reserve.Client
+import models.supply.PositionSupplyFull
 import models.reserve.Reserve
 import models.reserve.ReserveMin
+import models.supply.Supplier
+import models.supply.Supply
+import models.supply.SupplyMin
 import retrofit2.Call
 import retrofit2.http.*
 

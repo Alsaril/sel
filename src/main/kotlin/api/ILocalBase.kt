@@ -1,7 +1,7 @@
 package api
 
 import models.Node
-import models.Operation
+import models.operation.Operation
 import models.Product
 import models.ProductsData
 

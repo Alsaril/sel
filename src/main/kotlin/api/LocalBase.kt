@@ -7,7 +7,7 @@ import dao.NodeDAO
 import dao.OperationDAO
 import dao.PositionDAO
 import dao.ProductDAO
-import models.Operation
+import models.operation.Operation
 import models.ProductsData
 
 

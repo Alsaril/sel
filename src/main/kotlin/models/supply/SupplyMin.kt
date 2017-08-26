@@ -1,11 +1,11 @@
-package models
+package models.supply
 
 /**
  * Created by andrey on 22.08.17.
  */
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import models.position.PositionSupplyMin
+import models.supply.PositionSupplyMin
 
 class SupplyMin(@SerializedName("id")
              @Expose(serialize = false)
