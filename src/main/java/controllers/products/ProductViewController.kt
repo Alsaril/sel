@@ -195,7 +195,8 @@ class ProductViewController : LoadController<Boolean>() {
         }
     }
 
-    fun subProducts(products: List<Product>, node: TreeItem<Node>): List<Product> {
+    private fun subProducts(products: List<Product>, node: TreeItem<Node>?): List<Product> {
+        if (node == null) return listOf()
         val result = mutableListOf<Product>()
         result.addAll(products.filter { it.parent == node.value.id })
         result.addAll(node.children.flatMap { subProducts(products, it) })
