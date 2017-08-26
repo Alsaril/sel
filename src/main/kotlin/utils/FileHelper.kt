@@ -11,7 +11,8 @@ object FileHelper {
         Files.write(Paths.get(fileName), token.toByteArray())
     }
 
-    fun readToken(): String {
-        return String(Files.readAllBytes(Paths.get(fileName)))
+    fun readToken(): String? {
+        val path = Paths.get(fileName)
+        return if (Files.exists(path)) String(Files.readAllBytes(path)) else null
     }
 }

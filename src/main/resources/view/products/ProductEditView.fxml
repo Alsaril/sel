@@ -1,36 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane prefHeight="361.0" prefWidth="637.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.products.ProductsEditController">
-   <children>
-      <Label layoutX="32.0" layoutY="51.0" text="Название" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
-      <Label layoutX="21.0" layoutY="58.0" text="На чеке" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0" />
-      <Label layoutX="20.0" layoutY="96.0" text="Ед.измерения" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
-      <Label layoutX="32.0" layoutY="139.0" text="Баркод" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="140.0" />
-      <Label layoutX="277.0" layoutY="240.0" text="Артикул" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="180.0" />
-      <Label layoutX="246.0" layoutY="281.0" text="Производитель" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="220.0" />
-      <TextField fx:id="productName" layoutX="97.0" layoutY="16.0" prefHeight="26.0" prefWidth="489.0" AnchorPane.leftAnchor="95.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0" />
-      <TextField fx:id="productLName" layoutX="94.0" layoutY="55.0" AnchorPane.leftAnchor="95.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0" />
-      <TextField fx:id="productMeasurement" layoutX="127.0" layoutY="92.0" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="95.0" />
-      <TextField fx:id="productBarcode" layoutX="118.0" layoutY="134.0" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="135.0" />
-      <TextField fx:id="productVendor" layoutX="363.0" layoutY="235.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="175.0" />
-      <TextField fx:id="productProducer" layoutX="359.0" layoutY="276.0" AnchorPane.leftAnchor="125.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="215.0" />
-      <CheckBox fx:id="productIntegerOnly" layoutX="316.0" layoutY="108.0" mnemonicParsing="false" text="Только целое" AnchorPane.leftAnchor="315.0" AnchorPane.topAnchor="100.0" />
-      <Button layoutX="300.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleBarcode" text="Сгенерировать" AnchorPane.leftAnchor="305.0" AnchorPane.topAnchor="135.0" />
-      <Button layoutX="430.0" layoutY="135.0" mnemonicParsing="false" onAction="#handlePrint" text="Печать" AnchorPane.leftAnchor="435.0" AnchorPane.topAnchor="135.0" />
-      <Button layoutX="518.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleAdd" text="OK" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
-      <Label layoutX="22.0" layoutY="377.0" text="Минимальное кол-во:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="260.0" />
-      <TextField fx:id="productMinCount" layoutX="182.0" layoutY="375.0" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="255.0" />
-      <Label layoutX="20.0" layoutY="297.0" text="Раздел :" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="300.0" />
-      <Label fx:id="nodeLabel" layoutX="108.0" layoutY="297.0" text="не выбран" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="300.0" />
-      <Button layoutX="180.0" layoutY="295.0" mnemonicParsing="false" onAction="#handleNode" text="Изменить" AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="295.0" />
-   </children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="361.0" prefWidth="637.0" xmlns="http://javafx.com/javafx/8"
+            fx:controller="controllers.products.ProductsEditController">
+    <children>
+        <Label layoutX="32.0" layoutY="51.0" text="Название" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0"/>
+        <Label layoutX="21.0" layoutY="58.0" text="На чеке" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0"/>
+        <Label layoutX="20.0" layoutY="96.0" text="Ед.измерения" AnchorPane.leftAnchor="20.0"
+               AnchorPane.topAnchor="100.0"/>
+        <Label layoutX="32.0" layoutY="139.0" text="Баркод" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="140.0"/>
+        <Label layoutX="277.0" layoutY="240.0" text="Артикул" AnchorPane.leftAnchor="20.0"
+               AnchorPane.topAnchor="180.0"/>
+        <Label layoutX="246.0" layoutY="281.0" text="Производитель" AnchorPane.leftAnchor="20.0"
+               AnchorPane.topAnchor="220.0"/>
+        <TextField fx:id="productName" layoutX="97.0" layoutY="16.0" prefHeight="26.0" prefWidth="489.0"
+                   AnchorPane.leftAnchor="95.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="15.0"/>
+        <TextField fx:id="productLName" layoutX="94.0" layoutY="55.0" AnchorPane.leftAnchor="95.0"
+                   AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="55.0"/>
+        <TextField fx:id="productMeasurement" layoutX="127.0" layoutY="92.0" AnchorPane.leftAnchor="125.0"
+                   AnchorPane.topAnchor="95.0"/>
+        <TextField fx:id="productBarcode" layoutX="118.0" layoutY="134.0" AnchorPane.leftAnchor="125.0"
+                   AnchorPane.topAnchor="135.0"/>
+        <TextField fx:id="productVendor" layoutX="363.0" layoutY="235.0" AnchorPane.leftAnchor="125.0"
+                   AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="175.0"/>
+        <TextField fx:id="productProducer" layoutX="359.0" layoutY="276.0" AnchorPane.leftAnchor="125.0"
+                   AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="215.0"/>
+        <CheckBox fx:id="productIntegerOnly" layoutX="316.0" layoutY="108.0" mnemonicParsing="false" text="Только целое"
+                  AnchorPane.leftAnchor="315.0" AnchorPane.topAnchor="100.0"/>
+        <Button layoutX="300.0" layoutY="134.0" mnemonicParsing="false" onAction="#handleBarcode" text="Сгенерировать"
+                AnchorPane.leftAnchor="305.0" AnchorPane.topAnchor="135.0"/>
+        <Button layoutX="430.0" layoutY="135.0" mnemonicParsing="false" onAction="#handlePrint" text="Печать"
+                AnchorPane.leftAnchor="435.0" AnchorPane.topAnchor="135.0"/>
+        <Button layoutX="518.0" layoutY="349.0" mnemonicParsing="false" onAction="#handleAdd" text="OK"
+                AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0"/>
+        <Label layoutX="22.0" layoutY="377.0" text="Минимальное кол-во:" AnchorPane.leftAnchor="20.0"
+               AnchorPane.topAnchor="260.0"/>
+        <TextField fx:id="productMinCount" layoutX="182.0" layoutY="375.0" AnchorPane.leftAnchor="180.0"
+                   AnchorPane.topAnchor="255.0"/>
+        <Label layoutX="20.0" layoutY="297.0" text="Раздел :" AnchorPane.leftAnchor="20.0"
+               AnchorPane.topAnchor="300.0"/>
+        <Label fx:id="nodeLabel" layoutX="108.0" layoutY="297.0" text="не выбран" AnchorPane.leftAnchor="80.0"
+               AnchorPane.topAnchor="300.0"/>
+        <Button layoutX="180.0" layoutY="295.0" mnemonicParsing="false" onAction="#handleNode" text="Изменить"
+                AnchorPane.leftAnchor="180.0" AnchorPane.topAnchor="295.0"/>
+    </children>
 </AnchorPane>

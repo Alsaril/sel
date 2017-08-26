@@ -66,7 +66,7 @@ class Product(@SerializedName("id")
 
               @SerializedName("parent")
               @Expose
-              @DatabaseField(columnName = "sub_category")
+              @DatabaseField
               var parent: Int) {
 
     constructor() : this(0, "", "", "", false, "", "", "", 0.0, 0.0, 0.0, 0.0, 0)

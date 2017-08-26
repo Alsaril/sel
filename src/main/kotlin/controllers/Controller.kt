@@ -32,5 +32,7 @@ class Controller {
         SettingsController.show(actionEvent.source as Node) {}
     }
 
-    fun showClients(actionEvent: ActionEvent) {}
+    fun showClients(actionEvent: ActionEvent) {
+        ClientViewController.show(actionEvent.source as Node) {}
+    }
 }
