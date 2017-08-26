@@ -1,5 +1,17 @@
 package utils
 
+import javafx.application.Platform
+import javafx.embed.swing.JFXPanel
+import javafx.print.PrinterJob
+import javafx.scene.Scene
+import javafx.scene.web.WebView
+import javafx.stage.Stage
+import org.krysalis.barcode4j.impl.code128.Code128Bean
+import org.krysalis.barcode4j.output.java2d.Java2DCanvasProvider
+import java.awt.print.Printable
+import java.nio.file.Files
+import java.nio.file.Paths
+
 object Printer {
     fun printBarcode(barcode: String) {
         val pj = java.awt.print.PrinterJob.getPrinterJob()
@@ -8,16 +20,16 @@ object Printer {
                 if (pageIndex > 0) {
                     java.awt.print.Printable.NO_SUCH_PAGE
                 } else {
-                    val bean = org.krysalis.barcode4j.impl.code128.Code128Bean()
+                    val bean = Code128Bean()
                     bean.doQuietZone(false);
                     val g2d = graphics as java.awt.Graphics2D
                     g2d.translate(300, 100)
                     g2d.scale(5.0, 5.0)
 
-                    val canvas = org.krysalis.barcode4j.output.java2d.Java2DCanvasProvider(g2d, 0)
+                    val canvas = Java2DCanvasProvider(g2d, 0)
                     bean.generateBarcode(canvas, barcode)
 
-                    java.awt.print.Printable.PAGE_EXISTS
+                    Printable.PAGE_EXISTS
                 }
             }
         })
@@ -25,9 +37,11 @@ object Printer {
     }
 
 
-    val HEADER_TEMPLATE = "templates/header.html"
-    val ROW_TEMPLATE = "templates/row.html"
-    val FOOTER_TEMPLATE = "templates/footer.html"
+    val HEADER_TEMPLATE = "/templates/header.html"
+    val ROW_TEMPLATE = "/templates/row.html"
+    val FOOTER_TEMPLATE = "/templates/footer.html"
+
+    fun loadString(path: String) = String(Files.readAllBytes(Paths.get(Printer::class.java.getResource(path).toURI())))
 
     val NAME = "Человек-продавец"
 
@@ -41,11 +55,11 @@ object Printer {
                    cash: String,
                    odd: String,
                    operator: String) {
-        val headerTemplate = String(java.nio.file.Files.readAllBytes(java.nio.file.Paths.get(utils.Printer.HEADER_TEMPLATE)))
-        val rowTemplate = String(java.nio.file.Files.readAllBytes(java.nio.file.Paths.get(utils.Printer.ROW_TEMPLATE)))
-        val footerTemplate = String(java.nio.file.Files.readAllBytes(java.nio.file.Paths.get(utils.Printer.FOOTER_TEMPLATE)))
+        val headerTemplate = loadString(HEADER_TEMPLATE)
+        val rowTemplate = loadString(ROW_TEMPLATE)
+        val footerTemplate = loadString(FOOTER_TEMPLATE)
 
-        val headerLength = utils.Printer.NAME.length
+        val headerLength = NAME.length
 
         val headerBuilder = StringBuilder()
         for (i in 1..headerLength + 2) {
@@ -64,19 +78,19 @@ object Printer {
 
         val html = "$header$rows$footer"
 
-        javafx.embed.swing.JFXPanel()
-        javafx.application.Platform.runLater({
-            val stage = javafx.stage.Stage()
-            val wv = javafx.scene.web.WebView()
+        JFXPanel()
+        Platform.runLater({
+            val stage = Stage()
+            val wv = WebView()
             wv.engine.loadContent(html)
-            stage.scene = javafx.scene.Scene(wv)
+            stage.scene = Scene(wv)
             stage.setOnShown {
-                val pj = javafx.print.PrinterJob.createPrinterJob()
+                val pj = PrinterJob.createPrinterJob()
                 val b = pj.printPage(wv)
                 if (b) {
                     pj.endJob()
                 }
-                javafx.application.Platform.runLater({ stage.close() })
+                Platform.runLater({ stage.close() })
             }
             stage.show()
         })

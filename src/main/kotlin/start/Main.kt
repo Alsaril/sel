@@ -24,6 +24,10 @@ class Main : Application() {
 
         initRootLayout()
         showProductsOverview()
+
+        primaryStage.setOnCloseRequest {
+            System.exit(0)
+        }
     }
 
     fun initRootLayout() {
