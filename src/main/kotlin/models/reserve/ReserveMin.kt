@@ -16,6 +16,10 @@ class ReserveMin(@SerializedName("id")
                  @Expose
                  var date: String,
 
+                 @SerializedName("comment")
+                 @Expose
+                 var comment: String,
+
                  @SerializedName("client")
                  @Expose
                  var client: Int,

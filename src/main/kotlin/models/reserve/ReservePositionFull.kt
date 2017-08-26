@@ -12,6 +12,10 @@ class ReservePositionFull(@SerializedName("id")
                           @Expose
                           var count: Double,
 
+                          @SerializedName("price")
+                          @Expose
+                          var price: Double,
+
                           @SerializedName("product")
                           @Expose
                           val product: Product)

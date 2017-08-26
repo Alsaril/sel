@@ -16,6 +16,10 @@ public class Client(@SerializedName("id")
                     @Expose
                     val phone: String,
 
+                    @SerializedName("comment")
+                    @Expose
+                    val comment: String,
+
                     @SerializedName("address")
                     @Expose
                     val address: String)
