@@ -218,7 +218,7 @@ class ProductViewController : LoadController<Product?>() {
         return result
     }
 
-    private fun showProducts(products: List<Product>, node: TreeItem<Node>, predicate: ((product: Product) -> Boolean)? = null) {
+    private fun showProducts(products: List<Product>, node: TreeItem<Node>?, predicate: ((product: Product) -> Boolean)? = null) {
         var result = subProducts(products, node)
         predicate?.let {
             result = result.filter(it)
