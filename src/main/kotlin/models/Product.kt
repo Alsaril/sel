@@ -82,4 +82,5 @@ class Product(@SerializedName("id")
     fun getStrReserved() = str(reserved)
     fun getStrMinCount() = str(minCount)
     fun getPriceFormat() = String.format("%.2f", price)
+    override fun toString() = name
 }

@@ -95,7 +95,7 @@ class ProductViewController : LoadController<Product?>() {
 
     }
 
-    fun selectMode(){
+    fun selectMode() {
         productTable.setRowFactory { tv ->
             var row = TableRow<Product>()
             row.setOnMouseClicked({ event ->
@@ -239,7 +239,7 @@ class ProductViewController : LoadController<Product?>() {
                     title = "Товары",
                     isResizable = false,
                     modality = Modality.WINDOW_MODAL) {
-                if(select){
+                if (select) {
                     selectMode()
                 }
             }

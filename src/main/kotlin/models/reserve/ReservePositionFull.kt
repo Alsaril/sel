@@ -18,4 +18,22 @@ class ReservePositionFull(@SerializedName("id")
 
                           @SerializedName("product")
                           @Expose
-                          val product: Product)
+                          val product: Product) {
+
+
+    fun sum() = price * count
+    private fun str(d: Double) =
+            if (product.isInteger) {
+                d.toInt().toString()
+            } else {
+                String.format("%.2f", d)
+            }
+
+    fun getSumFormat() = String.format("%.2f", sum())
+    fun getStrCount() = str(count)
+    fun getName() = product.name
+    fun getUnit() = product.unit
+    fun getPriceFormat() = String.format("%.2f", price)
+
+    fun toMin() = ReservePositionMin(id, count, price, product.id)
+}

@@ -22,5 +22,7 @@ public class Client(@SerializedName("id")
 
                     @SerializedName("comment")
                     @Expose
-                    val comment: String)
+                    val comment: String) {
+    override fun toString() = name
+}
 

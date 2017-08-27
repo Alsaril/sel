@@ -2,8 +2,8 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="587.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/8"
-            fx:controller="controllers.reserves.NewReserveController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="587.0" prefWidth="839.0"
+            xmlns="http://javafx.com/javafx/8.0.112" fx:controller="controllers.reserves.NewReserveController">
     <children>
         <TableView fx:id="positionTable" layoutX="14.0" layoutY="113.0" prefHeight="200.0" prefWidth="200.0"
                    AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0"
@@ -28,5 +28,7 @@
         <Button layoutX="518.0" layoutY="413.0" mnemonicParsing="false" onAction="#okHandle" text="Сохранить"
                 AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0"/>
         <Button layoutX="149.0" layoutY="20.0" mnemonicParsing="false" text="Распечатать"/>
+        <TextArea fx:id="comment" layoutX="20.0" layoutY="506.0" prefHeight="71.0" prefWidth="200.0"/>
+        <ComboBox fx:id="clients" layoutX="229.0" layoutY="505.0" prefWidth="150.0"/>
     </children>
 </AnchorPane>

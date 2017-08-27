@@ -37,9 +37,9 @@ class ReservesViewController : LoadController<Boolean>() {
         dateColumn.setCellValueFactory(PropertyValueFactory("date"))
         clientColumn.setCellValueFactory(PropertyValueFactory("client"))
 
-        productColumn.setCellValueFactory(PropertyValueFactory("product"))
-        countColumn.setCellValueFactory(PropertyValueFactory("count"))
-        priceColumn.setCellValueFactory(PropertyValueFactory("price"))
+        productColumn.setCellValueFactory(PropertyValueFactory("name"))
+        countColumn.setCellValueFactory(PropertyValueFactory("strCount"))
+        priceColumn.setCellValueFactory(PropertyValueFactory("sumFormat"))
 
         reservesTable.selectionModel.selectedItemProperty().addListener { _, _, newValue -> select(newValue) }
 
