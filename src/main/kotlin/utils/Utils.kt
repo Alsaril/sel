@@ -19,6 +19,22 @@ object Utils {
     fun print() {
         //Printer.INSTANCE.printCheck(1,"4545454", new Date().toString(),25,"25:25,");
     }
+
+    fun fieldCheck(s:String):String{
+        if (s!=""){
+            return s
+        }else{
+            return "нет данных"
+        }
+    }
+    fun dataFormat(s:String):String{
+        if (s=="нет данных"){
+            return ""
+        }else{
+            return s
+        }
+    }
+
 }
 
 typealias CloseListener<T> = (result: T) -> Unit
