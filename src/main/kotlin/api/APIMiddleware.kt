@@ -1,12 +1,15 @@
 package api
 
 import kotlinx.coroutines.experimental.Deferred
-import models.*
+import models.Barcode
+import models.Node
+import models.Product
+import models.ProductsData
 import models.operation.Operation
 import models.reserve.Client
-import models.supply.PositionSupplyFull
 import models.reserve.Reserve
 import models.reserve.ReserveMin
+import models.supply.PositionSupplyFull
 import models.supply.Supplier
 import models.supply.Supply
 import models.supply.SupplyMin
@@ -88,6 +91,8 @@ interface API {
     fun editReserve(@Path("id") id: String, @Body reserveMin: ReserveMin): DeferredResult<Void>
 
     fun delReserve(@Path("id") id: String): DeferredResult<Void>
+
+    fun expiringProducts(): DeferredResult<List<Product>>
 
     fun addStateListener(stateListener: StateListener)
 }

@@ -1,11 +1,14 @@
 package network
 
-import models.*
+import models.Barcode
+import models.Node
+import models.Product
+import models.ProductsData
 import models.operation.Operation
 import models.reserve.Client
-import models.supply.PositionSupplyFull
 import models.reserve.Reserve
 import models.reserve.ReserveMin
+import models.supply.PositionSupplyFull
 import models.supply.Supplier
 import models.supply.Supply
 import models.supply.SupplyMin
@@ -97,4 +100,7 @@ interface Api {
 
     @DELETE("reserves/{id}/")
     fun delReserve(@Path("id") id: String): Call<Void>
+
+    @GET("expiring_products")
+    fun expiringProducts(): Call<List<Product>>
 }

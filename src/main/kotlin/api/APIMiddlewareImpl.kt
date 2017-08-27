@@ -3,12 +3,15 @@ package api
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
-import models.*
+import models.Barcode
+import models.Node
+import models.Product
+import models.ProductsData
 import models.operation.Operation
 import models.reserve.Client
-import models.supply.PositionSupplyFull
 import models.reserve.Reserve
 import models.reserve.ReserveMin
+import models.supply.PositionSupplyFull
 import models.supply.Supplier
 import models.supply.Supply
 import models.supply.SupplyMin
@@ -520,6 +523,23 @@ object APIMiddlewareImpl : API {
             Result.successVoidResult(State.ONLINE)
         } else {
             Result<Void>("response code != ${DELETED} or response body == null", State.ONLINE)
+        }
+    }
+
+    override fun expiringProducts(): DeferredResult<List<Product>> = async(CommonPool) {
+        val response: Response<List<Product>>
+        try {
+            response = networkAPI.expiringProducts().awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result<List<Product>>("Exception: ${t.message}", State.OFFLINE)
+        }
+        val data = response.body()
+        state = State.ONLINE
+        if (response.code() == OK && data != null) {
+            Result(data, State.ONLINE)
+        } else {
+            Result<List<Product>>("response code != ${OK} or response body == null", State.ONLINE)
         }
     }
 }
