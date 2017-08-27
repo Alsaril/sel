@@ -1,11 +1,10 @@
 package controllers
 
 import javafx.collections.FXCollections
+import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.Node
-import javafx.scene.control.Label
-import javafx.scene.control.TableColumn
-import javafx.scene.control.TableView
+import javafx.scene.control.*
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
@@ -28,7 +27,17 @@ class ClientViewController : LoadController<Void>() {
         nameColumn.setCellValueFactory(PropertyValueFactory("name"))
         phoneColumn.setCellValueFactory(PropertyValueFactory("phone"))
 
-        clientTable.selectionModel.selectedItemProperty().addListener { _, _, newValue -> select(newValue) }
+        val clientTableContextMenu = ContextMenu()
+        val editClient = MenuItem("Редактировать")
+        editClient.onAction = EventHandler {
+            val item = clientTable.selectionModel.selectedItem
+            edit(item)
+        }
+
+        clientTableContextMenu.items.add(editClient)
+        clientTable.contextMenu = clientTableContextMenu
+
+        clientTable.selectionModel.selectedItemProperty().addListener { _, _, newValue -> newValue?.let { select(newValue) } }
 
         update()
     }
@@ -51,6 +60,14 @@ class ClientViewController : LoadController<Void>() {
 
     fun add() {
         NewClientController.show(stage) {
+            if (it) {
+                update()
+            }
+        }
+    }
+
+    fun edit(client: Client) {
+        NewClientController.show(stage, client) {
             if (it) {
                 update()
             }

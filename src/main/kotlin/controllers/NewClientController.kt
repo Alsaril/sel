@@ -1,5 +1,6 @@
 package controllers
 
+import api.Result
 import javafx.fxml.FXML
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
@@ -17,9 +18,19 @@ class NewClientController : LoadController<Boolean>() {
     @FXML private lateinit var address: TextField
     @FXML private lateinit var comment: TextArea
 
+    private var id: Int? = null
+
     @FXML
     private fun initialize() {
 
+    }
+
+    fun edit(client: Client) {
+        id = client.id
+        name.text = client.name
+        phone.text = client.phone
+        address.text = client.address
+        comment.text = client.comment
     }
 
     fun ok() = launch(JavaFx) {
@@ -28,9 +39,16 @@ class NewClientController : LoadController<Boolean>() {
             return@launch
         }
 
-        val client = Client(0, name.text, phone.text, address.text, comment.text)
+        val id = this@NewClientController.id
 
-        val result = api.addClient(client).await()
+        val client = Client(id ?: 0, name.text, phone.text, address.text, comment.text)
+
+        val result: Result<Void> =
+                if (id == null) {
+                    api.addClient(client)
+                } else {
+                    api.editClient(id.toString(), client)
+                }.await()
 
         if (result.isSuccessful()) {
             close(true)
@@ -40,14 +58,18 @@ class NewClientController : LoadController<Boolean>() {
     }
 
     companion object {
-        fun show(owner: Window, callback: CloseListener<Boolean>) {
-            LoadController.show(owner, callback,
+        fun show(owner: Window, client: Client? = null, callback: CloseListener<Boolean>) {
+            LoadController.show<Boolean, NewClientController>(owner, callback,
                     path = "/view/reserves/NewClient.fxml",
                     title = "Добавить клиента",
                     minHeight = 600.0,
                     minWidth = 800.0,
                     isResizable = false,
-                    modality = Modality.WINDOW_MODAL)
+                    modality = Modality.WINDOW_MODAL) {
+                client?.let {
+                    edit(client)
+                }
+            }
         }
     }
 }
