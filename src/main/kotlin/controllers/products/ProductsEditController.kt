@@ -1,6 +1,7 @@
 package controllers.products
 
 import controllers.LoadController
+import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.CheckBox
@@ -36,7 +37,16 @@ class ProductsEditController : LoadController<Boolean>() {
 
     }
 
-    fun handleBarcode() {}
+    fun handleBarcode() {
+        loadBarcode()
+    }
+
+    private fun loadBarcode() = launch(JavaFx) {
+        val result = api.barcode().await()
+        if (result.isSuccessful()) {
+            productBarcode.text = result.result.toString()
+        }
+    }
     fun handleAdd() {
         var valid = true
         val product = Product()
@@ -68,6 +78,7 @@ class ProductsEditController : LoadController<Boolean>() {
     fun handleNode(actionEvent: ActionEvent) {
         SelectParentController.show(actionEvent.source as javafx.scene.Node) { result ->
             editProduct.parent = result
+            nodeLabel.text = result.toString()
         }
     }
 

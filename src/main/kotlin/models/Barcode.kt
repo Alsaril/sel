@@ -5,4 +5,6 @@ import com.google.gson.annotations.SerializedName
 
 class Barcode(@SerializedName("barcode")
               @Expose
-              val barcode: String)
+              val barcode: String){
+    override fun toString() = barcode
+}

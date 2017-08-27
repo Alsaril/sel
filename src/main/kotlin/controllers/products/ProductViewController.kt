@@ -108,11 +108,16 @@ class ProductViewController : LoadController<Product?>() {
     }
 
     private fun addProduct(node: Node) {
-        ProductsEditController.show(node = node, owner = productTable as javafx.scene.Node) { result ->
-            if (result) {
-                loadProductsData()
+        if (node.id == -1){
+            Dialogs.showErrorDialog("Невозможно добавить товар в этот раздел!")
+        }else{
+            ProductsEditController.show(node = node, owner = productTable as javafx.scene.Node) { result ->
+                if (result) {
+                    loadProductsData()
+                }
             }
         }
+
     }
 
     private fun editProduct(product: Product) {
@@ -146,7 +151,11 @@ class ProductViewController : LoadController<Product?>() {
 
     private fun addNode(name: String, parentNode: Node) = launch(JavaFx) {
         val node = Node()
-        node.parent = parentNode.id
+        if (parentNode.id == -1){
+            node.parent = null
+        }else {
+            node.parent = parentNode.id
+        }
         node.name = name
         val result = api.addNode(node).await()
         if (result.isSuccessful()) {
