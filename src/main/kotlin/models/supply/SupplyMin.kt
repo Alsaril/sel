@@ -37,4 +37,7 @@ class SupplyMin(@SerializedName("id")
 
              @SerializedName("positions")
              @Expose
-             var positions: List<PositionSupplyMin>)
+             var positions: List<PositionSupplyMin>){
+
+    constructor() : this(0, "", "", "","","",0, listOf())
+}

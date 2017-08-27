@@ -48,4 +48,9 @@ class Supplier(@SerializedName("id")
                var phone2: String){
     constructor() : this(0,"","",0,"","","","","","","")
 
+    override fun toString():String{
+        return name
+    }
+
+
 }
