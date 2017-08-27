@@ -31,18 +31,18 @@ class Position(@SerializedName("id")
 
     constructor() : this(0, 0.0, 0.0, 0.0, 0)
 
-    lateinit var productName: String
-    lateinit var unit: String
+    var productName: String = ""
+    var unit: String = ""
     var isInteger = false
 
     @DatabaseField
     private var operation: Int = 0
 
+
+
     fun sum() = (price - discount) * count
 
-    val getPriceFormat = String.format("%.2f", price)
 
-    val getSumFormat = String.format("%.2f", sum())
 
     fun setOperation(operation: Operation) {
         this.operation = operation.id
@@ -54,6 +54,8 @@ class Position(@SerializedName("id")
             } else {
                 String.format("%.2f", d)
             }
-
+    fun getSumFormat() = String.format("%.2f", sum())
     fun getStrCount() = str(count)
+    fun getPriceFormat() = String.format("%.2f", price)
+    fun getDiscountFormat() = String.format("%.2f", discount)
 }
