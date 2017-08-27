@@ -103,10 +103,8 @@ class NewReserveController : LoadController<Boolean>() {
             Dialogs.showErrorDialog("Не выбран клиент")
             return
         }
-        val reserve = ReserveMin(0, "", comment.text,
-                simpleDateFormat.format(Date()),
-                client = client.id,
-                positions = positionsOL.map { it.toMin() })
+        val reserve = ReserveMin(0, "", simpleDateFormat.format(Date()),
+                comment.text, client.id, positionsOL.map { it.toMin() })
 
         addReserve(reserve)
     }
