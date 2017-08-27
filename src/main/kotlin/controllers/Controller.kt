@@ -10,7 +10,7 @@ import javafx.scene.Node
 
 class Controller {
     fun showProducts(actionEvent: ActionEvent) {
-        ProductViewController.show(actionEvent.source as Node) {}
+        ProductViewController.show(select = false, owner = actionEvent.source as Node) {}
     }
 
     fun showPasswordCheckDialog(actionEvent: ActionEvent) {

@@ -1,6 +1,7 @@
 package controllers.supply
 
 import controllers.LoadController
+import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.Node
 import javafx.scene.control.Label
@@ -58,8 +59,8 @@ class SuppliesViewController : LoadController<Boolean>(){
     fun newSupply(){
 
     }
-    fun showSuppliers(){
-
+    fun showSuppliers(actionEvent: ActionEvent){
+        SuppliersViewController.show(actionEvent.source as Node){}
     }
 
     fun showSupply(supply:Supply){

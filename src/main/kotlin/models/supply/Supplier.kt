@@ -5,44 +5,47 @@ import com.google.gson.annotations.SerializedName
 
 class Supplier(@SerializedName("id")
                @Expose
-               val id: Int,
+               var id: Int,
 
                @SerializedName("name")
                @Expose
-               val name: String,
+               var name: String,
 
                @SerializedName("inn")
                @Expose
-               val inn: String,
+               var inn: String,
 
                @SerializedName("type")
                @Expose
-               val type: Int,
+               var type: Int,
 
                @SerializedName("ur_address")
                @Expose
-               val urAddress: String,
+               var urAddress: String,
 
                @SerializedName("phys_address")
                @Expose
-               val physAddress: String,
+               var physAddress: String,
 
                @SerializedName("requisites")
                @Expose
-               val requisites: String,
+               var requisites: String,
 
                @SerializedName("name1")
                @Expose
-               val name1: String,
+               var name1: String,
 
                @SerializedName("phone1")
                @Expose
-               val phone1: String,
+               var phone1: String,
 
                @SerializedName("name2")
                @Expose
-               val name2: String,
+               var name2: String,
 
                @SerializedName("phone2")
                @Expose
-               val phone2: String)
+               var phone2: String){
+    constructor() : this(0,"","",0,"","","","","","","")
+
+}
