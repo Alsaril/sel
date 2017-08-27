@@ -49,6 +49,14 @@ class ClientViewController : LoadController<Void>() {
         commentLabel.text = client.comment
     }
 
+    fun add() {
+        NewClientController.show(stage) {
+            if (it) {
+                update()
+            }
+        }
+    }
+
     companion object {
         fun show(owner: Node, callback: CloseListener<Void>) {
             LoadController.show(owner, callback,

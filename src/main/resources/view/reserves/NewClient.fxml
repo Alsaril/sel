@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" prefHeight="327.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8"
-            fx:controller="view.reserves.NewClient">
+            fx:controller="controllers.NewClientController">
     <children>
         <GridPane layoutX="87.0" layoutY="50.0" prefHeight="109.0" prefWidth="510.0" AnchorPane.leftAnchor="20.0"
                   AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="20.0">
@@ -21,15 +21,18 @@
                 <Label text="Имя"/>
                 <Label text="Телефон" GridPane.rowIndex="1"/>
                 <Label text="Адрес" GridPane.rowIndex="2"/>
-                <TextField GridPane.columnIndex="1"/>
-                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                <TextField prefHeight="6.0" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <TextField fx:id="name" GridPane.columnIndex="1"/>
+                <TextField fx:id="phone" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <TextField fx:id="address" prefHeight="6.0" prefWidth="350.0" GridPane.columnIndex="1"
+                           GridPane.rowIndex="2"/>
             </children>
         </GridPane>
         <Label layoutX="20.0" layoutY="141.0" text="Комментарий"/>
-        <TextArea layoutX="178.0" layoutY="135.0" prefHeight="109.0" prefWidth="350.0" AnchorPane.leftAnchor="180.0"
+        <TextArea fx:id="comment" layoutX="178.0" layoutY="135.0" prefHeight="109.0" prefWidth="350.0"
+                  AnchorPane.leftAnchor="180.0"
                   AnchorPane.topAnchor="135.0"/>
-        <Button layoutX="520.0" layoutY="286.0" mnemonicParsing="false" text="ОК" AnchorPane.bottomAnchor="20.0"
+        <Button onAction="#ok" layoutX="520.0" layoutY="286.0" mnemonicParsing="false" text="ОК"
+                AnchorPane.bottomAnchor="20.0"
                 AnchorPane.rightAnchor="20.0"/>
     </children>
 </AnchorPane>
