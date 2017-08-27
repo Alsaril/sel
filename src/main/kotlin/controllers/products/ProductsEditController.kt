@@ -5,6 +5,7 @@ import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.control.CheckBox
+import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
 import javafx.stage.Modality
@@ -14,6 +15,7 @@ import models.Node
 import models.Product
 import utils.CloseListener
 import utils.Dialogs
+import utils.Measure
 
 
 class ProductsEditController : LoadController<Boolean>() {
@@ -25,7 +27,7 @@ class ProductsEditController : LoadController<Boolean>() {
 
     @FXML private lateinit var productName: TextField
     @FXML private lateinit var productLName: TextField
-    @FXML private lateinit var productMeasurement: TextField
+    @FXML private lateinit var unitComboBox: ComboBox<Measure>
     @FXML private lateinit var productBarcode: TextField
     @FXML private lateinit var productVendor: TextField
     @FXML private lateinit var productProducer: TextField
@@ -34,7 +36,8 @@ class ProductsEditController : LoadController<Boolean>() {
     @FXML private lateinit var nodeLabel: Label
 
     @FXML private fun initialize() {
-
+        unitComboBox.items = FXCollections.observableArrayList(Measure.items())
+        unitComboBox.selectionModel.select(0)
     }
 
     fun handleBarcode() {
@@ -47,12 +50,18 @@ class ProductsEditController : LoadController<Boolean>() {
             productBarcode.text = result.result.toString()
         }
     }
+
     fun handleAdd() {
+        if (unitComboBox.selectionModel.selectedItem == null) {
+            Dialogs.showErrorDialog("Не выбрана единица измерения товара")
+            return
+        }
+
         var valid = true
         val product = Product()
         product.name = productName.text
         product.shortName = productLName.text
-        product.unit = productMeasurement.text
+        product.unit = unitComboBox.selectionModel.selectedItem.str
         product.barcode = productBarcode.text
         product.vendor = productVendor.text
         product.producer = productProducer.text
@@ -85,7 +94,7 @@ class ProductsEditController : LoadController<Boolean>() {
     fun edit(product: Product) {
         productName.text = product.name
         productLName.text = product.shortName
-        productMeasurement.text = product.unit
+        unitComboBox.selectionModel.select(Measure.fromName(product.unit))
         productBarcode.text = product.barcode
         productVendor.text = product.vendor
         productProducer.text = product.producer

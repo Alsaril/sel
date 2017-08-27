@@ -20,17 +20,18 @@ object Utils {
         //Printer.INSTANCE.printCheck(1,"4545454", new Date().toString(),25,"25:25,");
     }
 
-    fun fieldCheck(s:String):String{
-        if (s!=""){
+    fun fieldCheck(s: String): String {
+        if (s != "") {
             return s
-        }else{
+        } else {
             return "нет данных"
         }
     }
-    fun dataFormat(s:String):String{
-        if (s=="нет данных"){
+
+    fun dataFormat(s: String): String {
+        if (s == "нет данных") {
             return ""
-        }else{
+        } else {
             return s
         }
     }
@@ -38,3 +39,18 @@ object Utils {
 }
 
 typealias CloseListener<T> = (result: T) -> Unit
+
+enum class Measure(val str: String) {
+    SH("шт"), M("м"), KG("кг"), M2("м²"), M3("м³");
+
+    companion object {
+        private val map = HashMap<String, Measure>()
+
+        init {
+            Measure.values().forEach { map[it.str] = it }
+        }
+
+        fun fromName(str: String) = map[str]
+        fun items(): List<Measure> = Measure.values().asList()
+    }
+}
