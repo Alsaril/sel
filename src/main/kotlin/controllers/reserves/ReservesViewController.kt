@@ -34,7 +34,7 @@ class ReservesViewController : LoadController<Boolean>() {
 
     @FXML
     fun initialize() {
-        dateColumn.setCellValueFactory(PropertyValueFactory("date"))
+        dateColumn.setCellValueFactory(PropertyValueFactory("formatDate"))
         clientColumn.setCellValueFactory(PropertyValueFactory("client"))
 
         productColumn.setCellValueFactory(PropertyValueFactory("name"))
@@ -55,7 +55,7 @@ class ReservesViewController : LoadController<Boolean>() {
             positionTable.items = FXCollections.observableArrayList()
         } else {
             clientLabel.text = reserve.client.name
-            dateLabel.text = reserve.date
+            dateLabel.text = reserve.getFormatDate()
             commentLabel.text = reserve.comment
             positionTable.items = FXCollections.observableArrayList(reserve.positions)
         }
@@ -86,8 +86,6 @@ class ReservesViewController : LoadController<Boolean>() {
             LoadController.show(owner, callback,
                     path = "/view/reserves/ReservesView.fxml",
                     title = "Резервы",
-                    minHeight = 600.0,
-                    minWidth = 800.0,
                     isResizable = false,
                     modality = Modality.WINDOW_MODAL)
         }

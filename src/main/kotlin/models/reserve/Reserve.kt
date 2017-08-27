@@ -2,6 +2,7 @@ package models.reserve
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import utils.Utils
 
 class Reserve(@SerializedName("id")
               @Expose(serialize = false)
@@ -25,4 +26,6 @@ class Reserve(@SerializedName("id")
 
               @SerializedName("positions")
               @Expose
-              var positions: List<ReservePositionFull>)
+              var positions: List<ReservePositionFull>){
+    fun getFormatDate() = Utils.formatDate(date)
+}
