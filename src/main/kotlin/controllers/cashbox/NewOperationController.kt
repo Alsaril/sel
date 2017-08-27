@@ -68,7 +68,7 @@ class NewOperationController : LoadController<Boolean>() {
             position.count = count
             refresh()
         }
-        discountColumn.cellValueFactory = PropertyValueFactory("discountString")
+        discountColumn.cellValueFactory = PropertyValueFactory("discountFormat")
         discountColumn.cellFactory = TextFieldTableCell.forTableColumn()
         discountColumn.onEditCommit = EventHandler { t ->
             val position = t.tableView.items[t.tablePosition.row] as Position
@@ -83,31 +83,25 @@ class NewOperationController : LoadController<Boolean>() {
     }
 
     fun addProduct(actionEvent: ActionEvent) {
-        val stage = Stage()
-        val loader = FXMLLoader()
-        loader.location = javaClass.getResource("/view/cashbox/SelectProductView.fxml")
-        val FXML = loader.load<Parent>()
-        stage.title = "Выбор товара"
-        stage.isResizable = false
-        stage.scene = Scene(FXML)
-        stage.initModality(Modality.WINDOW_MODAL)
-        stage.initOwner((actionEvent.source as Node).scene.window)
-
-        val controller = loader.getController<ProductViewController>()
-        stage.showAndWait()
-
-        val product = controller.selectProduct
-        newPosition(product)
+        ProductViewController.show(select = true, owner = actionEvent.source as Node) {result ->
+            newPosition(result)
+        }
     }
 
-    private fun newPosition(product: Product) {
-        val position = Position(
-                count = 1.0,
-                price = Double.parseDouble(product.price.toString()),
-                product = product.id)
+    private fun newPosition(product: Product?) {
+        if (product!=null) {
+            val position = Position(
+                    count = 1.0,
+                    price = product.price,
+                    product = product.id)
+            position.productName = product.name
+            position.unit = product.unit
+            position.isInteger = product.isInteger
+            position.discount = 0.0
 
-        positionsOL.addAll(position)
-        refresh()
+            positionsOL.addAll(position)
+            refresh()
+        }
     }
 
     fun okHandle() {

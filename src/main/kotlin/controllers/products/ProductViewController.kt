@@ -102,7 +102,7 @@ class ProductViewController : LoadController<Product?>() {
         productTable.setRowFactory { tv ->
             var row = TableRow<Product>()
             row.setOnMouseClicked({ event ->
-                if (event.getClickCount() === 2 && !row.isEmpty()) {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
                     close(productTable.selectionModel.selectedItem)
                 }
             })
