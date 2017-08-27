@@ -56,7 +56,12 @@ class SuppliesViewController : LoadController<Boolean>(){
         loadSuppliesData()
     }
 
-    fun newSupply(){
+    fun newSupply(actionEvent: ActionEvent){
+        NewSupplyController.show(actionEvent.source as Node){ result ->
+            if(result){
+                loadSuppliesData()
+            }
+        }
 
     }
     fun showSuppliers(actionEvent: ActionEvent){

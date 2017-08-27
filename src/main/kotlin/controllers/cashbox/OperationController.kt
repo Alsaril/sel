@@ -50,13 +50,13 @@ class OperationController: LoadController<Boolean>(){
         nameColumn.setCellValueFactory(PropertyValueFactory("productName"))
         priceColumn.setCellValueFactory(PropertyValueFactory("priceFormat"))
         countColumn.setCellValueFactory(PropertyValueFactory("strCount"))
-        discountColumn.setCellValueFactory(PropertyValueFactory("discountString"))
+        discountColumn.setCellValueFactory(PropertyValueFactory("discountFormat"))
         sumColumn.setCellValueFactory(PropertyValueFactory("sumFormat"))
         unitColumn.setCellValueFactory(PropertyValueFactory("unit"))
         //---------------------------------------------------------------------------------------
         typeColumn.setCellValueFactory(PropertyValueFactory("typeString"))
         dateColumn.setCellValueFactory(PropertyValueFactory("dateFormat"))
-        userColumn.setCellValueFactory(PropertyValueFactory("user"))
+        userColumn.setCellValueFactory(PropertyValueFactory("userName"))
         operationTable.selectionModel.selectedItemProperty().addListener { _, _, newValue -> showOperation(newValue) }
         loadOperationData()
         loadProducts()
@@ -87,8 +87,8 @@ class OperationController: LoadController<Boolean>(){
 
     private fun showOperation(operation: Operation) {
         userLabel.text = operation.user
-        typeLabel.text = operation.typeString()
-        dateLabel.text = operation.dateFormat()
+        typeLabel.text = operation.getTypeString()
+        dateLabel.text = operation.getDateFormat()
         val positions = operation.positions
         var sum = 0.0
         positions.forEach { position ->

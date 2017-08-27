@@ -11,6 +11,7 @@ class Operation(@SerializedName("id")
                 val id: Int = 0,
 
                 @SerializedName("user")
+                @Expose(serialize = false)
                 @DatabaseField
                 val user: String = "",
 
@@ -30,9 +31,10 @@ class Operation(@SerializedName("id")
 
     constructor() : this(0, "", "", 0, listOf())
 
-    fun dateFormat() = Utils.formatDate(date)
+    fun getDateFormat() = Utils.formatDate(date)
+    fun getUserName() = user
 
-    fun typeString() = if (type == 1) "Возврат" else "Продажа"
+    fun getTypeString() = if (type == 1) "Возврат" else "Продажа"
 
     fun setPositions(positions: List<Position>): Operation {
         this.positions = positions

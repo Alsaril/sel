@@ -15,16 +15,18 @@
    <children>
       <TableView fx:id="positionTable" layoutX="6.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="150.0">
         <columns>
-          <TableColumn fx:id="barcodeColumn" prefWidth="105.0" text="Баркод" />
+          <TableColumn fx:id="vendorColumn" prefWidth="105.0" text="Артикул" />
           <TableColumn fx:id="nameColumn" prefWidth="156.0" text="Наименование" />
             <TableColumn fx:id="countColumn" prefWidth="71.0" text="Кол-во" />
+            <TableColumn fx:id="unitColumn" prefWidth="75.0" text="Ед.изм." />
             <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="110.0" text="Цена поставки" />
+            <TableColumn fx:id="sellPriceColumn" prefWidth="75.0" text="Цена продажи" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ComboBox fx:id="supplier" layoutX="120.0" layoutY="25.0" prefHeight="26.0" prefWidth="198.0" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="15.0" />
+      <ComboBox fx:id="suppliers" layoutX="120.0" layoutY="25.0" prefHeight="26.0" prefWidth="198.0" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="15.0" />
       <Label layoutX="20.0" layoutY="33.0" text="Поставщик" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
       <Label layoutX="23.0" layoutY="62.0" text="Документ" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0" />
       <Button layoutX="513.0" layoutY="59.0" mnemonicParsing="false" onAction="#addPosition" text="Добавить товар" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0" />
@@ -32,7 +34,7 @@
       <Button layoutX="517.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleOk" text="ОК" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="20.0" />
       <Label layoutX="341.0" layoutY="20.0" text="Информация о документе:" />
       <Label layoutX="20.0" layoutY="99.0" text="Дата документа" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0" />
-      <DatePicker fx:id="dateDocument" layoutX="132.0" layoutY="95.0" prefHeight="27.0" prefWidth="198.0" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="95.0" />
+      <DatePicker fx:id="documentDate" layoutX="132.0" layoutY="95.0" prefHeight="27.0" prefWidth="198.0" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="95.0" />
       <TextArea fx:id="documentInfo" layoutX="341.0" layoutY="48.0" prefHeight="73.0" prefWidth="390.0" AnchorPane.leftAnchor="340.0" AnchorPane.topAnchor="50.0" />
    </children>
 </AnchorPane>
