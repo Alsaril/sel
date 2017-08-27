@@ -38,7 +38,7 @@ class ClientViewController : LoadController<Void>() {
         clientTableContextMenu.items.add(editClient)
         clientTable.contextMenu = clientTableContextMenu
 
-        clientTable.selectionModel.selectedItemProperty().addListener { _, _, newValue -> newValue?.let { select(newValue) } }
+        clientTable.selectionModel.selectedItemProperty().addListener { _, _, newValue -> select(newValue) }
 
         update()
     }
@@ -52,11 +52,18 @@ class ClientViewController : LoadController<Void>() {
         clientTable.items = FXCollections.observableArrayList(clients)
     }
 
-    private fun select(client: Client) {
-        nameLabel.text = client.name
-        phoneLabel.text = client.phone
-        addressLabel.text = client.address
-        commentLabel.text = client.comment
+    private fun select(client: Client?) {
+        if (client != null) {
+            nameLabel.text = client.name
+            phoneLabel.text = client.phone
+            addressLabel.text = client.address
+            commentLabel.text = client.comment
+        } else {
+            nameLabel.text = "Нет данных"
+            phoneLabel.text = "Нет данных"
+            addressLabel.text = "Нет данных"
+            commentLabel.text = "Нет данных"
+        }
     }
 
     fun add() {

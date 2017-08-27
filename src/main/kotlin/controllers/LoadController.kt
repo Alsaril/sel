@@ -2,6 +2,7 @@ package controllers
 
 import api.API
 import api.APIMiddlewareImpl
+import javafx.application.Platform
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
 import javafx.scene.Parent
@@ -20,7 +21,7 @@ abstract class LoadController<T> {
 
     public fun close(result: T) {
         stage.close()
-        callback.invoke(result)
+        Platform.runLater { callback.invoke(result) }
     }
 
     companion object {
