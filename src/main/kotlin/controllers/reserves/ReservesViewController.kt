@@ -1,5 +1,6 @@
 package controllers.reserves
 
+import controllers.ClientViewController
 import controllers.LoadController
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
@@ -70,11 +71,15 @@ class ReservesViewController : LoadController<Boolean>() {
     }
 
     fun newReserve() {
-
+        NewReserveController.show(stage) {
+            if (it) {
+                update()
+            }
+        }
     }
 
-    fun showSuppliers() {
-
+    fun showClients() {
+        ClientViewController.show(stage) {}
     }
 
     companion object {

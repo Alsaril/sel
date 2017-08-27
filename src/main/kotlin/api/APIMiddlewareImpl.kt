@@ -25,6 +25,7 @@ object APIMiddlewareImpl : API {
     private val OK = 200
     private val CREATED = 201
     private val DELETED = 204
+    private val IM_TEAPOT = 418
 
     private val networkAPI = RetrofitClient.apiService
     private val localAPI: ILocalBase = LocalBase
@@ -129,7 +130,7 @@ object APIMiddlewareImpl : API {
         if (response.code() == CREATED) {
             Result.successVoidResult(State.ONLINE)
         } else {
-            Result<Void>("response code != ${CREATED} or response body == null", State.ONLINE)
+            Result<Void>(if (response.code() == IM_TEAPOT) "Недостаточно товара на складе" else "response code != ${CREATED} or response body == null", State.ONLINE)
         }
     }
 

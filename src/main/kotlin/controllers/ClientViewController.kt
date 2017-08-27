@@ -7,6 +7,7 @@ import javafx.scene.Node
 import javafx.scene.control.*
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.stage.Modality
+import javafx.stage.Window
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.reserve.Client
@@ -76,6 +77,11 @@ class ClientViewController : LoadController<Void>() {
 
     companion object {
         fun show(owner: Node, callback: CloseListener<Void>) {
+            show(owner.scene.window, callback)
+        }
+
+
+        fun show(owner: Window, callback: CloseListener<Void>) {
             LoadController.show(owner, callback,
                     path = "/view/reserves/ClientView.fxml",
                     title = "Клиенты",

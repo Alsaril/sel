@@ -6,7 +6,10 @@ import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 import javafx.scene.control.cell.PropertyValueFactory
+import javafx.stage.Modality
+import javafx.stage.Window
 import models.operation.Position
+import utils.CloseListener
 
 class NewReserveController : LoadController<Boolean>() {
     @FXML private lateinit var positionTable: TableView<Position>
@@ -33,5 +36,17 @@ class NewReserveController : LoadController<Boolean>() {
 
     fun okHandle() {
 
+    }
+
+    companion object {
+        fun show(owner: Window, callback: CloseListener<Boolean>) {
+            LoadController.show(owner, callback,
+                    path = "/view/reserves/NewReserve.fxml",
+                    title = "Новый резерв",
+                    minHeight = 600.0,
+                    minWidth = 800.0,
+                    isResizable = false,
+                    modality = Modality.WINDOW_MODAL)
+        }
     }
 }

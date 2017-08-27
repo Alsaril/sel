@@ -21,7 +21,7 @@
                 </TableView>
                 <Button layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#newReserve" prefHeight="27.0"
                         prefWidth="154.0" text="Новый резерв" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="60.0"/>
-                <Button layoutX="518.0" layoutY="20.0" mnemonicParsing="false" onAction="#showSuppliers"
+                <Button layoutX="518.0" layoutY="20.0" mnemonicParsing="false" onAction="#showClients"
                         prefHeight="27.0" prefWidth="155.0" text="Клиенты" AnchorPane.leftAnchor="20.0"
                         AnchorPane.topAnchor="20.0"/>
             </children>

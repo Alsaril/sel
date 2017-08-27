@@ -11,13 +11,10 @@ import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Node
-import models.operation.Operation
 import models.Product
+import models.operation.Operation
 import utils.CloseListener
 import utils.Dialogs
-import com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table
-
-
 
 
 class ProductViewController : LoadController<Product?>() {
@@ -102,7 +99,7 @@ class ProductViewController : LoadController<Product?>() {
         productTable.setRowFactory { tv ->
             var row = TableRow<Product>()
             row.setOnMouseClicked({ event ->
-                if (event.getClickCount() === 2 && !row.isEmpty()) {
+                if (event.getClickCount() == 2 && !row.isEmpty()) {
                     close(productTable.selectionModel.selectedItem)
                 }
             })
