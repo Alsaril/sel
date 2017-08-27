@@ -15,9 +15,12 @@ import models.operation.Operation
 import models.Product
 import utils.CloseListener
 import utils.Dialogs
+import com.sun.xml.internal.fastinfoset.alphabet.BuiltInRestrictedAlphabets.table
 
 
-class ProductViewController : LoadController<Boolean>() {
+
+
+class ProductViewController : LoadController<Product?>() {
 
     private var operationOL = FXCollections.observableArrayList<Operation>()
     private var products: List<Product> = listOf()
@@ -92,6 +95,19 @@ class ProductViewController : LoadController<Boolean>() {
         }
 
         loadProductsData()
+
+    }
+
+    fun selectMode(){
+        productTable.setRowFactory { tv ->
+            var row = TableRow<Product>()
+            row.setOnMouseClicked({ event ->
+                if (event.getClickCount() === 2 && !row.isEmpty()) {
+                    close(productTable.selectionModel.selectedItem)
+                }
+            })
+            row
+        }
     }
 
     private fun addProduct(node: Node) {
@@ -214,16 +230,22 @@ class ProductViewController : LoadController<Boolean>() {
 
     fun selectHandle() {
         selectProduct = productTable.selectionModel.selectedItem
-        close(true)
+        close(selectProduct)
     }
 
     companion object {
-        fun show(owner: javafx.scene.Node, callback: CloseListener<Boolean>) {
-            LoadController.show(owner, callback,
+        fun show(select: Boolean,
+                 owner: javafx.scene.Node,
+                 callback: CloseListener<Product?>) {
+            LoadController.show<Product?, ProductViewController>(owner, callback,
                     path = "/view/products/ProductsView.fxml",
                     title = "Товары",
                     isResizable = false,
-                    modality = Modality.WINDOW_MODAL)
+                    modality = Modality.WINDOW_MODAL) {
+                if(select){
+                    selectMode()
+                }
+            }
         }
     }
 }
