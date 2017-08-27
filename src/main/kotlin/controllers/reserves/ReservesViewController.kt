@@ -56,8 +56,7 @@ class ReservesViewController : LoadController<Boolean>() {
         } else {
             clientLabel.text = reserve.client.name
             dateLabel.text = reserve.date
-            commentLabel.text = reserve.client.comment
-
+            commentLabel.text = reserve.comment
             positionTable.items = FXCollections.observableArrayList(reserve.positions)
         }
     }

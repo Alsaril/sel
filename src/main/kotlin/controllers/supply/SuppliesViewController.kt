@@ -1,6 +1,7 @@
 package controllers.supply
 
 import controllers.LoadController
+import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
 import javafx.scene.Node
@@ -11,7 +12,6 @@ import javafx.scene.control.cell.PropertyValueFactory
 import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
-import models.Product
 import models.supply.PositionSupplyFull
 import models.supply.Supply
 import utils.CloseListener
@@ -21,7 +21,7 @@ import utils.Dialogs
 /**
  * Created by andrey on 25.07.17.
  */
-class SuppliesViewController : LoadController<Boolean>(){
+class SuppliesViewController : LoadController<Boolean>() {
 
     @FXML private lateinit var suppliesTable: TableView<Supply>
 
@@ -56,31 +56,40 @@ class SuppliesViewController : LoadController<Boolean>(){
         loadSuppliesData()
     }
 
-    fun newSupply(actionEvent: ActionEvent){
-        NewSupplyController.show(actionEvent.source as Node){ result ->
-            if(result){
+    fun newSupply(actionEvent: ActionEvent) {
+        NewSupplyController.show(actionEvent.source as Node) { result ->
+            if (result) {
                 loadSuppliesData()
             }
         }
 
     }
-    fun showSuppliers(actionEvent: ActionEvent){
-        SuppliersViewController.show(actionEvent.source as Node){}
+
+    fun showSuppliers(actionEvent: ActionEvent) {
+        SuppliersViewController.show(actionEvent.source as Node) {}
     }
 
-    fun showSupply(supply:Supply){
-        documentLabel.text = supply.document
-        infoDocumentLabel.text = supply.documentInfo
-        dateDocumentLabel.text = supply.documentDate
-        dateAddLabel.text = supply.getDateFormat()
-        productTable.items.setAll(supply.positions)
+    private fun showSupply(supply: Supply?) {
+        if (supply != null) {
+            documentLabel.text = supply.document
+            infoDocumentLabel.text = supply.documentInfo
+            dateDocumentLabel.text = supply.documentDate
+            dateAddLabel.text = supply.getDateFormat()
+            productTable.items.setAll(supply.positions)
+        } else {
+            documentLabel.text = "Нет данных"
+            infoDocumentLabel.text = "Нет данных"
+            dateDocumentLabel.text = "Нет данных"
+            dateAddLabel.text = "Нет данных"
+            productTable.items = FXCollections.observableArrayList()
+        }
     }
 
     private fun loadSuppliesData() = launch(JavaFx) {
         val result = api.supplies().await()
         if (result.isSuccessful()) {
             suppliesTable.items.setAll(result.result)
-        }else{
+        } else {
             Dialogs.showExeptionDialog(result.error)
         }
     }

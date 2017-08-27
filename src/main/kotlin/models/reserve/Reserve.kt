@@ -19,6 +19,10 @@ class Reserve(@SerializedName("id")
               @Expose
               var client: Client,
 
+              @SerializedName("comment")
+              @Expose
+              var comment: String,
+
               @SerializedName("positions")
               @Expose
               var positions: List<ReservePositionFull>)

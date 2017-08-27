@@ -87,7 +87,9 @@ class ProductViewController : LoadController<Product?>() {
 
         search.setOnKeyReleased {
             showProducts(products, nodeTreeView.selectionModel.selectedItem) {
-                it.name.contains(search.text, ignoreCase = true)
+                it.name.contains(search.text, ignoreCase = true) ||
+                        it.barcode.contains(search.text, ignoreCase = true) ||
+                        it.vendor.contains(search.text, ignoreCase = true)
             }
         }
 
