@@ -3,6 +3,7 @@ package controllers
 import controllers.cashbox.OperationController
 import controllers.cashbox.PasswordController
 import controllers.products.ProductViewController
+import controllers.reserves.ReservesViewController
 import controllers.supply.SuppliesViewController
 import javafx.event.ActionEvent
 import javafx.scene.Node
@@ -35,4 +36,9 @@ class Controller {
     fun showClients(actionEvent: ActionEvent) {
         ClientViewController.show(actionEvent.source as Node) {}
     }
+
+    fun showReserves(actionEvent: ActionEvent) {
+        ReservesViewController.show(actionEvent.source as Node) {}
+    }
+
 }

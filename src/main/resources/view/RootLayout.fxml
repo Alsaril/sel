@@ -22,7 +22,7 @@
                         </ImageView>
                         <Button mnemonicParsing="false" onAction="#showPasswordCheckDialog" text="Касса"/>
                         <Button mnemonicParsing="false" onAction="#showProducts" text="Товары"/>
-                        <Button mnemonicParsing="false" text="Резерв"/>
+                        <Button mnemonicParsing="false" onAction="#showReserves" text="Резерв"/>
                         <Button mnemonicParsing="false" onAction="#showClients" text="Клиенты"/>
                         <Button mnemonicParsing="false" onAction="#showSupply" text="Поставки"/>
                         <Button mnemonicParsing="false" onAction="#showSettings" text="Настройки"/>

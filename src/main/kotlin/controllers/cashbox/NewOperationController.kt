@@ -21,8 +21,8 @@ import javafx.stage.Modality
 import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
-import models.operation.Operation
 import models.Product
+import models.operation.Operation
 import models.operation.Position
 import utils.CloseListener
 import utils.Dialogs
@@ -32,7 +32,7 @@ import java.util.*
 
 class NewOperationController : LoadController<Boolean>() {
 
-    private var positionsOL: ObservableList<Position>? = FXCollections.observableArrayList()
+    private var positionsOL: ObservableList<Position> = FXCollections.observableArrayList()
     private var positionList: List<Position>? = null
 
     @FXML private lateinit var returnCheckBox: CheckBox
@@ -106,7 +106,7 @@ class NewOperationController : LoadController<Boolean>() {
                 price = Double.parseDouble(product.price.toString()),
                 product = product.id)
 
-        positionsOL?.addAll(position)
+        positionsOL.addAll(position)
         refresh()
     }
 
@@ -115,7 +115,7 @@ class NewOperationController : LoadController<Boolean>() {
         val operation = Operation(
                 date = simpleDateFormat.format(Date()),
                 type = if (returnCheckBox.isSelected) 1 else 0,
-                positions = positionsOL ?: listOf())
+                positions = positionsOL)
 
         addOperation(operation)
     }
@@ -137,7 +137,7 @@ class NewOperationController : LoadController<Boolean>() {
     private fun refresh() {
         positionTable.refresh()
         var sum = 0.0
-        positionsOL?.forEach { sum += it.sum() }
+        positionsOL.forEach { sum += it.sum() }
         totalSum.text = String.format("%.2f", sum)
     }
 
