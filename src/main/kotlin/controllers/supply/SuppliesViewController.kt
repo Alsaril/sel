@@ -44,7 +44,7 @@ class SuppliesViewController : LoadController<Boolean>() {
 
     @FXML
     private fun initialize() {
-        dateColumn.setCellValueFactory(PropertyValueFactory("document"))
+        dateColumn.setCellValueFactory(PropertyValueFactory("dateFormat"))
         supplierColumn.setCellValueFactory(PropertyValueFactory("supplierName"))
         documentColumn.setCellValueFactory(PropertyValueFactory("document"))
         suppliesTable.selectionModel.selectedItemProperty().addListener { _, _, newValue -> showSupply(newValue) }
