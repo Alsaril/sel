@@ -62,8 +62,6 @@ class NewClientController : LoadController<Boolean>() {
             LoadController.show<Boolean, NewClientController>(owner, callback,
                     path = "/view/reserves/NewClient.fxml",
                     title = "Добавить клиента",
-                    minHeight = 600.0,
-                    minWidth = 800.0,
                     isResizable = false,
                     modality = Modality.WINDOW_MODAL) {
                 client?.let {

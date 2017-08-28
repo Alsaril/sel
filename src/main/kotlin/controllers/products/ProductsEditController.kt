@@ -1,6 +1,7 @@
 package controllers.products
 
 import controllers.LoadController
+import controllers.supply.FirstSupplyController
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
@@ -122,7 +123,10 @@ class ProductsEditController : LoadController<Boolean>() {
         val result = api.addProduct(product).await()
         if (result.isSuccessful()) {
             Dialogs.showDialog("Товар успешно добавлен!")
-            close(true)
+            FirstSupplyController.show(product = result.result, owner = nodeLabel as javafx.scene.Node) {
+                result ->  close(true)
+            }
+            
         } else {
             Dialogs.showExeptionDialog(result.error)
         }
