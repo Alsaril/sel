@@ -2,22 +2,16 @@ package controllers.supply
 
 import api.API
 import api.APIMiddlewareImpl
-import controllers.LoadController
-import controllers.products.ProductsEditController
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
-import javafx.scene.Node
 import javafx.scene.control.TextField
-import javafx.stage.Modality
 import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Product
 import models.supply.PositionSupplyMin
 import models.supply.SupplyMin
-import utils.CloseListener
 import utils.Dialogs
-import utils.Position
 
 class FirstSupplyController{
 
@@ -35,7 +29,7 @@ class FirstSupplyController{
         var price = 0.0
         try {
             count = countField.text.toDouble()
-            price = countField.text.toDouble()
+            price = priceField.text.toDouble()
         } catch (e: NumberFormatException) {
             Dialogs.showErrorDialog("Введите в поля числа!")
             valid = false
