@@ -7,8 +7,10 @@ import dao.NodeDAO
 import dao.OperationDAO
 import dao.PositionDAO
 import dao.ProductDAO
-import models.operation.Operation
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.launch
 import models.ProductsData
+import models.operation.Operation
 
 
 object LocalBase : ILocalBase {
@@ -29,8 +31,10 @@ object LocalBase : ILocalBase {
     }
 
     override fun save(data: ProductsData) {
-        nodeDao.saveList(data.nodes)
-        productDao.saveList(data.products)
+        launch(CommonPool) {
+            nodeDao.saveList(data.nodes)
+            productDao.saveList(data.products)
+        }
     }
 
     override fun products() = productDao.loadList()
