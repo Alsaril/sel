@@ -19,7 +19,8 @@
           <TableColumn fx:id="nameColumn" prefWidth="156.0" text="Наименование" />
             <TableColumn fx:id="countColumn" prefWidth="71.0" text="Кол-во" />
             <TableColumn fx:id="unitColumn" prefWidth="75.0" text="Ед.изм." />
-            <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="110.0" text="Цена поставки" />
+            <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="110.0" text="Цена за все" />
+            <TableColumn fx:id="unitPriceColumn" prefWidth="75.0" text="Цена за ед." />
             <TableColumn fx:id="sellPriceColumn" prefWidth="75.0" text="Цена продажи" />
         </columns>
          <columnResizePolicy>
