@@ -18,10 +18,7 @@ import models.Product
 import models.supply.PositionSupplyFull
 import models.supply.Supplier
 import models.supply.SupplyMin
-import utils.CloseListener
-import utils.Dialogs
-import utils.Utils
-import utils.parseDouble
+import utils.*
 
 /**
  * Created by andrey on 25.07.17.
@@ -40,6 +37,7 @@ class NewSupplyController : LoadController<Boolean>() {
     @FXML private lateinit var nameColumn: TableColumn<PositionSupplyFull, String>
     @FXML private lateinit var vendorColumn: TableColumn<PositionSupplyFull, String>
     @FXML private lateinit var priceColumn: TableColumn<PositionSupplyFull, String>
+    @FXML private lateinit var unitPriceColumn: TableColumn<PositionSupplyFull, String>
     @FXML private lateinit var unitColumn: TableColumn<PositionSupplyFull, String>
     @FXML private lateinit var countColumn: TableColumn<PositionSupplyFull, String>
     @FXML private lateinit var sellPriceColumn: TableColumn<PositionSupplyFull, String>
@@ -51,7 +49,7 @@ class NewSupplyController : LoadController<Boolean>() {
         nameColumn.cellValueFactory = PropertyValueFactory("productName")
         vendorColumn.cellValueFactory = PropertyValueFactory("productVendor")
 
-        priceColumn.cellValueFactory = PropertyValueFactory("priceFormat")
+        priceColumn.cellValueFactory = PropertyValueFactory("fullPriceFormat")
         priceColumn.cellFactory = TextFieldTableCell.forTableColumn()
         priceColumn.onEditCommit = EventHandler { t ->
             val position = t.tableView.items[t.tablePosition.row] as PositionSupplyFull
@@ -60,7 +58,8 @@ class NewSupplyController : LoadController<Boolean>() {
                 Dialogs.showErrorDialog("Введено нечисловое значение")
                 return@EventHandler
             }
-            position.price = price
+            position.fullPrice = price
+            position.price = price/position.count
             refresh()
         }
         countColumn.cellValueFactory = PropertyValueFactory("strCount")
@@ -73,6 +72,7 @@ class NewSupplyController : LoadController<Boolean>() {
                 return@EventHandler
             }
             position.count = count
+            position.price = position.fullPrice/position.count
             refresh()
         }
         sellPriceColumn.cellValueFactory = PropertyValueFactory("sellPriceFormat")
@@ -88,6 +88,17 @@ class NewSupplyController : LoadController<Boolean>() {
             refresh()
         }
         unitColumn.cellValueFactory = PropertyValueFactory("productUnit")
+        unitPriceColumn.cellValueFactory = PropertyValueFactory("priceFormat")
+
+
+        val contextMenu = ContextMenu()
+        val calc = MenuItem("Посчитать цену")
+        calc.onAction = EventHandler {
+            val item = positionTable.selectionModel.selectedItem
+            calcSellPrice(item)
+        }
+        contextMenu.items.setAll(calc)
+        positionTable.contextMenu = contextMenu
 
         loadSuppliers()
 
@@ -158,6 +169,23 @@ class NewSupplyController : LoadController<Boolean>() {
         if (result.isSuccessful()) {
             suppliers.items=FXCollections.observableArrayList(result.result)
         }
+    }
+
+    fun calcSellPrice(position: PositionSupplyFull){
+        var supplyPirce = position.price
+        val dialog = TextInputDialog()
+        dialog.title = "Цена"
+        dialog.headerText = "Накинуть сверху:"
+        dialog.contentText = "%:"
+        val result = dialog.showAndWait()
+
+        result.ifPresent({ p ->
+            val d = parseDouble(p)
+            if (d != null) {
+                position.sellPrice = position.price + (position.price * (d / 100))
+            }
+        })
+        refresh()
     }
 
     companion object {

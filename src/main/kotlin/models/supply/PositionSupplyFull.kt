@@ -20,19 +20,24 @@ public class PositionSupplyFull(@SerializedName("id")
 
                                 @SerializedName("sell_price")
                                 @Expose
-                                @DatabaseField
                                 var sellPrice: Double,
 
                                 @SerializedName("product")
                                 @Expose
                                 val product: Product) {
+    var fullPrice: Double = 0.0
+
+
+
 
     fun getProductName() = product.name
     fun getProductVendor() = product.vendor
     fun getPriceFormat() = String.format("%.2f", price)
+    fun getFullPriceFormat() = String.format("%.2f", fullPrice)
     fun getStrCount() = str(count)
     fun getSellPriceFormat() = String.format("%.2f", sellPrice)
     fun getProductUnit() = product.unit
+
 
     private fun str(d: Double) =
             if (product.isInteger) {
