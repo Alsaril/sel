@@ -1,5 +1,7 @@
 package controllers.supply
 
+import api.API
+import api.APIMiddlewareImpl
 import controllers.LoadController
 import controllers.products.ProductsEditController
 import javafx.collections.FXCollections
@@ -7,6 +9,7 @@ import javafx.fxml.FXML
 import javafx.scene.Node
 import javafx.scene.control.TextField
 import javafx.stage.Modality
+import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Product
@@ -16,7 +19,9 @@ import utils.CloseListener
 import utils.Dialogs
 import utils.Position
 
-class FirstSupplyController : LoadController<Boolean>() {
+class FirstSupplyController{
+
+    protected var api: API = APIMiddlewareImpl
 
     @FXML private lateinit var countField: TextField
     @FXML private lateinit var priceField: TextField
@@ -46,37 +51,27 @@ class FirstSupplyController : LoadController<Boolean>() {
         val positions = FXCollections.observableArrayList<PositionSupplyMin>(position)
         supply.positions = positions
 
-        addSupply(supply)
+        newSupply(supply)
     }
 
-    private fun addSupply(supplyMin: SupplyMin) = launch(JavaFx) {
+    private fun newSupply(supplyMin: SupplyMin) = launch(JavaFx) {
         val result = api.addSupply(supplyMin).await()
         if (result.isSuccessful()) {
             Dialogs.showDialog("Поставка добавлена успешно!")
-            close(true)
+            close()
         } else {
             Dialogs.showExeptionDialog(result.error)
         }
     }
 
-
-    companion object {
-        fun show(product: Product? = null,
-                 owner: javafx.scene.Node,
-                 callback: CloseListener<Boolean>) {
-            LoadController.show<Boolean, FirstSupplyController>(owner, callback,
-                    path = "/view/supply/FirstSupply.fxml",
-                    title = "Новая поставка",
-                    isResizable = false,
-                    modality = Modality.WINDOW_MODAL) {
-                if (product != null) {
-                    editProduct = product
-                } else {
-                    Dialogs.showErrorDialog("Товар не найден!")
-                    close(false)
-                }
-
-            }
-        }
+    fun close() {
+        val stage = countField.scene.window as Stage
+        stage.close()
     }
+
+    fun setProduct(product: Product){
+        editProduct = product
+    }
+
+
 }

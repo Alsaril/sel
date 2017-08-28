@@ -17,6 +17,14 @@ import models.Product
 import utils.CloseListener
 import utils.Dialogs
 import utils.Measure
+import java.io.IOException
+import controllers.supply.SupplierEditController
+import javafx.scene.Scene
+import javafx.scene.Parent
+import javafx.fxml.FXMLLoader
+import javafx.stage.Stage
+
+
 
 
 class ProductsEditController : LoadController<Boolean>() {
@@ -123,12 +131,36 @@ class ProductsEditController : LoadController<Boolean>() {
         val result = api.addProduct(product).await()
         if (result.isSuccessful()) {
             Dialogs.showDialog("Товар успешно добавлен!")
-            FirstSupplyController.show(product = result.result, owner = nodeLabel as javafx.scene.Node) {
-                result ->  close(true)
-            }
+            supply(result.result)
+            close(true)
             
         } else {
             Dialogs.showExeptionDialog(result.error)
+        }
+    }
+
+    fun supply(product: Product?){
+        if (product!=null){
+            try {
+                val stage = Stage()
+                val loader = FXMLLoader()
+                loader.location = javaClass.getResource("/view/supply/FirstSupply.fxml")
+                val categoryAddFXML = loader.load<Parent>()
+                stage.title = "Новая поставка"
+                stage.scene = Scene(categoryAddFXML)
+                stage.initOwner(nodeLabel.scene.window)
+                stage.initModality(Modality.WINDOW_MODAL)
+
+                val controller = loader.getController<FirstSupplyController>()
+                controller.setProduct(product)
+
+                stage.showAndWait()
+
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+
         }
     }
 
