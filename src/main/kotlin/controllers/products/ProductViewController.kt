@@ -1,6 +1,7 @@
 package controllers.products
 
 import controllers.LoadController
+import javafx.application.Platform
 import javafx.collections.FXCollections
 import javafx.event.EventHandler
 import javafx.fxml.FXML
@@ -93,8 +94,11 @@ class ProductViewController : LoadController<Product?>() {
             }
         }
 
-        loadProductsData()
+        nodeTreeView.selectionModel.selectedItemProperty().addListener { _, _, newValue ->
+            showProducts(products, newValue)
+        }
 
+        loadProductsData()
     }
 
     fun selectMode() {
@@ -197,7 +201,7 @@ class ProductViewController : LoadController<Product?>() {
         val result = api.productsData().await()
         if (!result.isSuccessful()) return@launch
         products = result.notNullResult().products
-        productsOL = FXCollections.observableArrayList(result.notNullResult().products)
+        productsOL = FXCollections.observableArrayList(products)
         productTable.setItems(productsOL)
 
         val items = result.notNullResult().nodes.map { TreeItem(it) }
@@ -211,12 +215,10 @@ class ProductViewController : LoadController<Product?>() {
         }
         val root = TreeItem<Node>(Node("Все"))
         root.children.addAll(roots)
+        val selected = nodeTreeView.selectionModel.selectedItem
         nodeTreeView.root = root
-        nodeTreeView.selectionModel.select(0)
-
-        nodeTreeView.selectionModel.selectedItemProperty().addListener { _, _, newValue ->
-            showProducts(result.notNullResult().products, newValue)
-        }
+        nodeTreeView.refresh()
+        Platform.runLater { nodeTreeView.selectionModel.select(selected) }
     }
 
     private fun subProducts(products: List<Product>, node: TreeItem<Node>?): List<Product> {

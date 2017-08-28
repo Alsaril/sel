@@ -23,6 +23,11 @@ class Node(@SerializedName("id")
 
     override fun toString() = name
 
+    override fun equals(other: Any?): Boolean {
+        if (other !is Node) return false
+        return name == other.name
+    }
+
 }
 
 
