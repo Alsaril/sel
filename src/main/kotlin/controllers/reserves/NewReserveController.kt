@@ -21,7 +21,7 @@ import models.reserve.ReserveMin
 import models.reserve.ReservePositionFull
 import utils.CloseListener
 import utils.Dialogs
-import java.lang.Double
+import utils.parseDouble
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,7 +49,11 @@ class NewReserveController : LoadController<Boolean>() {
         priceColumn.cellFactory = TextFieldTableCell.forTableColumn()
         priceColumn.onEditCommit = EventHandler { t ->
             val position = t.tableView.items[t.tablePosition.row] as ReservePositionFull
-            val price = Double.parseDouble(t.newValue)
+            val price = parseDouble(t.newValue)
+            if (price == null) {
+                Dialogs.showErrorDialog("Введено нечисловое значение")
+                return@EventHandler
+            }
             position.price = price
             refresh()
         }
@@ -57,7 +61,11 @@ class NewReserveController : LoadController<Boolean>() {
         countColumn.cellFactory = TextFieldTableCell.forTableColumn()
         countColumn.onEditCommit = EventHandler { t ->
             val position = t.tableView.items[t.tablePosition.row] as ReservePositionFull
-            val count = Double.parseDouble(t.newValue)
+            val count = parseDouble(t.newValue)
+            if (count == null) {
+                Dialogs.showErrorDialog("Введено нечисловое значение")
+                return@EventHandler
+            }
             position.count = count
             refresh()
         }

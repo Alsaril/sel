@@ -15,15 +15,13 @@ import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Product
-import models.operation.Operation
-import models.operation.Position
-import models.supply.*
+import models.supply.PositionSupplyFull
+import models.supply.Supplier
+import models.supply.SupplyMin
 import utils.CloseListener
 import utils.Dialogs
 import utils.Utils
-import java.lang.Double
-import java.text.SimpleDateFormat
-import java.util.*
+import utils.parseDouble
 
 /**
  * Created by andrey on 25.07.17.
@@ -57,7 +55,11 @@ class NewSupplyController : LoadController<Boolean>() {
         priceColumn.cellFactory = TextFieldTableCell.forTableColumn()
         priceColumn.onEditCommit = EventHandler { t ->
             val position = t.tableView.items[t.tablePosition.row] as PositionSupplyFull
-            val price = Double.parseDouble(t.newValue)
+            val price = parseDouble(t.newValue)
+            if (price == null) {
+                Dialogs.showErrorDialog("Введено нечисловое значение")
+                return@EventHandler
+            }
             position.price = price
             refresh()
         }
@@ -65,7 +67,11 @@ class NewSupplyController : LoadController<Boolean>() {
         countColumn.cellFactory = TextFieldTableCell.forTableColumn()
         countColumn.onEditCommit = EventHandler { t ->
             val position = t.tableView.items[t.tablePosition.row] as PositionSupplyFull
-            val count = java.lang.Double.parseDouble(t.newValue)
+            val count = parseDouble(t.newValue)
+            if (count == null) {
+                Dialogs.showErrorDialog("Введено нечисловое значение")
+                return@EventHandler
+            }
             position.count = count
             refresh()
         }
@@ -73,8 +79,12 @@ class NewSupplyController : LoadController<Boolean>() {
         sellPriceColumn.cellFactory = TextFieldTableCell.forTableColumn()
         sellPriceColumn.onEditCommit = EventHandler { t ->
             val position = t.tableView.items[t.tablePosition.row] as PositionSupplyFull
-            val cellPrice = java.lang.Double.parseDouble(t.newValue)
-            position.sellPrice = cellPrice
+            val sellPrice = parseDouble(t.newValue)
+            if (sellPrice == null) {
+                Dialogs.showErrorDialog("Введено нечисловое значение")
+                return@EventHandler
+            }
+            position.sellPrice = sellPrice
             refresh()
         }
         unitColumn.cellValueFactory = PropertyValueFactory("productUnit")

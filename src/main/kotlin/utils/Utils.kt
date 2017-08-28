@@ -53,5 +53,8 @@ enum class Measure(val str: String) {
         fun fromName(str: String) = map[str]
         fun items(): List<Measure> = Measure.values().asList()
     }
+
     override fun toString() = str
 }
+
+fun parseDouble(str: String) = str.replace(',', '.').toDoubleOrNull()

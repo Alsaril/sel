@@ -7,10 +7,7 @@ import javafx.collections.ObservableList
 import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.fxml.FXML
-import javafx.fxml.FXMLLoader
 import javafx.scene.Node
-import javafx.scene.Parent
-import javafx.scene.Scene
 import javafx.scene.control.CheckBox
 import javafx.scene.control.Label
 import javafx.scene.control.TableColumn
@@ -18,7 +15,6 @@ import javafx.scene.control.TableView
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.control.cell.TextFieldTableCell
 import javafx.stage.Modality
-import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Product
@@ -26,7 +22,7 @@ import models.operation.Operation
 import models.operation.Position
 import utils.CloseListener
 import utils.Dialogs
-import java.lang.Double
+import utils.parseDouble
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,7 +51,11 @@ class NewOperationController : LoadController<Boolean>() {
         priceColumn.cellFactory = TextFieldTableCell.forTableColumn()
         priceColumn.onEditCommit = EventHandler { t ->
             val position = t.tableView.items[t.tablePosition.row] as Position
-            val price = java.lang.Double.parseDouble(t.newValue)
+            val price = parseDouble(t.newValue)
+            if (price == null) {
+                Dialogs.showErrorDialog("Введено нечисловое значение")
+                return@EventHandler
+            }
             position.price = price
             refresh()
         }
@@ -64,7 +64,11 @@ class NewOperationController : LoadController<Boolean>() {
         countColumn.cellFactory = TextFieldTableCell.forTableColumn()
         countColumn.onEditCommit = EventHandler { t ->
             val position = t.tableView.items[t.tablePosition.row] as Position
-            val count = java.lang.Double.parseDouble(t.newValue)
+            val count = parseDouble(t.newValue)
+            if (count == null) {
+                Dialogs.showErrorDialog("Введено нечисловое значение")
+                return@EventHandler
+            }
             position.count = count
             refresh()
         }
@@ -72,7 +76,11 @@ class NewOperationController : LoadController<Boolean>() {
         discountColumn.cellFactory = TextFieldTableCell.forTableColumn()
         discountColumn.onEditCommit = EventHandler { t ->
             val position = t.tableView.items[t.tablePosition.row] as Position
-            val discount = java.lang.Double.parseDouble(t.newValue)
+            val discount = parseDouble(t.newValue)
+            if (discount == null) {
+                Dialogs.showErrorDialog("Введено нечисловое значение")
+                return@EventHandler
+            }
             position.discount = discount
             refresh()
         }
@@ -83,13 +91,13 @@ class NewOperationController : LoadController<Boolean>() {
     }
 
     fun addProduct(actionEvent: ActionEvent) {
-        ProductViewController.show(select = true, owner = actionEvent.source as Node) {result ->
+        ProductViewController.show(select = true, owner = actionEvent.source as Node) { result ->
             newPosition(result)
         }
     }
 
     private fun newPosition(product: Product?) {
-        if (product!=null) {
+        if (product != null) {
             val position = Position(
                     count = 1.0,
                     price = product.price,
