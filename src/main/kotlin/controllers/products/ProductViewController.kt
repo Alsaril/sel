@@ -56,7 +56,7 @@ class ProductViewController : LoadController<Product?>() {
         val delProduct = MenuItem("Удалить")
         delProduct.onAction = EventHandler {
             val item = productTable.selectionModel.selectedItem
-            delProduct(item)
+            deleteProduct(item)
         }
         val infoProduct = MenuItem("Информация")
         infoProduct.onAction = EventHandler {
@@ -135,8 +135,17 @@ class ProductViewController : LoadController<Product?>() {
 
     }
 
-    private fun delProduct(product: Product) {
+    private fun deleteProduct(product: Product) {
+        val alert = Alert(AlertType.CONFIRMATION)
+        alert.title = "Удаление товарв"
+        alert.headerText = "Удалить товар: ${product.name}?"
 
+        val result = alert.showAndWait()
+        if (result.get() === ButtonType.OK) {
+            delProduct(product)
+        } else {
+
+        }
     }
 
     private fun infoProduct(product: Product) {
@@ -190,6 +199,17 @@ class ProductViewController : LoadController<Product?>() {
         val result = api.delNode(id).await()
         if (result.isSuccessful()) {
             Dialogs.showDialog("Раздел удален!")
+            loadProductsData()
+        } else {
+            Dialogs.showExeptionDialog(result.error)
+        }
+    }
+
+    private fun delProduct(product: Product) = launch(JavaFx) {
+        val id = product.id.toString()
+        val result = api.delProduct(id).await()
+        if (result.isSuccessful()) {
+            Dialogs.showDialog("Товар удален!")
             loadProductsData()
         } else {
             Dialogs.showExeptionDialog(result.error)
