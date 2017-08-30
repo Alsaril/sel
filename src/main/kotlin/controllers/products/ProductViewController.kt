@@ -1,7 +1,6 @@
 package controllers.products
 
 import controllers.LoadController
-import javafx.application.Platform
 import javafx.collections.FXCollections
 import javafx.event.EventHandler
 import javafx.fxml.FXML
@@ -114,12 +113,12 @@ class ProductViewController : LoadController<Product?>() {
     }
 
     private fun addProduct(node: Node) {
-        if (node.id == -1){
+        if (node.id == -1) {
             Dialogs.showErrorDialog("Невозможно добавить товар в этот раздел!")
-        }else{
+        } else {
             ProductsEditController.show(node = node, owner = productTable as javafx.scene.Node) { result ->
                 if (result) {
-                    loadProductsData()
+                    loadProductsData(false)
                 }
             }
         }
@@ -129,7 +128,7 @@ class ProductViewController : LoadController<Product?>() {
     private fun editProduct(product: Product) {
         ProductsEditController.show(product = product, owner = productTable as javafx.scene.Node) { result ->
             if (result) {
-                loadProductsData()
+                loadProductsData(false)
             }
         }
 
@@ -166,9 +165,9 @@ class ProductViewController : LoadController<Product?>() {
 
     private fun addNode(name: String, parentNode: Node) = launch(JavaFx) {
         val node = Node()
-        if (parentNode.id == -1){
+        if (parentNode.id == -1) {
             node.parent = null
-        }else {
+        } else {
             node.parent = parentNode.id
         }
         node.name = name
@@ -210,20 +209,24 @@ class ProductViewController : LoadController<Product?>() {
         val result = api.delProduct(id).await()
         if (result.isSuccessful()) {
             Dialogs.showDialog("Товар удален!")
-            loadProductsData()
+            loadProductsData(false)
         } else {
             Dialogs.showExeptionDialog(result.error)
         }
     }
 
 
-    private fun loadProductsData() = launch(JavaFx) {
+    private fun loadProductsData(updateTree: Boolean = true) = launch(JavaFx) {
         val result = api.productsData().await()
         if (!result.isSuccessful()) return@launch
         products = result.notNullResult().products
         productsOL = FXCollections.observableArrayList(products)
         productTable.setItems(productsOL)
 
+        if (!updateTree) {
+            showProducts(products, nodeTreeView.selectionModel.selectedItem)
+            return@launch
+        }
         val items = result.notNullResult().nodes.map { TreeItem(it) }
         val roots = mutableListOf<TreeItem<Node>>()
         items.forEach {
@@ -235,10 +238,7 @@ class ProductViewController : LoadController<Product?>() {
         }
         val root = TreeItem<Node>(Node("Все"))
         root.children.addAll(roots)
-        val selected = nodeTreeView.selectionModel.selectedItem
         nodeTreeView.root = root
-        nodeTreeView.refresh()
-        Platform.runLater { nodeTreeView.selectionModel.select(selected) }
     }
 
     private fun subProducts(products: List<Product>, node: TreeItem<Node>?): List<Product> {
