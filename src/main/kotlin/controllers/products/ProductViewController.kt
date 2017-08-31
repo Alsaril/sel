@@ -227,13 +227,17 @@ class ProductViewController : LoadController<Product?>() {
             showProducts(products, nodeTreeView.selectionModel.selectedItem)
             return@launch
         }
-        val items = result.notNullResult().nodes.map { TreeItem(it) }
+        val items = HashMap<Int, TreeItem<Node>>()
+        result.notNullResult().nodes.forEach {
+            items[it.id] = TreeItem(it)
+        }
         val roots = mutableListOf<TreeItem<Node>>()
-        items.forEach {
-            if (it.value.parent == null) {
+        items.values.forEach {
+            val parent = it.value.parent
+            if (parent == null) {
                 roots.add(it)
             } else {
-                items[it.value.parent!! - 1].children.add(it)
+                items[parent]?.children?.add(it)
             }
         }
         val root = TreeItem<Node>(Node("Все"))
