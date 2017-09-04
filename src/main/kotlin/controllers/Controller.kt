@@ -10,7 +10,7 @@ import javafx.scene.Node
 
 class Controller {
     fun showProducts(actionEvent: ActionEvent) {
-        ProductViewController.show(select = false, owner = actionEvent.source as Node) {}
+        ProductViewController.show(select = false, owner = actionEvent.source as Node)
     }
 
     fun showPasswordCheckDialog(actionEvent: ActionEvent) {
@@ -22,23 +22,23 @@ class Controller {
     }
 
     private fun showOperations(actionEvent: ActionEvent) {
-        OperationController.show(actionEvent.source as Node) {}
+        OperationController.show(actionEvent.source as Node)
     }
 
     fun showSupply(actionEvent: ActionEvent) {
-        SuppliesViewController.show(actionEvent.source as Node) {}
+        SuppliesViewController.show(actionEvent.source as Node)
     }
 
     fun showSettings(actionEvent: ActionEvent) {
-        SettingsController.show(actionEvent.source as Node) {}
+        SettingsController.show(actionEvent.source as Node)
     }
 
     fun showClients(actionEvent: ActionEvent) {
-        ClientViewController.show(actionEvent.source as Node) {}
+        ClientViewController.show(actionEvent.source as Node)
     }
 
     fun showReserves(actionEvent: ActionEvent) {
-        ReservesViewController.show(actionEvent.source as Node) {}
+        ReservesViewController.show(actionEvent.source as Node)
     }
 
 }

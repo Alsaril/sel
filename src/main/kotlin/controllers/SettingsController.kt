@@ -43,7 +43,7 @@ class SettingsController : LoadController<Boolean>() {
     }
 
     companion object {
-        fun show(owner: Node, callback: CloseListener<Boolean>) {
+        fun show(owner: Node, callback: CloseListener<Boolean>? = null) {
             LoadController.show(owner, callback,
                     path = "/view/SettingsView.fxml",
                     title = "Настройки",

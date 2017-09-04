@@ -2,6 +2,8 @@ package utils
 
 import javafx.application.Platform
 import javafx.embed.swing.JFXPanel
+import javafx.print.PageOrientation
+import javafx.print.Paper
 import javafx.print.PrinterJob
 import javafx.scene.Scene
 import javafx.scene.web.WebView
@@ -9,8 +11,10 @@ import javafx.stage.Stage
 import org.krysalis.barcode4j.impl.code128.Code128Bean
 import org.krysalis.barcode4j.output.java2d.Java2DCanvasProvider
 import java.awt.print.Printable
-import java.nio.file.Files
-import java.nio.file.Paths
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.util.stream.Collectors
+
 
 object Printer {
     fun printBarcode(barcode: String) {
@@ -23,7 +27,7 @@ object Printer {
                     val bean = Code128Bean()
                     bean.doQuietZone(false);
                     val g2d = graphics as java.awt.Graphics2D
-                    g2d.translate(300, 100)
+                    g2d.translate(30, 30)
                     g2d.scale(5.0, 5.0)
 
                     val canvas = Java2DCanvasProvider(g2d, 0)
@@ -41,7 +45,9 @@ object Printer {
     val ROW_TEMPLATE = "/templates/row.html"
     val FOOTER_TEMPLATE = "/templates/footer.html"
 
-    fun loadString(path: String) = String(Files.readAllBytes(Paths.get(Printer::class.java.getResource(path).toURI())))
+    fun loadString(path: String) = BufferedReader(InputStreamReader(
+            Printer::class.java.getResource(path).openStream(), "utf-8")).lines().collect(Collectors.joining("\n"));
+
 
     val NAME = "Человек-продавец"
 
@@ -85,8 +91,10 @@ object Printer {
             wv.engine.loadContent(html)
             stage.scene = Scene(wv)
             stage.setOnShown {
+                val printer = javafx.print.Printer.getDefaultPrinter()
+                val pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, javafx.print.Printer.MarginType.HARDWARE_MINIMUM)
                 val pj = PrinterJob.createPrinterJob()
-                val b = pj.printPage(wv)
+                val b = pj.printPage(pageLayout, wv)
                 if (b) {
                     pj.endJob()
                 }

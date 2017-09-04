@@ -17,15 +17,15 @@ abstract class LoadController<T> {
     protected var api: API = APIMiddlewareImpl
 
     protected lateinit var stage: Stage
-    private lateinit var callback: CloseListener<T>
+    private var callback: CloseListener<T>? = null
 
     public fun close(result: T) {
         stage.close()
-        Platform.runLater { callback.invoke(result) }
+        Platform.runLater { callback?.invoke(result) }
     }
 
     companion object {
-        public fun <T, C : LoadController<T>> show(owner: Node, callback: CloseListener<T>,
+        public fun <T, C : LoadController<T>> show(owner: Node, callback: CloseListener<T>?,
                                                    path: String,
                                                    title: String = "",
                                                    minWidth: Double = 0.0,
@@ -36,7 +36,7 @@ abstract class LoadController<T> {
             Companion.show<T, C>(owner.scene.window, callback, path, title, minWidth, minHeight, isResizable, modality, init)
         }
 
-        public fun <T, C : LoadController<T>> show(owner: Window, callback: CloseListener<T>,
+        public fun <T, C : LoadController<T>> show(owner: Window, callback: CloseListener<T>?,
                                                    path: String,
                                                    title: String = "",
                                                    minWidth: Double = 0.0,

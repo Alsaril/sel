@@ -71,6 +71,12 @@ class ProductViewController : LoadController<Product?>() {
             val item = nodeTreeView.selectionModel.selectedItem.value
             createNode(item)
         }
+        val editNode = MenuItem("Редактировать раздел")
+        editNode.onAction = EventHandler {
+            val item = nodeTreeView.selectionModel.selectedItem.value
+            renameNode(item)
+        }
+
         val delNode = MenuItem("Удалть раздел")
         delNode.onAction = EventHandler {
             val item = nodeTreeView.selectionModel.selectedItem.value
@@ -82,7 +88,7 @@ class ProductViewController : LoadController<Product?>() {
             addProduct(item)
         }
 
-        treeItemContextMenu.items.setAll(addNode, delNode, addProduct)
+        treeItemContextMenu.items.setAll(addNode, delNode, addProduct, editNode)
         nodeTreeView.contextMenu = treeItemContextMenu
 
         search.setOnKeyReleased {
@@ -102,7 +108,7 @@ class ProductViewController : LoadController<Product?>() {
 
     fun selectMode() {
         productTable.setRowFactory { tv ->
-            var row = TableRow<Product>()
+            val row = TableRow<Product>()
             row.setOnMouseClicked({ event ->
                 if (event.getClickCount() == 2 && !row.isEmpty()) {
                     close(productTable.selectionModel.selectedItem)
@@ -162,6 +168,21 @@ class ProductViewController : LoadController<Product?>() {
         result.ifPresent({ name -> addNode(name, parentNode) })
     }
 
+    private fun renameNode(node: Node) {
+        val dialog = TextInputDialog(node.name)
+        with(dialog) {
+            title = "Изменить раздел"
+            headerText = "Изменение раздела"
+            contentText = "Имя:"
+        }
+        val result = dialog.showAndWait()
+
+        result.ifPresent({//
+            name ->
+            editNode(name, node)
+        })
+    }
+
 
     private fun addNode(name: String, parentNode: Node) = launch(JavaFx) {
         val node = Node()
@@ -210,6 +231,18 @@ class ProductViewController : LoadController<Product?>() {
         if (result.isSuccessful()) {
             Dialogs.showDialog("Товар удален!")
             loadProductsData(false)
+        } else {
+            Dialogs.showExeptionDialog(result.error)
+        }
+    }
+
+    private fun editNode(name: String, node: Node) = launch(JavaFx) {
+        node.name = name
+        val id = node.id.toString()
+        val result = api.editNode(id, node = node).await()
+        if (result.isSuccessful()) {
+            Dialogs.showDialog("Раздел изменен!")
+            loadProductsData()
         } else {
             Dialogs.showExeptionDialog(result.error)
         }
@@ -270,7 +303,7 @@ class ProductViewController : LoadController<Product?>() {
     companion object {
         fun show(select: Boolean,
                  owner: javafx.scene.Node,
-                 callback: CloseListener<Product?>) {
+                 callback: CloseListener<Product?>? = null) {
             LoadController.show<Product?, ProductViewController>(owner, callback,
                     path = "/view/products/ProductsView.fxml",
                     title = "Товары",

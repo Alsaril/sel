@@ -12,8 +12,8 @@ import javafx.scene.control.cell.PropertyValueFactory
 import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
-import models.operation.Operation
 import models.Product
+import models.operation.Operation
 import models.operation.Position
 import start.Main
 import utils.CloseListener
@@ -114,7 +114,7 @@ class OperationController: LoadController<Boolean>(){
     private fun getProductById(id: Int) = productList?.firstOrNull { it.id == id }
 
     companion object {
-        fun show(owner: Node, callback: CloseListener<Boolean>) {
+        fun show(owner: Node, callback: CloseListener<Boolean>? = null) {
             LoadController.show(owner, callback,
                     path = "/view/cashbox/OperationsView.fxml",
                     title = "Касса",

@@ -5,11 +5,15 @@ import controllers.supply.FirstSupplyController
 import javafx.collections.FXCollections
 import javafx.event.ActionEvent
 import javafx.fxml.FXML
+import javafx.fxml.FXMLLoader
+import javafx.scene.Parent
+import javafx.scene.Scene
 import javafx.scene.control.CheckBox
 import javafx.scene.control.ComboBox
 import javafx.scene.control.Label
 import javafx.scene.control.TextField
 import javafx.stage.Modality
+import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Node
@@ -17,14 +21,8 @@ import models.Product
 import utils.CloseListener
 import utils.Dialogs
 import utils.Measure
+import utils.Printer
 import java.io.IOException
-import controllers.supply.SupplierEditController
-import javafx.scene.Scene
-import javafx.scene.Parent
-import javafx.fxml.FXMLLoader
-import javafx.stage.Stage
-
-
 
 
 class ProductsEditController : LoadController<Boolean>() {
@@ -91,7 +89,9 @@ class ProductsEditController : LoadController<Boolean>() {
         }
     }
 
-    fun handlePrint() {}
+    fun handlePrint() {
+        Printer.printBarcode(productBarcode.text)
+    }
 
     fun handleNode(actionEvent: ActionEvent) {
         SelectParentController.show(actionEvent.source as javafx.scene.Node) { result ->

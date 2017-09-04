@@ -2,10 +2,13 @@ package utils
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.util.*
 
 object Utils {
     private val backendDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
     private val normalDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
+    private val cashboxTimeFormat = SimpleDateFormat("HH:mm")
+    private val cashboxDateFormat = SimpleDateFormat("dd.MM.yyyy")
 
     fun formatDate(date: String): String? {
         return try {
@@ -17,8 +20,11 @@ object Utils {
     }
 
     fun print() {
-        //Printer.INSTANCE.printCheck(1,"4545454", new Date().toString(),25,"25:25,");
+        //Printer.printCheck(1,"4545454", Date().toString(),25,"25:25,");
     }
+
+    fun cashboxDate() = cashboxDateFormat.format(Date())
+    fun cashboxTime() = cashboxTimeFormat.format(Date())
 
     fun fieldCheck(s: String): String {
         if (s != "") {

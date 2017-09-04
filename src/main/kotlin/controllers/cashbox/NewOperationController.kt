@@ -8,10 +8,7 @@ import javafx.event.ActionEvent
 import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.Node
-import javafx.scene.control.CheckBox
-import javafx.scene.control.Label
-import javafx.scene.control.TableColumn
-import javafx.scene.control.TableView
+import javafx.scene.control.*
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.scene.control.cell.TextFieldTableCell
 import javafx.stage.Modality
@@ -20,16 +17,13 @@ import kotlinx.coroutines.experimental.launch
 import models.Product
 import models.operation.Operation
 import models.operation.Position
-import utils.CloseListener
-import utils.Dialogs
-import utils.parseDouble
+import utils.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class NewOperationController : LoadController<Boolean>() {
 
     private var positionsOL: ObservableList<Position> = FXCollections.observableArrayList()
-    private var positionList: List<Position>? = null
 
     @FXML private lateinit var returnCheckBox: CheckBox
     @FXML private lateinit var totalSum: Label
@@ -86,8 +80,21 @@ class NewOperationController : LoadController<Boolean>() {
         }
         sumColumn.cellValueFactory = PropertyValueFactory("sumFormat")
         unitColumn.cellValueFactory = PropertyValueFactory("unit")
+
+        val contextMenu = ContextMenu()
+        val deletePosition = MenuItem("Удалить")
+        deletePosition.onAction = EventHandler {
+            val item = positionTable.selectionModel.selectedItem
+            delPosition(item)
+        }
+
+        contextMenu.items.setAll(deletePosition)
+        positionTable.contextMenu = contextMenu
+
         showPositionList()
         refresh()
+
+
     }
 
     fun addProduct(actionEvent: ActionEvent) {
@@ -123,7 +130,24 @@ class NewOperationController : LoadController<Boolean>() {
     }
 
     fun printHandle() {
-
+        Printer.printCheck(
+                0,
+                "2341234320099",
+                Utils.cashboxDate(),
+                2312,
+                Utils.cashboxTime(),
+                positionsOL.map {
+                    utils.Position("",
+                            it.productName,
+                            it.price.toString(),
+                            it.count.toString(),
+                            it.sum().toString())
+                },
+                totalSum.text,
+                totalSum.text,
+                "0.00",
+                "Человек"
+        )
     }
 
     private fun addOperation(operation: Operation) = launch(JavaFx) {
@@ -134,6 +158,10 @@ class NewOperationController : LoadController<Boolean>() {
         } else {
             Dialogs.showExeptionDialog(result.error)
         }
+    }
+
+    private fun delPosition(position: Position) {
+        positionsOL.remove(position)
     }
 
     private fun refresh() {

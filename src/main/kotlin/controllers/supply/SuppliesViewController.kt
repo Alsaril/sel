@@ -95,7 +95,7 @@ class SuppliesViewController : LoadController<Boolean>() {
     }
 
     companion object {
-        fun show(owner: Node, callback: CloseListener<Boolean>) {
+        fun show(owner: Node, callback: CloseListener<Boolean>? = null) {
             LoadController.show(owner, callback,
                     path = "/view/supply/SuppliesView.fxml",
                     title = "Поставки",

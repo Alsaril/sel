@@ -83,12 +83,12 @@ class ClientViewController : LoadController<Void>() {
     }
 
     companion object {
-        fun show(owner: Node, callback: CloseListener<Void>) {
+        fun show(owner: Node, callback: CloseListener<Void>? = null) {
             show(owner.scene.window, callback)
         }
 
 
-        fun show(owner: Window, callback: CloseListener<Void>) {
+        fun show(owner: Window, callback: CloseListener<Void>? = null) {
             LoadController.show(owner, callback,
                     path = "/view/reserves/ClientView.fxml",
                     title = "Клиенты",
