@@ -39,9 +39,7 @@ class Position(@SerializedName("id")
     private var operation: Int = 0
 
 
-
     fun sum() = (price - discount) * count
-
 
 
     fun setOperation(operation: Operation) {
@@ -54,6 +52,7 @@ class Position(@SerializedName("id")
             } else {
                 String.format("%.2f", d)
             }
+
     fun getSumFormat() = String.format("%.2f", sum())
     fun getStrCount() = str(count)
     fun getPriceFormat() = String.format("%.2f", price)

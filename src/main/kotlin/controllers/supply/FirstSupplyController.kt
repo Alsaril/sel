@@ -13,7 +13,7 @@ import models.supply.PositionSupplyMin
 import models.supply.SupplyMin
 import utils.Dialogs
 
-class FirstSupplyController{
+class FirstSupplyController {
 
     protected var api: API = APIMiddlewareImpl
 
@@ -63,7 +63,7 @@ class FirstSupplyController{
         stage.close()
     }
 
-    fun setProduct(product: Product){
+    fun setProduct(product: Product) {
         editProduct = product
     }
 

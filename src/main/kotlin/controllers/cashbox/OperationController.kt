@@ -18,7 +18,7 @@ import models.operation.Position
 import start.Main
 import utils.CloseListener
 
-class OperationController: LoadController<Boolean>(){
+class OperationController : LoadController<Boolean>() {
     private val mainApp: Main? = null
 
     private var operationOL = FXCollections.observableArrayList<Operation>()

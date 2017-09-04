@@ -133,14 +133,14 @@ class ProductsEditController : LoadController<Boolean>() {
             Dialogs.showDialog("Товар успешно добавлен!")
             supply(result.result)
             close(true)
-            
+
         } else {
             Dialogs.showExeptionDialog(result.error)
         }
     }
 
-    fun supply(product: Product?){
-        if (product!=null){
+    fun supply(product: Product?) {
+        if (product != null) {
             try {
                 val stage = Stage()
                 val loader = FXMLLoader()

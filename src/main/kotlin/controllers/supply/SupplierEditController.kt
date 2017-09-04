@@ -54,7 +54,6 @@ class SupplierEditController : LoadController<Boolean>() {
     }
 
 
-
     fun handleOk() {
         editSupplier.name = nameField.text
         editSupplier.inn = innField.text

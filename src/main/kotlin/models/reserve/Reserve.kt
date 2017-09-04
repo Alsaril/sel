@@ -26,6 +26,6 @@ class Reserve(@SerializedName("id")
 
               @SerializedName("positions")
               @Expose
-              var positions: List<ReservePositionFull>){
+              var positions: List<ReservePositionFull>) {
     fun getFormatDate() = Utils.formatDate(date)
 }

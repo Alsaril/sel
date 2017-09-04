@@ -45,10 +45,10 @@ class Supplier(@SerializedName("id")
 
                @SerializedName("phone2")
                @Expose
-               var phone2: String){
-    constructor() : this(0,"","",0,"","","","","","","")
+               var phone2: String) {
+    constructor() : this(0, "", "", 0, "", "", "", "", "", "", "")
 
-    override fun toString():String{
+    override fun toString(): String {
         return name
     }
 

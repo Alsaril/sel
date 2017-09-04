@@ -2,7 +2,6 @@ package models.supply
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import com.j256.ormlite.field.DatabaseField
 import models.Product
 
 
@@ -26,8 +25,6 @@ public class PositionSupplyFull(@SerializedName("id")
                                 @Expose
                                 val product: Product) {
     var fullPrice: Double = 0.0
-
-
 
 
     fun getProductName() = product.name

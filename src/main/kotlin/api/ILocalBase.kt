@@ -1,9 +1,9 @@
 package api
 
 import models.Node
-import models.operation.Operation
 import models.Product
 import models.ProductsData
+import models.operation.Operation
 
 interface ILocalBase {
     fun save(data: ProductsData)

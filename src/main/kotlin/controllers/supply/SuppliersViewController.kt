@@ -12,7 +12,6 @@ import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.supply.Supplier
-import models.supply.Supply
 import utils.CloseListener
 import utils.Dialogs
 
@@ -20,7 +19,7 @@ import utils.Dialogs
 /**
  * Created by andrey on 25.07.17.
  */
-class SuppliersViewController:LoadController<Boolean>() {
+class SuppliersViewController : LoadController<Boolean>() {
 
     @FXML private lateinit var suppliersTable: TableView<Supplier>
 
@@ -40,7 +39,7 @@ class SuppliersViewController:LoadController<Boolean>() {
     @FXML
     private fun initialize() {
         nameColumn.setCellValueFactory(PropertyValueFactory("name"))
-        suppliersTable.selectionModel.selectedItemProperty().addListener {_, _, newValue -> newValue?.let { showSupplier(newValue) } }
+        suppliersTable.selectionModel.selectedItemProperty().addListener { _, _, newValue -> newValue?.let { showSupplier(newValue) } }
 
         loadSuppliersData()
 
@@ -54,23 +53,23 @@ class SuppliersViewController:LoadController<Boolean>() {
         suppliersTable.contextMenu = contextMenu
     }
 
-    fun handleAdd(actionEvent: ActionEvent){
-        SupplierEditController.show(owner = actionEvent.source as Node){ result ->
+    fun handleAdd(actionEvent: ActionEvent) {
+        SupplierEditController.show(owner = actionEvent.source as Node) { result ->
             if (result) {
                 loadSuppliersData()
             }
         }
     }
 
-    fun editSupplier(supplier: Supplier){
-        SupplierEditController.show(owner = name as Node, supplier = supplier){ result ->
+    fun editSupplier(supplier: Supplier) {
+        SupplierEditController.show(owner = name as Node, supplier = supplier) { result ->
             if (result) {
                 loadSuppliersData()
             }
         }
     }
 
-    fun showSupplier(supplier:Supplier){
+    fun showSupplier(supplier: Supplier) {
         name.text = supplier.name
         inn.text = supplier.inn
         // нужен метод который преводит тип в строку
@@ -89,7 +88,7 @@ class SuppliersViewController:LoadController<Boolean>() {
         if (result.isSuccessful()) {
             val suppliers = result.notNullResult()
             suppliersTable.items = FXCollections.observableArrayList(suppliers)
-        }else{
+        } else {
             Dialogs.showExeptionDialog(result.error)
         }
     }

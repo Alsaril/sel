@@ -17,7 +17,7 @@ class SelectParentController : LoadController<Int>() {
         loadNodesData()
     }
 
-    fun handleSelect(){
+    fun handleSelect() {
         val item = nodeTreeView.selectionModel.selectedItem.value
         close(item.id)
     }

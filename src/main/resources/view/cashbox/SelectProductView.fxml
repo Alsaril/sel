@@ -5,34 +5,45 @@
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0"
             minWidth="900.0" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8"
             fx:controller="controllers.products.ProductViewController">
-   <children>
-      <AnchorPane layoutX="8.0" prefHeight="400.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Button layoutX="43.0" layoutY="50.0" mnemonicParsing="false" onAction="#showAddProductDialog" text="Товар" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0" />
-            <Label layoutX="14.0" layoutY="14.0" text="Добавить:" />
-         </children></AnchorPane>
-      <AnchorPane layoutX="158.0" prefHeight="400.0" prefWidth="422.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <AnchorPane layoutX="14.0" prefHeight="60.0" prefWidth="700.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <TextField layoutY="17.0" prefHeight="26.0" prefWidth="232.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                  <Button layoutX="240.0" layoutY="17.0" mnemonicParsing="false" text="Поиск" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="20.0" />
-               </children>
-            </AnchorPane>
-            <TableView fx:id="productTable" layoutX="3.0" layoutY="297.0" prefHeight="353.0" prefWidth="680.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="300.0">
-               <columns>
-                  <TableColumn fx:id="barcodeColumn" prefWidth="196.0" text="Баркод" />
-                  <TableColumn fx:id="nameColumn" minWidth="3.0" prefWidth="211.0" text="Наименование" />
-                  <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Цена" />
-                  <TableColumn fx:id="countColumn" prefWidth="136.0" text="Кол-во на складе" />
-                  <TableColumn fx:id="measurementColumn" prefWidth="75.0" text="Ед.изм" />
-                  <TableColumn fx:id="reserveColumn" prefWidth="59.0" text="Резерв" />
-               </columns>
-            </TableView>
-             <TreeView fx:id="nodeTreeView" layoutY="60.0" prefHeight="218.0" prefWidth="680.0"
-                       AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0"/>
-            <Button layoutX="618.0" layoutY="660.0" mnemonicParsing="false" onAction="#selectHandle" text="Выбрать" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0" />
-         </children>
-      </AnchorPane>
-   </children>
+    <children>
+        <AnchorPane layoutX="8.0" prefHeight="400.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Button layoutX="43.0" layoutY="50.0" mnemonicParsing="false" onAction="#showAddProductDialog"
+                        text="Товар" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                        AnchorPane.topAnchor="40.0"/>
+                <Label layoutX="14.0" layoutY="14.0" text="Добавить:"/>
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="158.0" prefHeight="400.0" prefWidth="422.0" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane layoutX="14.0" prefHeight="60.0" prefWidth="700.0" AnchorPane.leftAnchor="0.0"
+                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <TextField layoutY="17.0" prefHeight="26.0" prefWidth="232.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.topAnchor="20.0"/>
+                        <Button layoutX="240.0" layoutY="17.0" mnemonicParsing="false" text="Поиск"
+                                AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="20.0"/>
+                    </children>
+                </AnchorPane>
+                <TableView fx:id="productTable" layoutX="3.0" layoutY="297.0" prefHeight="353.0" prefWidth="680.0"
+                           AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0"
+                           AnchorPane.topAnchor="300.0">
+                    <columns>
+                        <TableColumn fx:id="barcodeColumn" prefWidth="196.0" text="Баркод"/>
+                        <TableColumn fx:id="nameColumn" minWidth="3.0" prefWidth="211.0" text="Наименование"/>
+                        <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Цена"/>
+                        <TableColumn fx:id="countColumn" prefWidth="136.0" text="Кол-во на складе"/>
+                        <TableColumn fx:id="measurementColumn" prefWidth="75.0" text="Ед.изм"/>
+                        <TableColumn fx:id="reserveColumn" prefWidth="59.0" text="Резерв"/>
+                    </columns>
+                </TableView>
+                <TreeView fx:id="nodeTreeView" layoutY="60.0" prefHeight="218.0" prefWidth="680.0"
+                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="60.0"/>
+                <Button layoutX="618.0" layoutY="660.0" mnemonicParsing="false" onAction="#selectHandle" text="Выбрать"
+                        AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="20.0"/>
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

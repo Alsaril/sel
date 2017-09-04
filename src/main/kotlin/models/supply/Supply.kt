@@ -34,9 +34,9 @@ class Supply(@SerializedName("id")
 
              @SerializedName("positions")
              @Expose
-             var positions: List<PositionSupplyFull>){
+             var positions: List<PositionSupplyFull>) {
 
-    fun getSupplierName():String{
+    fun getSupplierName(): String {
         return supplier.name
     }
 
