@@ -18,7 +18,10 @@ import models.Product
 import models.supply.PositionSupplyFull
 import models.supply.Supplier
 import models.supply.SupplyMin
-import utils.*
+import utils.CloseListener
+import utils.Dialogs
+import utils.Utils
+import utils.parseDouble
 
 /**
  * Created by andrey on 25.07.17.
@@ -59,7 +62,7 @@ class NewSupplyController : LoadController<Boolean>() {
                 return@EventHandler
             }
             position.fullPrice = price
-            position.price = price/position.count
+            position.price = price / position.count
             refresh()
         }
         countColumn.cellValueFactory = PropertyValueFactory("strCount")
@@ -72,7 +75,7 @@ class NewSupplyController : LoadController<Boolean>() {
                 return@EventHandler
             }
             position.count = count
-            position.price = position.fullPrice/position.count
+            position.price = position.fullPrice / position.count
             refresh()
         }
         sellPriceColumn.cellValueFactory = PropertyValueFactory("sellPriceFormat")
@@ -113,7 +116,7 @@ class NewSupplyController : LoadController<Boolean>() {
     }
 
     private fun newPosition(product: Product?) {
-        if (product!=null) {
+        if (product != null) {
             val position = PositionSupplyFull(
                     count = 1.0,
                     price = 0.0,
@@ -130,14 +133,14 @@ class NewSupplyController : LoadController<Boolean>() {
         supply.supplier = suppliers.selectionModel.selectedItem.id
         supply.document = Utils.fieldCheck(document.text)
         supply.documentInfo = Utils.fieldCheck(documentInfo.text)
-        if (documentDate.value!=null) {
+        if (documentDate.value != null) {
             supply.documentDate = Utils.fieldCheck(documentDate.value.toString())
-        }else{
+        } else {
             supply.documentDate = "нет данных"
         }
 
         supply.positions = positionsOL.map { it.toMin() }
-        addSupply(supply)
+        addDraft(supply)
 
 
     }
@@ -146,13 +149,31 @@ class NewSupplyController : LoadController<Boolean>() {
 
     }
 
-    private fun addSupply(supplyMin:SupplyMin) = launch(JavaFx) {
-        val result = api.addSupply(supplyMin).await()
+    private fun addDraft(supplyMin: SupplyMin) = launch(JavaFx) {
+        val result = api.addDraft(supplyMin).await()
         if (result.isSuccessful()) {
-            Dialogs.showDialog("Поставка добавлена успешно!")
+            Dialogs.showDialog("Сохранено!")
             close(true)
         } else {
             Dialogs.showExeptionDialog(result.error)
+        }
+    }
+
+    private fun addSupply(supplyMin: SupplyMin) = launch(JavaFx) {
+        val result = api.addSupply(supplyMin).await()
+        if (result.isSuccessful()) {
+            Dialogs.showDialog("Документ провден!")
+            close(true)
+        } else {
+            Dialogs.showExeptionDialog(result.error)
+        }
+    }
+
+    private fun delDraft(supplyMin: SupplyMin) = launch(JavaFx) {
+        val result = api.delDraft(supplyMin.id.toString()).await()
+        if (result.isSuccessful()) {
+        } else {
+            Dialogs.showExeptionDialog("del draft: " + result.error)
         }
     }
 
@@ -167,12 +188,11 @@ class NewSupplyController : LoadController<Boolean>() {
     fun loadSuppliers() = launch(JavaFx) {
         val result = api.suppliers().await()
         if (result.isSuccessful()) {
-            suppliers.items=FXCollections.observableArrayList(result.result)
+            suppliers.items = FXCollections.observableArrayList(result.result)
         }
     }
 
-    fun calcSellPrice(position: PositionSupplyFull){
-        var supplyPirce = position.price
+    private fun calcSellPrice(position: PositionSupplyFull) {
         val dialog = TextInputDialog()
         dialog.title = "Цена"
         dialog.headerText = "Накинуть сверху:"

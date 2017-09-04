@@ -363,26 +363,43 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun editSupply(id: String, supplyMin: SupplyMin): DeferredResult<Void> = async(CommonPool) {
+    override fun drafts(): DeferredResult<List<Supply>> = async(CommonPool) {
+        val response: Response<List<Supply>>
+        try {
+            response = networkAPI.drafts().awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result<List<Supply>>("Exception: ${t.message}", State.OFFLINE)
+        }
+        val data = response.body()
+        state = State.ONLINE
+        if (response.code() == OK && data != null) {
+            Result(data, State.ONLINE)
+        } else {
+            Result<List<Supply>>("response code != ${OK} or response body == null", State.ONLINE)
+        }
+    }
+
+    override fun addDraft(supplyMin: SupplyMin): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
-            response = networkAPI.editSupply(id, supplyMin).awaitResponse()
+            response = networkAPI.addDraft(supplyMin).awaitResponse()
         } catch (t: Throwable) {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
         }
         state = State.ONLINE
-        if (response.code() == OK) {
+        if (response.code() == CREATED) {
             Result.successVoidResult(State.ONLINE)
         } else {
-            Result<Void>("response code != ${OK} or response body == null", State.ONLINE)
+            Result<Void>("response code != ${CREATED} or response body == null", State.ONLINE)
         }
     }
 
-    override fun delSupply(id: String): DeferredResult<Void> = async(CommonPool) {
+    override fun delDraft(id: String): DeferredResult<Void> = async(CommonPool) {
         val response: Response<Void>
         try {
-            response = networkAPI.delSupply(id).awaitResponse()
+            response = networkAPI.delDraft(id).awaitResponse()
         } catch (t: Throwable) {
             state = State.OFFLINE
             return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)

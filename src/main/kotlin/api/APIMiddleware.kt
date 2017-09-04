@@ -72,9 +72,11 @@ interface API {
 
     fun addSupply(@Body supplyMin: SupplyMin): DeferredResult<Void>
 
-    fun editSupply(@Path("id") id: String, @Body supplyMin: SupplyMin): DeferredResult<Void>
+    fun drafts(): DeferredResult<List<Supply>>
 
-    fun delSupply(@Path("id") id: String): DeferredResult<Void>
+    fun addDraft(@Body supplyMin: SupplyMin): DeferredResult<Void>
+
+    fun delDraft(@Path("id") id: String): DeferredResult<Void>
 
     fun clients(): DeferredResult<List<Client>>
 

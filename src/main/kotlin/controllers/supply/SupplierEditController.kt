@@ -1,15 +1,12 @@
 package controllers.supply
 
 import controllers.LoadController
-import controllers.products.ProductsEditController
 import javafx.fxml.FXML
-import javafx.scene.control.Label
 import javafx.scene.control.TextArea
 import javafx.scene.control.TextField
 import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
-import models.Product
 import models.supply.Supplier
 import utils.CloseListener
 import utils.Dialogs

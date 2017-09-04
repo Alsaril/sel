@@ -2,7 +2,6 @@ package controllers.products
 
 import controllers.LoadController
 import javafx.collections.FXCollections
-import javafx.event.EventHandler
 import javafx.fxml.FXML
 import javafx.scene.control.*
 import javafx.scene.control.Alert.AlertType
@@ -15,6 +14,7 @@ import models.Product
 import models.operation.Operation
 import utils.CloseListener
 import utils.Dialogs
+import utils.makeMenu
 
 
 class ProductViewController : LoadController<Product?>() {
@@ -38,58 +38,25 @@ class ProductViewController : LoadController<Product?>() {
     @FXML private lateinit var search: TextField
 
     @FXML private fun initialize() {
-        nameColumn.setCellValueFactory(PropertyValueFactory("name"))
-        measurementColumn.setCellValueFactory(PropertyValueFactory("unit"))
-        barcodeColumn.setCellValueFactory(PropertyValueFactory("barcode"))
-        countColumn.setCellValueFactory(PropertyValueFactory("strCount"))
-        reserveColumn.setCellValueFactory(PropertyValueFactory("strReserved"))
-        priceColumn.setCellValueFactory(PropertyValueFactory("priceFormat"))
+        nameColumn.cellValueFactory = PropertyValueFactory("name")
+        measurementColumn.cellValueFactory = PropertyValueFactory("unit")
+        barcodeColumn.cellValueFactory = PropertyValueFactory("barcode")
+        countColumn.cellValueFactory = PropertyValueFactory("strCount")
+        reserveColumn.cellValueFactory = PropertyValueFactory("strReserved")
+        priceColumn.cellValueFactory = PropertyValueFactory("priceFormat")
 
-        val productTableContextMenu = ContextMenu()
-        val editProduct = MenuItem("Редактировать")
-        editProduct.onAction = EventHandler {
-            val item = productTable.selectionModel.selectedItem
-            editProduct(item)
-        }
-
-        val delProduct = MenuItem("Удалить")
-        delProduct.onAction = EventHandler {
-            val item = productTable.selectionModel.selectedItem
-            deleteProduct(item)
-        }
-        val infoProduct = MenuItem("Информация")
-        infoProduct.onAction = EventHandler {
-            val item = productTable.selectionModel.selectedItem
-            infoProduct(item)
-        }
-        productTableContextMenu.items.setAll(editProduct, delProduct, infoProduct)
-        productTable.contextMenu = productTableContextMenu
-
-        val treeItemContextMenu = ContextMenu()
-        val addNode = MenuItem("Добавить раздел")
-        addNode.onAction = EventHandler {
-            val item = nodeTreeView.selectionModel.selectedItem.value
-            createNode(item)
-        }
-        val editNode = MenuItem("Редактировать раздел")
-        editNode.onAction = EventHandler {
-            val item = nodeTreeView.selectionModel.selectedItem.value
-            renameNode(item)
+        makeMenu(productTable) {
+            "Редактировать" to { editProduct(it) }
+            "Удалить" to { delProduct(it) }
+            "Информация" to { infoProduct(it) }
         }
 
-        val delNode = MenuItem("Удалть раздел")
-        delNode.onAction = EventHandler {
-            val item = nodeTreeView.selectionModel.selectedItem.value
-            deleteNode(item)
+        makeMenu(nodeTreeView) {
+            "Добавить раздел" to { createNode(it) }
+            "Редактировать раздел" to { renameNode(it) }
+            "Удалить раздел" to { deleteNode(it) }
+            "Добавить товар" to { addProduct(it) }
         }
-        val addProduct = MenuItem("Добавить товар")
-        addProduct.onAction = EventHandler {
-            val item = nodeTreeView.selectionModel.selectedItem.value
-            addProduct(item)
-        }
-
-        treeItemContextMenu.items.setAll(addNode, delNode, addProduct, editNode)
-        nodeTreeView.contextMenu = treeItemContextMenu
 
         search.setOnKeyReleased {
             showProducts(products, nodeTreeView.selectionModel.selectedItem) {

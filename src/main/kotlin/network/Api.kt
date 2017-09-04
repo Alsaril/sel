@@ -62,11 +62,14 @@ interface Api {
     @POST("supplies/")
     fun addSupply(@Body supplyMin: SupplyMin): Call<Void>
 
-    @PUT("supplies/{id}/")
-    fun editSupply(@Path("id") id: String, @Body supplyMin: SupplyMin): Call<Void>
+    @GET("drafts")
+    fun drafts(): Call<List<Supply>>
 
-    @DELETE("supplies/{id}/")
-    fun delSupply(@Path("id") id: String): Call<Void>
+    @POST("drafts/")
+    fun addDraft(@Body supplyMin: SupplyMin): Call<Void>
+
+    @DELETE("drafts/{id}/")
+    fun delDraft(@Path("id") id: String): Call<Void>
 
     @POST("nodes/")
     fun addNode(@Body node: Node): Call<Void>
