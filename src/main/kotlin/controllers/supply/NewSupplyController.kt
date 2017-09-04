@@ -128,7 +128,21 @@ class NewSupplyController : LoadController<Boolean>() {
     }
 
     fun handleOk() {
+        val supply = SupplyMin()
+        supply.supplier = suppliers.selectionModel.selectedItem.id
+        supply.document = Utils.fieldCheck(document.text)
+        supply.documentInfo = Utils.fieldCheck(documentInfo.text)
+        if (documentDate.value != null) {
+            supply.documentDate = Utils.fieldCheck(documentDate.value.toString())
+        } else {
+            supply.documentDate = "нет данных"
+        }
 
+        supply.positions = positionsOL.map { it.toMin() }
+        addSupply(supply)
+    }
+
+    fun handleSave() {
         val supply = SupplyMin()
         supply.supplier = suppliers.selectionModel.selectedItem.id
         supply.document = Utils.fieldCheck(document.text)
@@ -141,8 +155,6 @@ class NewSupplyController : LoadController<Boolean>() {
 
         supply.positions = positionsOL.map { it.toMin() }
         addDraft(supply)
-
-
     }
 
     fun printHandle() {
