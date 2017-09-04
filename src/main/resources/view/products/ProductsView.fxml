@@ -22,7 +22,7 @@
                            AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="20.0"
                            AnchorPane.topAnchor="300.0">
                     <columns>
-                        <TableColumn fx:id="barcodeColumn" prefWidth="196.0" text="Баркод"/>
+                        <TableColumn fx:id="barcodeColumn" prefWidth="196.0" text="Артикул"/>
                         <TableColumn fx:id="nameColumn" minWidth="3.0" prefWidth="211.0" text="Наименование"/>
                         <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Цена"/>
                         <TableColumn fx:id="countColumn" prefWidth="136.0" text="Кол-во на складе"/>

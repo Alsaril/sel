@@ -94,6 +94,10 @@ class SuppliesViewController : LoadController<Boolean>() {
         }
     }
 
+    fun handleDrafts(actionEvent: ActionEvent) {
+        SuppliesDrafts.show(actionEvent.source as Node)
+    }
+
     companion object {
         fun show(owner: Node, callback: CloseListener<Boolean>? = null) {
             LoadController.show(owner, callback,

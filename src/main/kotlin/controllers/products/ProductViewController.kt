@@ -41,7 +41,7 @@ class ProductViewController : LoadController<Product?>() {
     @FXML private fun initialize() {
         nameColumn.cellValueFactory = PropertyValueFactory("name")
         measurementColumn.cellValueFactory = PropertyValueFactory("unit")
-        barcodeColumn.cellValueFactory = PropertyValueFactory("barcode")
+        barcodeColumn.cellValueFactory = PropertyValueFactory("vendor")
         countColumn.cellValueFactory = PropertyValueFactory("strCount")
         reserveColumn.cellValueFactory = PropertyValueFactory("strReserved")
         priceColumn.cellValueFactory = PropertyValueFactory("priceFormat")

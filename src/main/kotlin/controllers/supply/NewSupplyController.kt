@@ -29,6 +29,7 @@ import utils.parseDouble
 class NewSupplyController : LoadController<Boolean>() {
 
     private var positionsOL: ObservableList<PositionSupplyFull> = FXCollections.observableArrayList()
+    var edit = false
 
     @FXML private lateinit var suppliers: ComboBox<Supplier>
     @FXML private lateinit var document: TextField
@@ -115,6 +116,11 @@ class NewSupplyController : LoadController<Boolean>() {
         }
     }
 
+    fun editMode(positions: ObservableList<PositionSupplyFull>) {
+        edit = true
+        positionsOL = positions
+    }
+
     private fun newPosition(product: Product?) {
         if (product != null) {
             val position = PositionSupplyFull(
@@ -128,6 +134,10 @@ class NewSupplyController : LoadController<Boolean>() {
     }
 
     fun handleOk() {
+        newSupply()
+    }
+
+    fun newSupply() {
         val supply = SupplyMin()
         supply.supplier = suppliers.selectionModel.selectedItem.id
         supply.document = Utils.fieldCheck(document.text)

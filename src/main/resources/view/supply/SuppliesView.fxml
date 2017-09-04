@@ -3,9 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <SplitPane xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity"
-           minHeight="-Infinity"
-           minWidth="-Infinity" prefHeight="589.0" prefWidth="798.0" xmlns="http://javafx.com/javafx/8"
-           fx:controller="controllers.supply.SuppliesViewController">
+           minHeight="-Infinity" minWidth="-Infinity" prefHeight="589.0" prefWidth="798.0"
+           xmlns="http://javafx.com/javafx/8" fx:controller="controllers.supply.SuppliesViewController">
     <items>
         <AnchorPane prefHeight="400.0" prefWidth="600.0">
             <children>
@@ -26,6 +25,8 @@
                         AnchorPane.topAnchor="60.0"/>
                 <Button layoutX="518.0" layoutY="20.0" mnemonicParsing="false" onAction="#showSuppliers"
                         text="Список поставщиков" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0"/>
+                <Button layoutX="191.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleDrafts" text="Черновики"
+                        AnchorPane.leftAnchor="190.0" AnchorPane.topAnchor="60.0"/>
             </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="480.0" prefWidth="429.0">
