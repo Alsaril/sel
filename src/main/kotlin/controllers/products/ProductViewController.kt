@@ -14,6 +14,7 @@ import models.Product
 import models.operation.Operation
 import utils.CloseListener
 import utils.Dialogs
+import utils.createSortedTree
 import utils.makeMenu
 
 
@@ -88,14 +89,13 @@ class ProductViewController : LoadController<Product?>() {
     private fun addProduct(node: Node) {
         if (node.id == -1) {
             Dialogs.showErrorDialog("Невозможно добавить товар в этот раздел!")
-        } else {
-            ProductsEditController.show(node = node, owner = productTable as javafx.scene.Node) { result ->
-                if (result) {
-                    loadProductsData(false)
-                }
+            return
+        }
+        ProductsEditController.show(node = node, owner = productTable as javafx.scene.Node) { result ->
+            if (result) {
+                loadProductsData(false)
             }
         }
-
     }
 
     private fun editProduct(product: Product) {
@@ -113,7 +113,7 @@ class ProductViewController : LoadController<Product?>() {
         alert.headerText = "Удалить товар: ${product.name}?"
 
         val result = alert.showAndWait()
-        if (result.get() === ButtonType.OK) {
+        if (result.get() == ButtonType.OK) {
             delProduct(product)
         } else {
 
@@ -227,19 +227,8 @@ class ProductViewController : LoadController<Product?>() {
             showProducts(products, nodeTreeView.selectionModel.selectedItem)
             return@launch
         }
-        val items = HashMap<Int, TreeItem<Node>>()
-        result.notNullResult().nodes.forEach {
-            items[it.id] = TreeItem(it)
-        }
-        val roots = mutableListOf<TreeItem<Node>>()
-        items.values.forEach {
-            val parent = it.value.parent
-            if (parent == null) {
-                roots.add(it)
-            } else {
-                items[parent]?.children?.add(it)
-            }
-        }
+
+        val roots = createSortedTree(result.notNullResult().nodes)
         val root = TreeItem<Node>(Node("Все"))
         root.children.addAll(roots)
         nodeTreeView.root = root

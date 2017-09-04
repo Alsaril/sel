@@ -1,10 +1,8 @@
 package utils
 
 import javafx.event.EventHandler
-import javafx.scene.control.ContextMenu
-import javafx.scene.control.MenuItem
-import javafx.scene.control.TableView
-import javafx.scene.control.TreeView
+import javafx.scene.control.*
+import models.Node
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -31,21 +29,11 @@ object Utils {
     fun cashboxDate() = cashboxDateFormat.format(Date())
     fun cashboxTime() = cashboxTimeFormat.format(Date())
 
-    fun fieldCheck(s: String): String {
-        if (s != "") {
-            return s
-        } else {
-            return "нет данных"
-        }
-    }
+    val noData = "Нет данных"
 
-    fun dataFormat(s: String): String {
-        if (s == "нет данных") {
-            return ""
-        } else {
-            return s
-        }
-    }
+    fun fieldCheck(s: String): String = if (s != "") s else noData
+
+    fun dataFormat(s: String): String = if (s == "нет данных") "" else s
 
 }
 
@@ -113,4 +101,43 @@ fun <T> makeMenu(tree: TreeView<T>, create: TreeMenu<T>.() -> Unit) {
     val menu = TreeMenu(tree)
     menu.create()
     tree.contextMenu = menu.menu
+}
+
+class TreeNodeHelper(val node: Node) : Comparable<TreeNodeHelper> {
+    private val childs = mutableListOf<TreeNodeHelper>()
+
+    fun addChild(node: TreeNodeHelper) = childs.add(node)
+
+    fun childs(): MutableList<TreeNodeHelper> {
+        Collections.sort(childs)
+        return childs
+    }
+
+    override fun compareTo(other: TreeNodeHelper) = node.compareTo(other.node)
+}
+
+fun createSortedTree(nodes: List<Node>): List<TreeItem<Node>> {
+    val items = HashMap<Int, TreeNodeHelper>()
+    nodes.forEach {
+        items[it.id] = TreeNodeHelper(it)
+    }
+
+    val roots = mutableListOf<TreeNodeHelper>()
+
+    items.values.forEach {
+        val parent = it.node.parent
+        if (parent == null) {
+            roots.add(it)
+        } else {
+            items[parent]?.addChild(it)
+        }
+    }
+
+    fun buildTree(node: TreeNodeHelper): TreeItem<Node> {
+        val item = TreeItem(node.node)
+        node.childs().forEach { item.children.add(buildTree(it)) }
+        return item
+    }
+
+    return roots.map { buildTree(it) }
 }

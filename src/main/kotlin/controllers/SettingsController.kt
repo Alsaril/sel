@@ -8,9 +8,7 @@ import javafx.stage.Modality
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.auth.AuthRequest
-import models.auth.Token
 import network.AuthRetrofitClient
-import retrofit2.Response
 import utils.CloseListener
 import utils.Dialogs
 import utils.FileHelper
@@ -25,9 +23,8 @@ class SettingsController : LoadController<Boolean>() {
 
     fun save(actionEvent: ActionEvent) = launch(JavaFx) {
         val call = authApi.auth(AuthRequest(login.text, password.text))
-        val response: Response<Token>
-        try {
-            response = call.awaitResponse()
+        val response = try {
+            call.awaitResponse()
         } catch (t: Throwable) {
             Dialogs.showErrorDialog("Не удалось получить токен!")
             return@launch

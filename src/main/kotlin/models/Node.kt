@@ -17,7 +17,8 @@ class Node(@SerializedName("id")
            @SerializedName("parent")
            @Expose
            @DatabaseField
-           var parent: Int?) {
+           var parent: Int?) : Comparable<Node> {
+
     constructor() : this(0, "", null)
     constructor(name: String) : this(-1, name, null)
 
@@ -28,6 +29,7 @@ class Node(@SerializedName("id")
         return id == other.id
     }
 
+    override fun compareTo(other: Node) = name.compareTo(other.name)
 }
 
 
