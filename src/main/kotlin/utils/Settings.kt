@@ -31,6 +31,8 @@ class Settings private constructor(val filename: String) {
     private val readLock = _lock.readLock()
     private val writeLock = _lock.writeLock()
 
+    fun hasName(name: String) = settings.containsKey(name)
+
     operator fun get(name: String) = lock(readLock) { settings[name]!! }
 
     /*
