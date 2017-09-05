@@ -16,6 +16,7 @@ import models.supply.PositionSupplyFull
 import models.supply.Supply
 import utils.CloseListener
 import utils.Dialogs
+import utils.makeMenu
 
 class SuppliesDrafts : LoadController<Boolean>() {
 
@@ -38,6 +39,7 @@ class SuppliesDrafts : LoadController<Boolean>() {
     @FXML private lateinit var dateAddLabel: Label
 
 
+
     @FXML
     private fun initialize() {
         dateColumn.setCellValueFactory(PropertyValueFactory("dateFormat"))
@@ -49,17 +51,33 @@ class SuppliesDrafts : LoadController<Boolean>() {
         countColumn.setCellValueFactory(PropertyValueFactory("count"))
         priceColumn.setCellValueFactory(PropertyValueFactory("price"))
 
+        makeMenu(suppliesTable) {
+            "Редактировать" to { editDraft(it) }
+            "Удалить" to { delDraft(it) }
+        }
+
         loadSuppliesData()
     }
 
     fun newSupply(actionEvent: ActionEvent) {
-        NewSupplyController.show(actionEvent.source as Node) { result ->
+        NewSupplyController.show(owner = actionEvent.source as Node) { result ->
             if (result) {
                 loadSuppliesData()
             }
         }
 
     }
+
+    private fun editDraft(supply: Supply) {
+        NewSupplyController.show(owner = documentLabel, supply = supply) { result ->
+            if (result) {
+                loadSuppliesData()
+            }
+        }
+
+    }
+
+    private fun delDraft(supply: Supply) {}
 
     fun showSuppliers(actionEvent: ActionEvent) {
         SuppliersViewController.show(actionEvent.source as Node) {}

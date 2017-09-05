@@ -23,6 +23,9 @@ interface Api {
     @GET("operations")
     fun operations(): Call<List<Operation>>
 
+    @GET("nodes")
+    fun nodes(): Call<List<Node>>
+
     @GET("/operations_by_date")
     fun operationsByDate(@Query("start") start: String, @Query("end") end: String): Call<List<Operation>>
 

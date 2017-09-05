@@ -16,7 +16,6 @@ import javafx.stage.Modality
 import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
-import models.Node
 import models.Product
 import utils.CloseListener
 import utils.Dialogs
@@ -29,7 +28,6 @@ class ProductsEditController : LoadController<Boolean>() {
 
     var edit: Boolean = false
     var editProduct: Product = Product()
-    lateinit var parentNode: Node
 
 
     @FXML private lateinit var productName: TextField

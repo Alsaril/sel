@@ -33,7 +33,7 @@ object Utils {
 
     fun fieldCheck(s: String): String = if (s != "") s else noData
 
-    fun dataFormat(s: String): String = if (s == "нет данных") "" else s
+    fun dataFormat(s: String): String = if (s == noData) "" else s
 
 }
 
@@ -58,14 +58,6 @@ enum class Measure(val str: String) {
 
 fun parseDouble(str: String) = str.replace(',', '.').toDoubleOrNull()
 
-/*
-
-    val contextMenu = makeMenu {
-        "abc" to ::editProduct
-        "dew" to ::delProduct
-    }
-
- */
 
 class TableMenu<out T>(private val table: TableView<T>) {
     val menu = ContextMenu()
@@ -141,3 +133,6 @@ fun createSortedTree(nodes: List<Node>): List<TreeItem<Node>> {
 
     return roots.map { buildTree(it) }
 }
+
+fun Double.twoPoints() = String.format("%.2f", this)
+fun Double.noPoints() = String.format("%.0f", this)

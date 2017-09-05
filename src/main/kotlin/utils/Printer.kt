@@ -95,9 +95,7 @@ object Printer {
                 val pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, javafx.print.Printer.MarginType.HARDWARE_MINIMUM)
                 val pj = PrinterJob.createPrinterJob()
                 val b = pj.printPage(pageLayout, wv)
-                if (b) {
-                    pj.endJob()
-                }
+                if (b) pj.endJob()
                 Platform.runLater({ stage.close() })
             }
             stage.show()

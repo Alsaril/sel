@@ -9,6 +9,7 @@ import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Node
 import utils.CloseListener
+import utils.createSortedTree
 
 class SelectParentController : LoadController<Int>() {
     @FXML private lateinit var nodeTreeView: TreeView<Node>
@@ -23,17 +24,9 @@ class SelectParentController : LoadController<Int>() {
     }
 
     private fun loadNodesData() = launch(JavaFx) {
-        val result = api.productsData().await()
+        val result = api.nodes().await()
         if (!result.isSuccessful()) return@launch
-        val items = result.notNullResult().nodes.map { TreeItem(it) }
-        val roots = mutableListOf<TreeItem<Node>>()
-        items.forEach {
-            if (it.value.parent == null) {
-                roots.add(it)
-            } else {
-                items[it.value.parent!! - 1].children.add(it)
-            }
-        }
+        val roots = createSortedTree(result.notNullResult())
         val root = TreeItem<Node>(Node("Все"))
         root.children.addAll(roots)
         nodeTreeView.root = root
@@ -44,7 +37,7 @@ class SelectParentController : LoadController<Int>() {
         fun show(owner: javafx.scene.Node, callback: CloseListener<Int>) {
             LoadController.show(owner, callback,
                     path = "/view/products/SelectParent.fxml",
-                    title = "Выберете раздел",
+                    title = "Выберите раздел",
                     isResizable = false,
                     modality = Modality.WINDOW_MODAL)
         }

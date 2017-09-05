@@ -9,10 +9,7 @@ class Position(@SerializedName("id")
                @DatabaseField(id = true)
                val id: Int = 0,
 
-               @SerializedName("count")
-               @Expose
-               @DatabaseField
-               var count: Double,
+               count: Double,
 
                @SerializedName("price")
                @Expose
@@ -28,6 +25,18 @@ class Position(@SerializedName("id")
                @Expose
                @DatabaseField
                val product: Int) {
+
+    @SerializedName("count")
+    @Expose
+    @DatabaseField
+    var count: Double = count
+        set(value) {
+            if (isInteger) {
+                field = Math.floor(count)
+            } else {
+                field = count
+            }
+        }
 
     constructor() : this(0, 0.0, 0.0, 0.0, 0)
 

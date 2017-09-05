@@ -40,6 +40,8 @@ interface API {
 
     fun operations(): DeferredResult<List<Operation>>
 
+    fun nodes(): DeferredResult<List<Node>>
+
     fun operationsByDate(start: String, end: String): DeferredResult<List<Operation>>
 
     fun addOperation(@Body operation: Operation): DeferredResult<Void>

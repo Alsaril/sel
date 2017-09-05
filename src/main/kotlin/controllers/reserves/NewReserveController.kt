@@ -44,7 +44,7 @@ class NewReserveController : LoadController<Boolean>() {
         positionTable.isEditable = true
 
         nameColumn.setCellValueFactory(PropertyValueFactory("name"))
-        priceColumn.cellValueFactory = PropertyValueFactory("priceFormat")
+        priceColumn.cellValueFactory = PropertyValueFactory("twoPoints")
 
         priceColumn.cellFactory = TextFieldTableCell.forTableColumn()
         priceColumn.onEditCommit = EventHandler { t ->

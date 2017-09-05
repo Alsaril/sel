@@ -48,7 +48,7 @@ class OperationController : LoadController<Boolean>() {
     private fun initialize() {
 
         nameColumn.setCellValueFactory(PropertyValueFactory("productName"))
-        priceColumn.setCellValueFactory(PropertyValueFactory("priceFormat"))
+        priceColumn.setCellValueFactory(PropertyValueFactory("twoPoints"))
         countColumn.setCellValueFactory(PropertyValueFactory("strCount"))
         discountColumn.setCellValueFactory(PropertyValueFactory("discountFormat"))
         sumColumn.setCellValueFactory(PropertyValueFactory("sumFormat"))

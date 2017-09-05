@@ -17,6 +17,7 @@ import kotlinx.coroutines.experimental.launch
 import models.Product
 import models.supply.PositionSupplyFull
 import models.supply.Supplier
+import models.supply.Supply
 import models.supply.SupplyMin
 import utils.CloseListener
 import utils.Dialogs
@@ -92,7 +93,7 @@ class NewSupplyController : LoadController<Boolean>() {
             refresh()
         }
         unitColumn.cellValueFactory = PropertyValueFactory("productUnit")
-        unitPriceColumn.cellValueFactory = PropertyValueFactory("priceFormat")
+        unitPriceColumn.cellValueFactory = PropertyValueFactory("twoPoints")
 
 
         val contextMenu = ContextMenu()
@@ -116,9 +117,14 @@ class NewSupplyController : LoadController<Boolean>() {
         }
     }
 
-    fun editMode(positions: ObservableList<PositionSupplyFull>) {
+    fun editMode(supply: Supply) {
         edit = true
-        positionsOL = positions
+        document.text = Utils.dataFormat(supply.document)
+        //documentDate.value = supply.documentDate
+        documentInfo.text = Utils.dataFormat(supply.documentInfo)
+        positionsOL = FXCollections.observableArrayList(supply.positions)
+        positionTable.items = positionsOL
+        refresh()
     }
 
     private fun newPosition(product: Product?) {
@@ -145,7 +151,7 @@ class NewSupplyController : LoadController<Boolean>() {
         if (documentDate.value != null) {
             supply.documentDate = Utils.fieldCheck(documentDate.value.toString())
         } else {
-            supply.documentDate = "нет данных"
+            supply.documentDate = Utils.noData
         }
 
         supply.positions = positionsOL.map { it.toMin() }
@@ -160,10 +166,14 @@ class NewSupplyController : LoadController<Boolean>() {
         if (documentDate.value != null) {
             supply.documentDate = Utils.fieldCheck(documentDate.value.toString())
         } else {
-            supply.documentDate = "нет данных"
+            supply.documentDate = Utils.noData
         }
 
         supply.positions = positionsOL.map { it.toMin() }
+
+        if (edit) {
+            delDraft(supply)
+        }
         addDraft(supply)
     }
 
@@ -231,12 +241,18 @@ class NewSupplyController : LoadController<Boolean>() {
     }
 
     companion object {
-        fun show(owner: Node, callback: CloseListener<Boolean>) {
-            LoadController.show(owner, callback,
+        fun show(supply: Supply? = null,
+                 owner: javafx.scene.Node,
+                 callback: CloseListener<Boolean>) {
+            LoadController.show<Boolean, NewSupplyController>(owner, callback,
                     path = "/view/supply/NewSupply.fxml",
                     title = "Новая поставка",
                     isResizable = false,
-                    modality = Modality.WINDOW_MODAL)
+                    modality = Modality.WINDOW_MODAL) {
+                if (supply != null) {
+                    editMode(supply)
+                }
+            }
         }
     }
 }

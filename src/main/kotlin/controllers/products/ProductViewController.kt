@@ -7,11 +7,11 @@ import javafx.scene.control.*
 import javafx.scene.control.Alert.AlertType
 import javafx.scene.control.cell.PropertyValueFactory
 import javafx.stage.Modality
+import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.javafx.JavaFx
 import kotlinx.coroutines.experimental.launch
 import models.Node
 import models.Product
-import models.operation.Operation
 import utils.CloseListener
 import utils.Dialogs
 import utils.createSortedTree
@@ -20,12 +20,9 @@ import utils.makeMenu
 
 class ProductViewController : LoadController<Product?>() {
 
-    private var operationOL = FXCollections.observableArrayList<Operation>()
     private var products: List<Product> = listOf()
 
     private var productsOL = FXCollections.observableArrayList<Product>()
-    private var productsFiltredOL = FXCollections.observableArrayList<Product>()
-    private var productsList: List<Product>? = null
     lateinit var selectProduct: Product
 
     @FXML private lateinit var productTable: TableView<Product>
@@ -44,12 +41,13 @@ class ProductViewController : LoadController<Product?>() {
         barcodeColumn.cellValueFactory = PropertyValueFactory("vendor")
         countColumn.cellValueFactory = PropertyValueFactory("strCount")
         reserveColumn.cellValueFactory = PropertyValueFactory("strReserved")
-        priceColumn.cellValueFactory = PropertyValueFactory("priceFormat")
+        priceColumn.cellValueFactory = PropertyValueFactory("twoPoints")
 
         makeMenu(productTable) {
             "Редактировать" to { editProduct(it) }
             "Удалить" to { delProduct(it) }
             "Информация" to { infoProduct(it) }
+            "Переместить" to { moveProducts() }
         }
 
         makeMenu(nodeTreeView) {
@@ -71,14 +69,29 @@ class ProductViewController : LoadController<Product?>() {
             showProducts(products, newValue)
         }
 
+        productTable.selectionModel.selectionMode = SelectionMode.MULTIPLE
+
         loadProductsData()
+    }
+
+    private fun moveProducts() {
+        val products = productTable.selectionModel.selectedItems
+        SelectParentController.show(search) { parent ->
+            launch(CommonPool) {
+                products.forEach {
+                    it.parent = parent
+                    api.editProduct(it.id.toString(), it).await()
+                }
+                loadProductsData(updateTree = false)
+            }
+        }
     }
 
     fun selectMode() {
         productTable.setRowFactory { tv ->
             val row = TableRow<Product>()
             row.setOnMouseClicked({ event ->
-                if (event.getClickCount() == 2 && !row.isEmpty()) {
+                if (event.clickCount == 2 && !row.isEmpty) {
                     close(productTable.selectionModel.selectedItem)
                 }
             })

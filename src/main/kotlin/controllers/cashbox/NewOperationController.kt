@@ -40,7 +40,7 @@ class NewOperationController : LoadController<Boolean>() {
     private fun initialize() {
         positionTable.isEditable = true
         nameColumn.cellValueFactory = PropertyValueFactory("productName")
-        priceColumn.cellValueFactory = PropertyValueFactory("priceFormat")
+        priceColumn.cellValueFactory = PropertyValueFactory("twoPoints")
 
         priceColumn.cellFactory = TextFieldTableCell.forTableColumn()
         priceColumn.onEditCommit = EventHandler { t ->
@@ -139,13 +139,13 @@ class NewOperationController : LoadController<Boolean>() {
                 positionsOL.map {
                     utils.Position("",
                             it.productName,
-                            it.price.toString(),
-                            it.count.toString(),
-                            it.sum().toString())
+                            it.price.twoPoints(),
+                            if (it.isInteger) it.count.noPoints() else it.count.twoPoints(),
+                            it.sum().twoPoints())
                 },
                 totalSum.text,
                 totalSum.text,
-                "0.00",
+                "0,00",
                 "Человек"
         )
     }

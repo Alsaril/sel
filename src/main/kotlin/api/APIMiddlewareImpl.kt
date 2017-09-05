@@ -100,6 +100,23 @@ object APIMiddlewareImpl : API {
         }
     }
 
+    override fun nodes(): DeferredResult<List<Node>> = async(CommonPool) {
+        val response: Response<List<Node>>
+        try {
+            response = networkAPI.nodes().awaitResponse()
+        } catch (t: Throwable) {
+            state = State.OFFLINE
+            return@async Result(localAPI.nodes(), State.OFFLINE)
+        }
+        val data = response.body()
+        state = State.ONLINE
+        if (response.code() == OK && data != null) {
+            Result(data, State.ONLINE)
+        } else {
+            Result<List<Node>>("response code != ${OK} or response body == null", State.ONLINE)
+        }
+    }
+
     override fun operationsByDate(start: String, end: String): DeferredResult<List<Operation>> = async(CommonPool) {
         val response: Response<List<Operation>>
         try {
