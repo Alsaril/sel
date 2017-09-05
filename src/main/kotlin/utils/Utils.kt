@@ -21,11 +21,6 @@ object Utils {
             null
         }
     }
-
-    fun print() {
-        //Printer.printCheck(1,"4545454", Date().toString(),25,"25:25,");
-    }
-
     fun cashboxDate() = cashboxDateFormat.format(Date())
     fun cashboxTime() = cashboxTimeFormat.format(Date())
 

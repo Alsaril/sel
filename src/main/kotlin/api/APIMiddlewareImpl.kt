@@ -76,7 +76,7 @@ object APIMiddlewareImpl : API {
         val data = response.body()
         state = State.ONLINE
         if (response.code() == OK && data != null) {
-            localAPI.save(data) // save responce to local base
+            localAPI.save(data) // softSave responce to local base
             Result(data, State.ONLINE)
         } else {
             Result<ProductsData>("response code != ${OK} or response body == null", State.ONLINE)
