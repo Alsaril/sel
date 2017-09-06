@@ -54,6 +54,7 @@ class ProductViewController : LoadController<Product?>() {
             "Добавить раздел" to { createNode(it) }
             "Редактировать раздел" to { renameNode(it) }
             "Удалить раздел" to { deleteNode(it) }
+            "Переместить раздел" to { moveNode(it) }
             "Добавить товар" to { addProduct(it) }
         }
 
@@ -83,6 +84,16 @@ class ProductViewController : LoadController<Product?>() {
                     api.editProduct(it.id.toString(), it).await()
                 }
                 loadProductsData(updateTree = false)
+            }
+        }
+    }
+
+    private fun moveNode(node: Node) {
+        SelectParentController.show(search) { parent ->
+            launch(CommonPool) {
+                node.parent = parent
+                api.editNode(node.id.toString(), node).await()
+                loadProductsData(true)
             }
         }
     }
@@ -175,7 +186,8 @@ class ProductViewController : LoadController<Product?>() {
         val result = api.addNode(node).await()
         if (result.isSuccessful()) {
             Dialogs.showDialog("Раздел добавлен!")
-            loadProductsData()
+            loadProductsData(false)
+            nodeTreeView.selectionModel.selectedItem.children.add(TreeItem(result.notNullResult()))
         } else {
             Dialogs.showExeptionDialog(result.error)
         }

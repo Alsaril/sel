@@ -75,7 +75,7 @@ interface Api {
     fun delDraft(@Path("id") id: String): Call<Void>
 
     @POST("nodes/")
-    fun addNode(@Body node: Node): Call<Void>
+    fun addNode(@Body node: Node): Call<Node>
 
     @PUT("nodes/{id}/")
     fun editNode(@Path("id") id: String, @Body node: Node): Call<Void>

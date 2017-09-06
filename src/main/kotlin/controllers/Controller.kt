@@ -1,12 +1,13 @@
 package controllers
 
 import controllers.cashbox.OperationController
-import controllers.cashbox.PasswordController
 import controllers.products.ProductViewController
 import controllers.reserves.ReservesViewController
 import controllers.supply.SuppliesViewController
 import javafx.event.ActionEvent
 import javafx.scene.Node
+import utils.PasswordDialog
+
 
 class Controller {
     fun showProducts(actionEvent: ActionEvent) {
@@ -14,10 +15,10 @@ class Controller {
     }
 
     fun showPasswordCheckDialog(actionEvent: ActionEvent) {
-        PasswordController.show(actionEvent.source as Node) { result ->
-            if (result) {
-                showOperations(actionEvent)
-            }
+        val dialog = PasswordDialog()
+        val result = dialog.showAndWait()
+        result.ifPresent {
+            if (result.get() == "0000") showOperations(actionEvent)
         }
     }
 

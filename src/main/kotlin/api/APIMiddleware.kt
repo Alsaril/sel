@@ -62,7 +62,7 @@ interface API {
 
     fun delProduct(@Path("id") id: String): DeferredResult<Void>
 
-    fun addNode(@Body node: Node): DeferredResult<Void>
+    fun addNode(@Body node: Node): DeferredResult<Node>
 
     fun editNode(@Path("id") id: String, @Body node: Node): DeferredResult<Void>
 

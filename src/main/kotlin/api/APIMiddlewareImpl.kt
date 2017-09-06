@@ -282,19 +282,20 @@ object APIMiddlewareImpl : API {
         }
     }
 
-    override fun addNode(node: Node): DeferredResult<Void> = async(CommonPool) {
-        val response: Response<Void>
+    override fun addNode(node: Node): DeferredResult<Node> = async(CommonPool) {
+        val response: Response<Node>
         try {
             response = networkAPI.addNode(node).awaitResponse()
         } catch (t: Throwable) {
             state = State.OFFLINE
-            return@async Result<Void>("Exception: ${t.message}", State.OFFLINE)
+            return@async Result<Node>("Exception: ${t.message}", State.OFFLINE)
         }
+        val data = response.body()
         state = State.ONLINE
-        if (response.code() == CREATED) {
-            Result.successVoidResult(State.ONLINE)
+        if (response.code() == CREATED && data != null) {
+            Result(data, State.ONLINE)
         } else {
-            Result<Void>("response code != ${CREATED} or response body == null", State.ONLINE)
+            Result<Node>("response code != ${CREATED} or response body == null", State.ONLINE)
         }
     }
 

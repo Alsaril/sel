@@ -118,8 +118,8 @@ class OperationController : LoadController<Boolean>() {
             LoadController.show(owner, callback,
                     path = "/view/cashbox/OperationsView.fxml",
                     title = "Касса",
-                    isResizable = false,
-                    modality = Modality.WINDOW_MODAL)
+                    isResizable = true,
+                    modality = Modality.NONE)
         }
     }
 }
