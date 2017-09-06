@@ -1,11 +1,17 @@
 package utils
 
+import javafx.application.Platform
 import javafx.event.EventHandler
+import javafx.geometry.Insets
 import javafx.scene.control.*
+import javafx.scene.control.ButtonBar.ButtonData
+import javafx.scene.layout.HBox
+import javafx.scene.layout.Priority
 import models.Node
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 object Utils {
     private val backendDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
@@ -131,3 +137,36 @@ fun createSortedTree(nodes: List<Node>): List<TreeItem<Node>> {
 
 fun Double.twoPoints() = String.format("%.2f", this)
 fun Double.noPoints() = String.format("%.0f", this)
+
+class PasswordDialog : Dialog<String>() {
+    private val passwordField: PasswordField
+
+    init {
+        title = "Пароль"
+        headerText = "Введите пароль"
+
+        val ok = ButtonType("ОК", ButtonData.OK_DONE)
+        val cancel = ButtonType("Отмена", ButtonData.CANCEL_CLOSE)
+        dialogPane.buttonTypes.addAll(ok, cancel)
+
+        passwordField = PasswordField()
+        passwordField.promptText = "Пароль"
+
+        val hBox = HBox()
+        hBox.children.add(passwordField)
+        hBox.padding = Insets(20.0)
+
+        HBox.setHgrow(passwordField, Priority.ALWAYS)
+
+        dialogPane.content = hBox
+
+        Platform.runLater { passwordField.requestFocus() }
+
+        setResultConverter { dialogButton ->
+            if (dialogButton === ok) {
+                return@setResultConverter passwordField.text
+            }
+            null
+        }
+    }
+}
